@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NECS 2026 App - Tournament Brackets</title>
+  <link rel="stylesheet" href="../css/mobile-app.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #070709;
+    }
+    
+    /* Enhanced bracket styles for this screen */
+    .bracket-wrapper {
+      padding: 0 20px;
+    }
+    
+    .bracket-game-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+    
+    .bracket-game-btn {
+      flex: 1;
+      padding: 12px 8px;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    
+    .bracket-game-btn.active {
+      background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
+      border-color: transparent;
+      color: var(--color-bg-primary);
+    }
+    
+    .bracket-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      margin: 0 20px 16px;
+      background: var(--color-bg-tertiary);
+      border-radius: 10px;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+    
+    .bracket-hint svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-accent-cyan);
+    }
+    
+    /* Vertical bracket layout for mobile */
+    .bracket-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 0 20px;
+    }
+    
+    .bracket-stage {
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    
+    .stage-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .stage-status {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--color-accent-cyan);
+    }
+    
+    .stage-status.completed {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--color-status-completed);
+    }
+    
+    .stage-status.live {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--color-status-live);
+    }
+    
+    .bracket-matchups {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .bracket-matchup {
+      background: var(--color-bg-elevated);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .matchup-team {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    
+    .matchup-team:last-child {
+      border-bottom: none;
+    }
+    
+    .matchup-team.winner {
+      background: rgba(0, 240, 255, 0.08);
+    }
+    
+    .matchup-team-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .matchup-team-logo {
+      width: 28px;
+      height: 28px;
+      background: var(--color-bg-tertiary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-accent-cyan);
+    }
+    
+    .matchup-team-name {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    
+    .matchup-team.winner .matchup-team-name {
+      color: var(--color-accent-cyan);
+    }
+    
+    .matchup-score {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+    
+    .matchup-team.winner .matchup-score {
+      color: var(--color-accent-cyan);
+    }
+    
+    .matchup-tbd {
+      padding: 10px 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+    
+    .winner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(139, 92, 246, 0.2));
+      border: 1px solid var(--color-accent-cyan);
+      border-radius: 20px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-cyan);
+    }
+    
+    .winner-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Device Frame -->
+  <div class="mobile-frame">
+    
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="status-bar-time">9:41</span>
+      <div class="status-bar-icons">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C7.46 3 3.34 4.78.29 7.67c-.18.18-.29.43-.29.71s.11.53.29.71l2.48 2.48c.18.18.43.29.71.29s.53-.11.71-.29c1.44-1.44 3.41-2.33 5.59-2.56v2.22c-1.43.23-2.73.87-3.79 1.78l-2.48-2.48c1.97-1.74 4.54-2.81 7.37-2.81s5.4 1.07 7.37 2.81l-2.48 2.48c-1.06-.91-2.36-1.55-3.79-1.78V8.01c2.18.23 4.15 1.12 5.59 2.56.18.18.43.29.71.29s.53-.11.71-.29l2.48-2.48c.18-.18.29-.43.29-.71s-.11-.53-.29-.71C20.66 4.78 16.54 3 12 3z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 22h20V2L2 22zm18-2h-2v-3h2v3zm0-5h-2v-3h2v3zm0-5h-2V7h2v3z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
+      </div>
+    </div>
+
+    <!-- Screen Content -->
+    <div class="mobile-screen">
+      <!-- Header -->
+      <div class="screen-header">
+        <h1 class="screen-title">Bracket <span class="text-gradient">Updates</span></h1>
+        <p class="screen-subtitle">Tournament progression</p>
+      </div>
+
+      <!-- Game Selector -->
+      <div class="bracket-game-selector">
+        <button class="bracket-game-btn active">Valorant</button>
+        <button class="bracket-game-btn">Rocket League</button>
+        <button class="bracket-game-btn">Smash</button>
+      </div>
+
+      <!-- Hint -->
+      <div class="bracket-hint">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        <span>Swipe to see full bracket • Teams advance upward</span>
+      </div>
+
+      <!-- Vertical Bracket -->
+      <div class="bracket-vertical">
+        <!-- Quarterfinals -->
+        <div class="bracket-stage">
+          <div class="stage-header">
+            <span class="stage-title">Quarterfinals</span>
+            <span class="stage-status live">In Progress</span>
+          </div>
+          <div class="bracket-matchups">
+            <div class="bracket-matchup">
+              <div class="matchup-team winner">
+                <div class="matchup-team-info">
+                  <div class="matchup-team-logo">NV</div>
+                  <span class="matchup-team-name">Nova Vanguard</span>
+                </div>
+                <span class="matchup-score">2</span>
+              </div>
+              <div class="matchup-team">
+                <div class="matchup-team-info">
+                  <div class="matchup-team-logo">SE</div>
+                  <span class="matchup-team-name">Shadow Elite</span>
+                </div>
+                <span class="matchup-score">1</span>
+              </div>
+            </div>
+            <div class="bracket-matchup">
+              <div class="matchup-team">
+                <div class="matchup-team-info">
+                  <div class="matchup-team-logo">TF</div>
+                  <span class="matchup-team-name">Titan Force</span>
+                </div>
+                <span class="matchup-score">-</span>
+              </div>
+              <div class="matchup-team">
+                <div class="matchup-team-info">
+                  <div class="matchup-team-logo">CG</div>
+                  <span class="matchup-team-name">Cyber Guardians</span>
+                </div>
+                <span class="matchup-score">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Semifinals -->
+        <div class="bracket-stage">
+          <div class="stage-header">
+            <span class="stage-title">Semifinals</span>
+            <span class="stage-status">Upcoming</span>
+          </div>
+          <div class="bracket-matchups">
+            <div class="bracket-matchup">
+              <div class="matchup-team winner">
+                <div class="matchup-team-info">
+                  <div class="matchup-team-logo">NV</div>
+                  <span class="matchup-team-name">Nova Vanguard</span>
+                </div>
+                <span class="matchup-score">-</span>
+              </div>
+              <div class="matchup-tbd">Winner of QF2</div>
+            </div>
+            <div class="bracket-matchup">
+              <div class="matchup-tbd">TBD</div>
+              <div class="matchup-tbd">TBD</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grand Final -->
+        <div class="bracket-stage">
+          <div class="stage-header">
+            <span class="stage-title">Grand Final</span>
+            <span class="stage-status">May 10</span>
+          </div>
+          <div class="bracket-matchups">
+            <div class="bracket-matchup">
+              <div class="matchup-tbd">Winner of SF1</div>
+              <div class="matchup-tbd">Winner of SF2</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Champion placeholder -->
+        <div style="text-align: center; padding: 16px;">
+          <div class="winner-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            Champion TBD
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="live-scores.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <span>Scores</span>
+      </a>
+      <a href="player-stats.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+        <span>Players</span>
+      </a>
+      <a href="replays.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <span>Replays</span>
+      </a>
+      <a href="brackets.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/>
+        </svg>
+        <span>Brackets</span>
+      </a>
+      <a href="chat.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+        </svg>
+        <span>Chat</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>
+
+
