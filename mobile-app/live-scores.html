@@ -13,6 +13,339 @@
       min-height: 100vh;
       background: #070709;
     }
+    
+    /* Favorites Row */
+    .favorites-section {
+      margin-bottom: 20px;
+    }
+    
+    .favorites-row {
+      display: flex;
+      gap: 16px;
+      padding: 0 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .favorites-row::-webkit-scrollbar { display: none; }
+    
+    .favorite-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .favorite-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #000;
+    }
+    
+    .favorite-name {
+      font-size: 10px;
+      color: var(--color-text-muted);
+    }
+    
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--color-status-live);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    
+    .see-all {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-cyan);
+    }
+    
+    /* Enhanced Match Card */
+    .match-card-enhanced {
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 16px;
+      margin: 0 20px 12px;
+      overflow: hidden;
+    }
+    
+    .match-card-enhanced.live {
+      border-color: var(--color-status-live);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    
+    .match-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--color-bg-elevated);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    
+    .match-card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(239, 68, 68, 0.2);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    
+    .live-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-status-live);
+      border-radius: 50%;
+    }
+    
+    .live-badge-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-status-live);
+    }
+    
+    .match-game-badge {
+      font-size: 10px;
+      color: var(--color-text-muted);
+    }
+    
+    .viewers-count {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: var(--color-text-muted);
+    }
+    
+    .match-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+    }
+    
+    .team-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    
+    .team-logo-colored {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 8px;
+    }
+    
+    .team-name-center {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      text-align: center;
+    }
+    
+    .score-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+    }
+    
+    .score-numbers {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .score-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+    
+    .score-num.winning {
+      color: var(--color-text-primary);
+    }
+    
+    .score-dash {
+      font-size: 20px;
+      color: var(--color-text-muted);
+    }
+    
+    .match-time-badge {
+      font-size: 11px;
+      color: var(--color-status-live);
+      font-weight: 500;
+      margin-top: 4px;
+    }
+    
+    .match-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-top: 1px solid var(--color-border-default);
+    }
+    
+    .match-round-text {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+    
+    .watch-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--color-accent-cyan);
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    .highlights-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--color-bg-elevated);
+      color: var(--color-accent-cyan);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    /* Upcoming Horizontal Scroll */
+    .upcoming-scroll {
+      display: flex;
+      gap: 12px;
+      padding: 0 20px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .upcoming-scroll::-webkit-scrollbar { display: none; }
+    
+    .upcoming-card {
+      flex-shrink: 0;
+      width: 150px;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    
+    .upcoming-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .upcoming-game {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+    
+    .upcoming-time {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-accent-cyan);
+    }
+    
+    .upcoming-teams {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .upcoming-team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .upcoming-team-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #000;
+    }
+    
+    .upcoming-team-name {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    
+    .vs-badge {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+    
+    .upcoming-round {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -37,141 +370,224 @@
         <p class="screen-subtitle">May 8, 2026 • Day 3</p>
       </div>
 
-      <!-- Game Tabs -->
-      <div class="game-tabs">
-        <button class="game-tab active">Valorant</button>
-        <button class="game-tab">Rocket League</button>
-        <button class="game-tab">Smash</button>
+      <!-- Favorites -->
+      <div class="favorites-section">
+        <div class="section-header" style="margin-bottom: 8px;">
+          <span class="section-title">Favorites</span>
+        </div>
+        <div class="favorites-row">
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #00f0ff;">NV</div>
+            <span class="favorite-name">Nova</span>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #ff4655;">SE</div>
+            <span class="favorite-name">Shadow</span>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #ffd700;">TF</div>
+            <span class="favorite-name">Titan</span>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #22c55e;">CG</div>
+            <span class="favorite-name">Cyber</span>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #ff4655;">VAL</div>
+            <span class="favorite-name">Valorant</span>
+          </div>
+          <div class="favorite-item">
+            <div class="favorite-logo" style="background: #0080ff;">RL</div>
+            <span class="favorite-name">Rocket</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Matches List -->
-      <div class="matches-list">
-        <!-- Live Match -->
-        <div class="match-card live">
-          <div class="match-header">
-            <div class="match-status live">
-              <span class="status-dot"></span>
-              Live Now
+      <!-- Live Now -->
+      <div class="section-header">
+        <span class="section-title">
+          <span class="live-dot"></span>
+          Live Now
+        </span>
+        <span class="see-all">See All</span>
+      </div>
+
+      <!-- Live Match 1 -->
+      <div class="match-card-enhanced live">
+        <div class="match-card-header">
+          <div class="match-card-header-left">
+            <div class="live-badge">
+              <span class="live-badge-dot"></span>
+              <span class="live-badge-text">LIVE</span>
             </div>
-            <span class="match-round">Quarterfinal 1</span>
+            <span class="match-game-badge">VALORANT</span>
           </div>
-          <div class="match-teams">
-            <div class="match-team">
-              <div class="team-logo-small">NV</div>
-              <div class="team-info">
-                <div class="team-name-small">Nova Vanguard</div>
-                <div class="team-record">8-2</div>
-              </div>
-            </div>
-            <div class="match-score">
-              <span class="score-value winning">2</span>
-              <span class="score-divider">-</span>
-              <span class="score-value">1</span>
-            </div>
-            <div class="match-team right">
-              <div class="team-logo-small">SE</div>
-              <div class="team-info">
-                <div class="team-name-small">Shadow Elite</div>
-                <div class="team-record">7-3</div>
-              </div>
-            </div>
+          <div class="viewers-count">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            </svg>
+            24.5K
           </div>
         </div>
-
-        <!-- Upcoming Match -->
-        <div class="match-card">
-          <div class="match-header">
-            <div class="match-status upcoming">
-              <span class="status-dot"></span>
-              12:00 PM
-            </div>
-            <span class="match-round">Quarterfinal 2</span>
+        <div class="match-card-content">
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #00f0ff;">NV</div>
+            <span class="team-name-center">Nova Vanguard</span>
           </div>
-          <div class="match-teams">
-            <div class="match-team">
-              <div class="team-logo-small">TF</div>
-              <div class="team-info">
-                <div class="team-name-small">Titan Force</div>
-                <div class="team-record">6-4</div>
-              </div>
+          <div class="score-center">
+            <div class="score-numbers">
+              <span class="score-num winning">2</span>
+              <span class="score-dash">-</span>
+              <span class="score-num">1</span>
             </div>
-            <div class="match-score">
-              <span class="score-value">-</span>
-              <span class="score-divider">vs</span>
-              <span class="score-value">-</span>
-            </div>
-            <div class="match-team right">
-              <div class="team-logo-small">CG</div>
-              <div class="team-info">
-                <div class="team-name-small">Cyber Guardians</div>
-                <div class="team-record">7-3</div>
-              </div>
-            </div>
+            <span class="match-time-badge">Map 3 • Haven</span>
+          </div>
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #ff4655;">SE</div>
+            <span class="team-name-center">Shadow Elite</span>
           </div>
         </div>
-
-        <!-- Completed Match -->
-        <div class="match-card">
-          <div class="match-header">
-            <div class="match-status final">
-              <span class="status-dot"></span>
-              Final
-            </div>
-            <span class="match-round">Group Stage</span>
-          </div>
-          <div class="match-teams">
-            <div class="match-team">
-              <div class="team-logo-small">NV</div>
-              <div class="team-info">
-                <div class="team-name-small">Nova Vanguard</div>
-                <div class="team-record">7-2</div>
-              </div>
-            </div>
-            <div class="match-score">
-              <span class="score-value winning">2</span>
-              <span class="score-divider">-</span>
-              <span class="score-value">0</span>
-            </div>
-            <div class="match-team right">
-              <div class="team-logo-small">CG</div>
-              <div class="team-info">
-                <div class="team-name-small">Cyber Guardians</div>
-                <div class="team-record">6-3</div>
-              </div>
-            </div>
+        <div class="match-card-footer">
+          <span class="match-round-text">Quarterfinal 1</span>
+          <div class="watch-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            Watch
           </div>
         </div>
+      </div>
 
-        <!-- Another Match -->
-        <div class="match-card">
-          <div class="match-header">
-            <div class="match-status final">
-              <span class="status-dot"></span>
-              Final
-            </div>
-            <span class="match-round">Group Stage</span>
+      <!-- Upcoming Today -->
+      <div class="section-header">
+        <span class="section-title">Upcoming Today</span>
+        <span class="see-all">See All</span>
+      </div>
+      
+      <div class="upcoming-scroll">
+        <div class="upcoming-card">
+          <div class="upcoming-header">
+            <span class="upcoming-game">Valorant</span>
+            <span class="upcoming-time">12:00 PM</span>
           </div>
-          <div class="match-teams">
-            <div class="match-team">
-              <div class="team-logo-small">SE</div>
-              <div class="team-info">
-                <div class="team-name-small">Shadow Elite</div>
-                <div class="team-record">7-2</div>
-              </div>
+          <div class="upcoming-teams">
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #ffd700;">TF</div>
+              <span class="upcoming-team-name">TF</span>
             </div>
-            <div class="match-score">
-              <span class="score-value">1</span>
-              <span class="score-divider">-</span>
-              <span class="score-value winning">2</span>
-            </div>
-            <div class="match-team right">
-              <div class="team-logo-small">TF</div>
-              <div class="team-info">
-                <div class="team-name-small">Titan Force</div>
-                <div class="team-record">6-3</div>
-              </div>
+            <span class="vs-badge">VS</span>
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #22c55e;">CG</div>
+              <span class="upcoming-team-name">CG</span>
             </div>
           </div>
+          <span class="upcoming-round">Quarterfinal 2</span>
+        </div>
+        
+        <div class="upcoming-card">
+          <div class="upcoming-header">
+            <span class="upcoming-game">Valorant</span>
+            <span class="upcoming-time">4:00 PM</span>
+          </div>
+          <div class="upcoming-teams">
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #444;">?</div>
+              <span class="upcoming-team-name">TBD</span>
+            </div>
+            <span class="vs-badge">VS</span>
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #444;">?</div>
+              <span class="upcoming-team-name">TBD</span>
+            </div>
+          </div>
+          <span class="upcoming-round">Semifinal 1</span>
+        </div>
+        
+        <div class="upcoming-card">
+          <div class="upcoming-header">
+            <span class="upcoming-game">Smash Bros</span>
+            <span class="upcoming-time">6:00 PM</span>
+          </div>
+          <div class="upcoming-teams">
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #e60012;">SM</div>
+              <span class="upcoming-team-name">SM</span>
+            </div>
+            <span class="vs-badge">VS</span>
+            <div class="upcoming-team">
+              <div class="upcoming-team-logo" style="background: #ff00aa;">KB</div>
+              <span class="upcoming-team-name">KB</span>
+            </div>
+          </div>
+          <span class="upcoming-round">Semifinal 1</span>
+        </div>
+      </div>
+
+      <!-- Completed -->
+      <div class="section-header">
+        <span class="section-title">Completed</span>
+        <span class="see-all">See All</span>
+      </div>
+
+      <!-- Completed Match 1 -->
+      <div class="match-card-enhanced">
+        <div class="match-card-header">
+          <div class="match-card-header-left">
+            <span class="match-game-badge">VALORANT • Group Stage</span>
+          </div>
+          <span style="font-size: 10px; color: var(--color-text-muted);">Final</span>
+        </div>
+        <div class="match-card-content">
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #ff6b35;">PR</div>
+            <span class="team-name-center">Phoenix Rising</span>
+          </div>
+          <div class="score-center">
+            <div class="score-numbers">
+              <span class="score-num winning">2</span>
+              <span class="score-dash">-</span>
+              <span class="score-num">0</span>
+            </div>
+          </div>
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #6b7280;">DK</div>
+            <span class="team-name-center">Dark Knights</span>
+          </div>
+        </div>
+        <div class="match-card-footer">
+          <span class="match-round-text">Group A - Match 4</span>
+          <div class="highlights-btn">Highlights</div>
+        </div>
+      </div>
+
+      <!-- Completed Match 2 -->
+      <div class="match-card-enhanced">
+        <div class="match-card-header">
+          <div class="match-card-header-left">
+            <span class="match-game-badge">SMASH BROS • Winners Bracket</span>
+          </div>
+          <span style="font-size: 10px; color: var(--color-text-muted);">Final</span>
+        </div>
+        <div class="match-card-content">
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #22c55e;">SC</div>
+            <span class="team-name-center">Stock Crushers</span>
+          </div>
+          <div class="score-center">
+            <div class="score-numbers">
+              <span class="score-num winning">3</span>
+              <span class="score-dash">-</span>
+              <span class="score-num">1</span>
+            </div>
+          </div>
+          <div class="team-side">
+            <div class="team-logo-colored" style="background: #ffd700;">FD</div>
+            <span class="team-name-center">Final Destination</span>
+          </div>
+        </div>
+        <div class="match-card-footer">
+          <span class="match-round-text">Winners Finals</span>
+          <div class="highlights-btn">Highlights</div>
         </div>
       </div>
     </div>
@@ -212,5 +628,3 @@
   </div>
 </body>
 </html>
-
-

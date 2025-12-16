@@ -13,6 +13,204 @@
       min-height: 100vh;
       background: #070709;
     }
+    
+    /* Horizontal Players Scroll */
+    .players-scroll {
+      display: flex;
+      gap: 12px;
+      padding: 0 20px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .players-scroll::-webkit-scrollbar { display: none; }
+    
+    .player-card-horizontal {
+      flex-shrink: 0;
+      width: 100px;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .player-rank-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--color-bg-elevated);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-accent-cyan);
+    }
+    
+    .player-avatar-h {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 8px auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+    }
+    
+    .player-name-h {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    
+    .player-team-h {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      margin-bottom: 10px;
+    }
+    
+    .player-stat-h {
+      background: var(--color-bg-elevated);
+      border-radius: 8px;
+      padding: 8px;
+    }
+    
+    .player-stat-value {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-accent-cyan);
+    }
+    
+    .player-stat-label {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+    
+    /* Leaderboard Cards */
+    .leaderboard-section {
+      padding: 0 20px;
+      margin-bottom: 16px;
+    }
+    
+    .leaderboard-card {
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border-default);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    
+    .leaderboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    
+    .leaderboard-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    
+    .leaderboard-game {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+    
+    .leaderboard-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    
+    .leaderboard-row:last-child {
+      border-bottom: none;
+    }
+    
+    .leaderboard-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .leaderboard-rank {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+    
+    .leaderboard-rank.gold {
+      background: #ffd700;
+      color: #000;
+    }
+    
+    .leaderboard-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .leaderboard-player {
+      font-size: 13px;
+      color: var(--color-text-primary);
+    }
+    
+    .leaderboard-team-tag {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      margin-left: 4px;
+    }
+    
+    .leaderboard-value {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent-cyan);
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .see-all {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-cyan);
+    }
   </style>
 </head>
 <body>
@@ -34,146 +232,184 @@
       <!-- Header -->
       <div class="screen-header">
         <h1 class="screen-title">Player <span class="text-gradient">Stats</span></h1>
-        <p class="screen-subtitle">Top performers this tournament</p>
-      </div>
-
-      <!-- Search Bar -->
-      <div class="search-bar">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        </svg>
-        <input type="text" class="search-input" placeholder="Search players...">
+        <p class="screen-subtitle">Tournament Rankings</p>
       </div>
 
       <!-- Game Tabs -->
       <div class="game-tabs">
-        <button class="game-tab active">Valorant</button>
+        <button class="game-tab active">All Games</button>
+        <button class="game-tab">Valorant</button>
         <button class="game-tab">Rocket League</button>
         <button class="game-tab">Smash</button>
       </div>
 
-      <!-- Players List -->
-      <div class="players-list">
-        <!-- Player Card 1 -->
-        <div class="player-card">
-          <div class="player-avatar">AC</div>
-          <div class="player-info">
-            <div class="player-name">Alex "Phantom" Chen</div>
-            <div class="player-team">Nova Vanguard</div>
-            <div class="player-stats-mini">
-              <div class="stat-item">
-                <span class="stat-label">K/D:</span>
-                <span class="stat-value">1.42</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">ACS:</span>
-                <span class="stat-value">287</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">HS%:</span>
-                <span class="stat-value">31%</span>
-              </div>
-            </div>
+      <!-- Top Players - Horizontal Scroll -->
+      <div class="section-header">
+        <span class="section-title">Top Players</span>
+        <span class="see-all">See All</span>
+      </div>
+      
+      <div class="players-scroll">
+        <!-- Player 1 -->
+        <div class="player-card-horizontal">
+          <span class="player-rank-badge">#1</span>
+          <div class="player-avatar-h" style="background: linear-gradient(135deg, #00f0ff, #0080ff);">P</div>
+          <div class="player-name-h">Phantom</div>
+          <div class="player-team-h">Nova Vanguard</div>
+          <div class="player-stat-h">
+            <div class="player-stat-value">1.42</div>
+            <div class="player-stat-label">K/D</div>
           </div>
-          <div class="player-game-badge">Duelist</div>
         </div>
-
-        <!-- Player Card 2 -->
-        <div class="player-card">
-          <div class="player-avatar" style="background: linear-gradient(135deg, #ff4655, #ff6b6b);">RK</div>
-          <div class="player-info">
-            <div class="player-name">Ryan "Reaper" Kim</div>
-            <div class="player-team">Shadow Elite</div>
-            <div class="player-stats-mini">
-              <div class="stat-item">
-                <span class="stat-label">K/D:</span>
-                <span class="stat-value">1.38</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">ACS:</span>
-                <span class="stat-value">271</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">HS%:</span>
-                <span class="stat-value">28%</span>
-              </div>
-            </div>
+        
+        <!-- Player 2 -->
+        <div class="player-card-horizontal">
+          <span class="player-rank-badge">#2</span>
+          <div class="player-avatar-h" style="background: linear-gradient(135deg, #ff4655, #ff6b6b);">R</div>
+          <div class="player-name-h">Reaper</div>
+          <div class="player-team-h">Shadow Elite</div>
+          <div class="player-stat-h">
+            <div class="player-stat-value">1.38</div>
+            <div class="player-stat-label">K/D</div>
           </div>
-          <div class="player-game-badge">Duelist</div>
         </div>
-
-        <!-- Player Card 3 -->
-        <div class="player-card">
-          <div class="player-avatar" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">NH</div>
-          <div class="player-info">
-            <div class="player-name">Nathan "Blaze" Harris</div>
-            <div class="player-team">Titan Force</div>
-            <div class="player-stats-mini">
-              <div class="stat-item">
-                <span class="stat-label">K/D:</span>
-                <span class="stat-value">1.35</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">ACS:</span>
-                <span class="stat-value">264</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">HS%:</span>
-                <span class="stat-value">33%</span>
-              </div>
-            </div>
+        
+        <!-- Player 3 -->
+        <div class="player-card-horizontal">
+          <span class="player-rank-badge">#3</span>
+          <div class="player-avatar-h" style="background: linear-gradient(135deg, #0080ff, #00bfff);">T</div>
+          <div class="player-name-h">Turbo</div>
+          <div class="player-team-h">Supersonic Racers</div>
+          <div class="player-stat-h">
+            <div class="player-stat-value">24</div>
+            <div class="player-stat-label">Goals</div>
           </div>
-          <div class="player-game-badge">Duelist</div>
         </div>
-
-        <!-- Player Card 4 -->
-        <div class="player-card">
-          <div class="player-avatar" style="background: linear-gradient(135deg, #22c55e, #4ade80);">YT</div>
-          <div class="player-info">
-            <div class="player-name">Yuki "Storm" Tanaka</div>
-            <div class="player-team">Nova Vanguard</div>
-            <div class="player-stats-mini">
-              <div class="stat-item">
-                <span class="stat-label">K/D:</span>
-                <span class="stat-value">1.12</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">ACS:</span>
-                <span class="stat-value">198</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">HS%:</span>
-                <span class="stat-value">22%</span>
-              </div>
-            </div>
+        
+        <!-- Player 4 -->
+        <div class="player-card-horizontal">
+          <span class="player-rank-badge">#4</span>
+          <div class="player-avatar-h" style="background: linear-gradient(135deg, #e60012, #ff4444);">L</div>
+          <div class="player-name-h">Lightning</div>
+          <div class="player-team-h">Smash Masters</div>
+          <div class="player-stat-h">
+            <div class="player-stat-value">87%</div>
+            <div class="player-stat-label">Win Rate</div>
           </div>
-          <div class="player-game-badge">Controller</div>
+        </div>
+        
+        <!-- Player 5 -->
+        <div class="player-card-horizontal">
+          <span class="player-rank-badge">#5</span>
+          <div class="player-avatar-h" style="background: linear-gradient(135deg, #ffd700, #ffaa00);">B</div>
+          <div class="player-name-h">Blaze</div>
+          <div class="player-team-h">Titan Force</div>
+          <div class="player-stat-h">
+            <div class="player-stat-value">1.35</div>
+            <div class="player-stat-label">K/D</div>
+          </div>
         </div>
       </div>
 
-      <!-- Detailed Stats Section -->
-      <div class="stats-section">
-        <h3 class="stats-title">Tournament Leaders</h3>
-        <div class="stats-table">
-          <div class="stats-row">
-            <span class="stats-row-label">Most Kills</span>
-            <span class="stats-row-value">Phantom • 187</span>
+      <!-- Leaderboards -->
+      <div class="section-header">
+        <span class="section-title">Leaderboards</span>
+      </div>
+      
+      <div class="leaderboard-section">
+        <!-- Most Kills -->
+        <div class="leaderboard-card">
+          <div class="leaderboard-header">
+            <span class="leaderboard-title">Most Kills</span>
+            <span class="leaderboard-game">Valorant</span>
           </div>
-          <div class="stats-row">
-            <span class="stats-row-label">Highest K/D</span>
-            <span class="stats-row-value">Phantom • 1.42</span>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank gold">1</span>
+              <span class="leaderboard-dot" style="background: #00f0ff;"></span>
+              <span class="leaderboard-player">Phantom<span class="leaderboard-team-tag">NV</span></span>
+            </div>
+            <span class="leaderboard-value">187</span>
           </div>
-          <div class="stats-row">
-            <span class="stats-row-label">Most Aces</span>
-            <span class="stats-row-value">Reaper • 4</span>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">2</span>
+              <span class="leaderboard-dot" style="background: #ff4655;"></span>
+              <span class="leaderboard-player">Reaper<span class="leaderboard-team-tag">SE</span></span>
+            </div>
+            <span class="leaderboard-value">172</span>
           </div>
-          <div class="stats-row">
-            <span class="stats-row-label">Most Clutches</span>
-            <span class="stats-row-value">Blaze • 12</span>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">3</span>
+              <span class="leaderboard-dot" style="background: #ffd700;"></span>
+              <span class="leaderboard-player">Blaze<span class="leaderboard-team-tag">TF</span></span>
+            </div>
+            <span class="leaderboard-value">165</span>
           </div>
-          <div class="stats-row">
-            <span class="stats-row-label">Highest HS%</span>
-            <span class="stats-row-value">Blaze • 33%</span>
+        </div>
+        
+        <!-- Most Goals -->
+        <div class="leaderboard-card">
+          <div class="leaderboard-header">
+            <span class="leaderboard-title">Most Goals</span>
+            <span class="leaderboard-game">Rocket League</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank gold">1</span>
+              <span class="leaderboard-dot" style="background: #0080ff;"></span>
+              <span class="leaderboard-player">Turbo<span class="leaderboard-team-tag">SR</span></span>
+            </div>
+            <span class="leaderboard-value">24</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">2</span>
+              <span class="leaderboard-dot" style="background: #8b5cf6;"></span>
+              <span class="leaderboard-player">Flip<span class="leaderboard-team-tag">AE</span></span>
+            </div>
+            <span class="leaderboard-value">21</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">3</span>
+              <span class="leaderboard-dot" style="background: #22c55e;"></span>
+              <span class="leaderboard-player">Boost<span class="leaderboard-team-tag">BO</span></span>
+            </div>
+            <span class="leaderboard-value">18</span>
+          </div>
+        </div>
+        
+        <!-- Win Rate -->
+        <div class="leaderboard-card">
+          <div class="leaderboard-header">
+            <span class="leaderboard-title">Highest Win Rate</span>
+            <span class="leaderboard-game">Smash Bros</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank gold">1</span>
+              <span class="leaderboard-dot" style="background: #e60012;"></span>
+              <span class="leaderboard-player">Lightning<span class="leaderboard-team-tag">SM</span></span>
+            </div>
+            <span class="leaderboard-value">87%</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">2</span>
+              <span class="leaderboard-dot" style="background: #ff00aa;"></span>
+              <span class="leaderboard-player">Combo<span class="leaderboard-team-tag">KB</span></span>
+            </div>
+            <span class="leaderboard-value">82%</span>
+          </div>
+          <div class="leaderboard-row">
+            <div class="leaderboard-left">
+              <span class="leaderboard-rank">3</span>
+              <span class="leaderboard-dot" style="background: #22c55e;"></span>
+              <span class="leaderboard-player">Meteor<span class="leaderboard-team-tag">SC</span></span>
+            </div>
+            <span class="leaderboard-value">78%</span>
           </div>
         </div>
       </div>
@@ -215,6 +451,3 @@
   </div>
 </body>
 </html>
-
-
-
