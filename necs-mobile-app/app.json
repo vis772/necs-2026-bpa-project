@@ -26,8 +26,17 @@
       "package": "com.necs2026.mobile"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single",
+      "name": "NECS 2026",
+      "shortName": "NECS",
+      "description": "National Esports Championship Series 2026",
+      "backgroundColor": "#0a0a0f",
+      "themeColor": "#00f0ff"
+    },
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
-

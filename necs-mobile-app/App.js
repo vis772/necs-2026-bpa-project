@@ -1,100 +1,142 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar, View, Text, StyleSheet, Platform } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { View, StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { Colors } from './constants/theme';
-
-// Import Screens
+// Import screens
 import LiveScoresScreen from './screens/LiveScoresScreen';
 import PlayerStatsScreen from './screens/PlayerStatsScreen';
 import ReplaysScreen from './screens/ReplaysScreen';
 import BracketsScreen from './screens/BracketsScreen';
 import ChatScreen from './screens/ChatScreen';
 
+// Import theme
+import { Colors, Spacing, FontSizes } from './constants/theme';
+
 const Tab = createBottomTabNavigator();
+
+// Custom dark theme for navigation
+const NECSTheme = {
+  ...DefaultTheme,
+  dark: true,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: Colors.accentCyan,
+    background: '#000',
+    card: '#000',
+    text: Colors.textPrimary,
+    border: '#1a1a1a',
+    notification: Colors.statusLive,
+  },
+};
+
+const tabConfig = {
+  Scores: {
+    icon: 'football',
+    iconOutline: 'football-outline',
+  },
+  Stats: {
+    icon: 'stats-chart',
+    iconOutline: 'stats-chart-outline',
+  },
+  Watch: {
+    icon: 'play-circle',
+    iconOutline: 'play-circle-outline',
+  },
+  Brackets: {
+    icon: 'git-network',
+    iconOutline: 'git-network-outline',
+  },
+  Chat: {
+    icon: 'chatbubbles',
+    iconOutline: 'chatbubbles-outline',
+  },
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <NavigationContainer
-        theme={{
-          dark: true,
-          colors: {
-            primary: Colors.accentCyan,
-            background: Colors.bgPrimary,
-            card: Colors.bgSecondary,
-            text: Colors.textPrimary,
-            border: Colors.borderDefault,
-            notification: Colors.statusLive,
-          },
-        }}
-      >
+    <SafeAreaProvider>
+      <StatusBar barStyle="light-content" backgroundColor="#000" />
+      <NavigationContainer theme={NECSTheme}>
         <Tab.Navigator
+          initialRouteName="Scores"
           screenOptions={({ route }) => ({
             headerShown: false,
             tabBarStyle: styles.tabBar,
             tabBarActiveTintColor: Colors.accentCyan,
             tabBarInactiveTintColor: Colors.textMuted,
-            tabBarLabelStyle: styles.tabBarLabel,
+            tabBarLabelStyle: styles.tabLabel,
             tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-
-              switch (route.name) {
-                case 'Scores':
-                  iconName = focused ? 'trophy' : 'trophy-outline';
-                  break;
-                case 'Players':
-                  iconName = focused ? 'people' : 'people-outline';
-                  break;
-                case 'Replays':
-                  iconName = focused ? 'play-circle' : 'play-circle-outline';
-                  break;
-                case 'Brackets':
-                  iconName = focused ? 'git-network' : 'git-network-outline';
-                  break;
-                case 'Chat':
-                  iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-                  break;
-                default:
-                  iconName = 'ellipse';
-              }
-
-              return <Ionicons name={iconName} size={22} color={color} />;
+              const config = tabConfig[route.name];
+              const iconName = focused ? config.icon : config.iconOutline;
+              return (
+                <View style={styles.tabIconWrapper}>
+                  <Ionicons name={iconName} size={22} color={color} />
+                </View>
+              );
             },
           })}
         >
-          <Tab.Screen name="Scores" component={LiveScoresScreen} />
-          <Tab.Screen name="Players" component={PlayerStatsScreen} />
-          <Tab.Screen name="Replays" component={ReplaysScreen} />
-          <Tab.Screen name="Brackets" component={BracketsScreen} />
-          <Tab.Screen name="Chat" component={ChatScreen} />
+          <Tab.Screen
+            name="Scores"
+            component={LiveScoresScreen}
+            options={{
+              tabBarBadge: 2,
+              tabBarBadgeStyle: styles.badge,
+            }}
+          />
+          <Tab.Screen
+            name="Stats"
+            component={PlayerStatsScreen}
+          />
+          <Tab.Screen
+            name="Watch"
+            component={ReplaysScreen}
+          />
+          <Tab.Screen
+            name="Brackets"
+            component={BracketsScreen}
+          />
+          <Tab.Screen
+            name="Chat"
+            component={ChatScreen}
+            options={{
+              tabBarBadge: 12,
+              tabBarBadgeStyle: styles.badge,
+            }}
+          />
         </Tab.Navigator>
       </NavigationContainer>
-    </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.bgPrimary,
-  },
   tabBar: {
-    backgroundColor: Colors.bgSecondary,
-    borderTopColor: Colors.borderDefault,
+    backgroundColor: '#000',
+    borderTopColor: '#1a1a1a',
     borderTopWidth: 1,
-    height: 85,
+    height: Platform.OS === 'ios' ? 84 : 60,
     paddingTop: 8,
-    paddingBottom: 25,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 8,
   },
-  tabBarLabel: {
+  tabLabel: {
     fontSize: 10,
-    fontWeight: '600',
-    marginTop: 4,
+    fontWeight: '500',
+    marginTop: 2,
+  },
+  tabIconWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badge: {
+    backgroundColor: Colors.statusLive,
+    fontSize: 10,
+    fontWeight: '700',
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
   },
 });
-

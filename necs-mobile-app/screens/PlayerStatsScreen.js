@@ -10,125 +10,238 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, FontSizes, BorderRadius } from '../constants/theme';
-import ScreenHeader from '../components/ScreenHeader';
-import GameTabs from '../components/GameTabs';
 
-const playersData = {
-  'Valorant': [
-    {
-      id: 1,
-      name: 'Alex "Phantom" Chen',
-      team: 'Nova Vanguard',
-      role: 'Duelist',
-      initials: 'AC',
-      stats: { kd: '1.42', acs: '287', hs: '31%' },
-      color: ['#00f0ff', '#8b5cf6'],
-    },
-    {
-      id: 2,
-      name: 'Ryan "Reaper" Kim',
-      team: 'Shadow Elite',
-      role: 'Duelist',
-      initials: 'RK',
-      stats: { kd: '1.38', acs: '271', hs: '28%' },
-      color: ['#ff4655', '#ff6b6b'],
-    },
-    {
-      id: 3,
-      name: 'Nathan "Blaze" Harris',
-      team: 'Titan Force',
-      role: 'Duelist',
-      initials: 'NH',
-      stats: { kd: '1.35', acs: '264', hs: '33%' },
-      color: ['#8b5cf6', '#a78bfa'],
-    },
-    {
-      id: 4,
-      name: 'Yuki "Storm" Tanaka',
-      team: 'Nova Vanguard',
-      role: 'Controller',
-      initials: 'YT',
-      stats: { kd: '1.12', acs: '198', hs: '22%' },
-      color: ['#22c55e', '#4ade80'],
-    },
-  ],
-  'Rocket League': [
-    {
-      id: 5,
-      name: 'Jake "Turbo" Reynolds',
-      team: 'Supersonic Racers',
-      role: 'Striker',
-      initials: 'JR',
-      stats: { goals: '24', assists: '18', saves: '12' },
-      color: ['#0080ff', '#60a5fa'],
-    },
-  ],
-  'Smash': [
-    {
-      id: 6,
-      name: 'Leo "Lightning" Nakamura',
-      team: 'Smash Masters',
-      role: 'Main: Fox',
-      initials: 'LN',
-      stats: { winrate: '87%', stocks: '2.4', ko: '156' },
-      color: ['#e60012', '#ff4444'],
-    },
-  ],
-};
+const filters = ['All', 'Valorant', 'Rocket League', 'Smash Bros'];
 
-const leaderboardData = [
-  { label: 'Most Kills', value: 'Phantom • 187' },
-  { label: 'Highest K/D', value: 'Phantom • 1.42' },
-  { label: 'Most Aces', value: 'Reaper • 4' },
-  { label: 'Most Clutches', value: 'Blaze • 12' },
-  { label: 'Highest HS%', value: 'Blaze • 33%' },
+const topPlayers = [
+  {
+    id: 1,
+    rank: 1,
+    name: 'Alex "Phantom" Chen',
+    team: 'Nova Vanguard',
+    teamAbbr: 'NV',
+    teamColor: '#00f0ff',
+    game: 'Valorant',
+    mainStat: '1.42',
+    mainStatLabel: 'K/D',
+    stats: [
+      { label: 'ACS', value: '287' },
+      { label: 'HS%', value: '31%' },
+      { label: 'FK', value: '45' },
+    ],
+    trend: 'up',
+    change: '+2',
+  },
+  {
+    id: 2,
+    rank: 2,
+    name: 'Ryan "Reaper" Kim',
+    team: 'Shadow Elite',
+    teamAbbr: 'SE',
+    teamColor: '#ff4655',
+    game: 'Valorant',
+    mainStat: '1.38',
+    mainStatLabel: 'K/D',
+    stats: [
+      { label: 'ACS', value: '271' },
+      { label: 'HS%', value: '28%' },
+      { label: 'FK', value: '38' },
+    ],
+    trend: 'same',
+    change: '-',
+  },
+  {
+    id: 3,
+    rank: 3,
+    name: 'Jake "Turbo" Reynolds',
+    team: 'Supersonic Racers',
+    teamAbbr: 'SR',
+    teamColor: '#0080ff',
+    game: 'Rocket League',
+    mainStat: '24',
+    mainStatLabel: 'Goals',
+    stats: [
+      { label: 'Assists', value: '18' },
+      { label: 'Saves', value: '12' },
+      { label: 'Shots', value: '58' },
+    ],
+    trend: 'up',
+    change: '+1',
+  },
+  {
+    id: 4,
+    rank: 4,
+    name: 'Leo "Lightning" Nakamura',
+    team: 'Smash Masters',
+    teamAbbr: 'SM',
+    teamColor: '#e60012',
+    game: 'Smash Bros',
+    mainStat: '87%',
+    mainStatLabel: 'Win Rate',
+    stats: [
+      { label: 'KOs', value: '156' },
+      { label: 'Stocks', value: '2.4' },
+      { label: 'Games', value: '24' },
+    ],
+    trend: 'up',
+    change: '+3',
+  },
 ];
+
+const leaderboards = [
+  {
+    title: 'Most Kills',
+    game: 'Valorant',
+    color: '#ff4655',
+    players: [
+      { rank: 1, name: 'Phantom', value: '187' },
+      { rank: 2, name: 'Reaper', value: '172' },
+      { rank: 3, name: 'Blaze', value: '165' },
+    ],
+  },
+  {
+    title: 'Most Goals',
+    game: 'Rocket League',
+    color: '#0080ff',
+    players: [
+      { rank: 1, name: 'Turbo', value: '24' },
+      { rank: 2, name: 'Flip', value: '21' },
+      { rank: 3, name: 'Boost', value: '18' },
+    ],
+  },
+  {
+    title: 'Highest Win %',
+    game: 'Smash Bros',
+    color: '#e60012',
+    players: [
+      { rank: 1, name: 'Lightning', value: '87%' },
+      { rank: 2, name: 'Combo', value: '82%' },
+      { rank: 3, name: 'Meteor', value: '78%' },
+    ],
+  },
+];
+
+function FilterPill({ label, isActive, onPress }) {
+  return (
+    <TouchableOpacity
+      style={[styles.filterPill, isActive && styles.filterPillActive]}
+      onPress={onPress}
+    >
+      <Text style={[styles.filterPillText, isActive && styles.filterPillTextActive]}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function TeamLogo({ abbr, color, size = 40 }) {
+  return (
+    <View style={[styles.teamLogo, { width: size, height: size, backgroundColor: color }]}>
+      <Text style={[styles.teamLogoText, { fontSize: size * 0.35 }]}>{abbr}</Text>
+    </View>
+  );
+}
 
 function PlayerCard({ player }) {
   return (
-    <TouchableOpacity style={styles.playerCard}>
-      <View style={[styles.playerAvatar, { backgroundColor: player.color[0] }]}>
-        <Text style={styles.playerInitials}>{player.initials}</Text>
-      </View>
-      <View style={styles.playerInfo}>
-        <Text style={styles.playerName}>{player.name}</Text>
-        <Text style={styles.playerTeam}>{player.team}</Text>
-        <View style={styles.statsRow}>
-          {Object.entries(player.stats).map(([key, value]) => (
-            <View key={key} style={styles.statItem}>
-              <Text style={styles.statLabel}>{key.toUpperCase()}:</Text>
-              <Text style={styles.statValue}>{value}</Text>
-            </View>
-          ))}
+    <TouchableOpacity style={styles.playerCard} activeOpacity={0.7}>
+      <View style={styles.playerHeader}>
+        <View style={styles.rankBadge}>
+          <Text style={styles.rankText}>#{player.rank}</Text>
+        </View>
+        <TeamLogo abbr={player.teamAbbr} color={player.teamColor} size={44} />
+        <View style={styles.playerInfo}>
+          <Text style={styles.playerName}>{player.name}</Text>
+          <Text style={styles.playerTeam}>{player.team}</Text>
+        </View>
+        <View style={styles.mainStatBox}>
+          <Text style={styles.mainStatValue}>{player.mainStat}</Text>
+          <Text style={styles.mainStatLabel}>{player.mainStatLabel}</Text>
         </View>
       </View>
-      <View style={styles.roleBadge}>
-        <Text style={styles.roleText}>{player.role}</Text>
+      
+      <View style={styles.statsRow}>
+        {player.stats.map((stat, index) => (
+          <View key={index} style={styles.statItem}>
+            <Text style={styles.statValue}>{stat.value}</Text>
+            <Text style={styles.statLabel}>{stat.label}</Text>
+          </View>
+        ))}
+        <View style={styles.trendItem}>
+          {player.trend === 'up' && (
+            <Ionicons name="arrow-up" size={16} color={Colors.statusCompleted} />
+          )}
+          {player.trend === 'down' && (
+            <Ionicons name="arrow-down" size={16} color={Colors.statusLive} />
+          )}
+          {player.trend === 'same' && (
+            <Ionicons name="remove" size={16} color={Colors.textMuted} />
+          )}
+          <Text style={[
+            styles.changeText,
+            player.trend === 'up' && { color: Colors.statusCompleted },
+            player.trend === 'down' && { color: Colors.statusLive },
+          ]}>{player.change}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 }
 
-export default function PlayerStatsScreen() {
-  const [activeGame, setActiveGame] = useState('Valorant');
-  const [searchQuery, setSearchQuery] = useState('');
-  const players = playersData[activeGame] || [];
-
-  const filteredPlayers = players.filter((player) =>
-    player.name.toLowerCase().includes(searchQuery.toLowerCase())
+function LeaderboardCard({ leaderboard }) {
+  return (
+    <View style={styles.leaderboardCard}>
+      <View style={[styles.leaderboardHeader, { backgroundColor: leaderboard.color }]}>
+        <Text style={styles.leaderboardGame}>{leaderboard.game}</Text>
+        <Text style={styles.leaderboardTitle}>{leaderboard.title}</Text>
+      </View>
+      <View style={styles.leaderboardContent}>
+        {leaderboard.players.map((player, index) => (
+          <View key={index} style={styles.leaderboardRow}>
+            <View style={styles.leaderboardLeft}>
+              <View style={[
+                styles.leaderboardRank,
+                index === 0 && styles.leaderboardRankFirst
+              ]}>
+                <Text style={[
+                  styles.leaderboardRankText,
+                  index === 0 && styles.leaderboardRankTextFirst
+                ]}>{player.rank}</Text>
+              </View>
+              <Text style={styles.leaderboardName}>{player.name}</Text>
+            </View>
+            <Text style={styles.leaderboardValue}>{player.value}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
   );
+}
+
+export default function PlayerStatsScreen() {
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredPlayers = topPlayers.filter(player => {
+    const matchesFilter = activeFilter === 'All' || player.game === activeFilter;
+    const matchesSearch = player.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader
-        title="Player"
-        highlightedWord="Stats"
-        subtitle="Top performers this tournament"
-      />
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.headerButton}>
+          <Ionicons name="search" size={22} color={Colors.textPrimary} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Stats</Text>
+        <TouchableOpacity style={styles.headerButton}>
+          <Ionicons name="options-outline" size={22} color={Colors.textPrimary} />
+        </TouchableOpacity>
+      </View>
 
-      {/* Search Bar */}
+      {/* Search */}
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color={Colors.textMuted} style={styles.searchIcon} />
+        <Ionicons name="search" size={18} color={Colors.textMuted} />
         <TextInput
           style={styles.searchInput}
           placeholder="Search players..."
@@ -138,36 +251,54 @@ export default function PlayerStatsScreen() {
         />
       </View>
 
-      <GameTabs activeTab={activeGame} onTabPress={setActiveGame} />
+      {/* Filters */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.filtersRow}
+      >
+        {filters.map(filter => (
+          <FilterPill
+            key={filter}
+            label={filter}
+            isActive={activeFilter === filter}
+            onPress={() => setActiveFilter(filter)}
+          />
+        ))}
+      </ScrollView>
 
       <ScrollView
-        style={styles.scrollView}
+        style={styles.content}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
       >
-        {/* Players List */}
-        {filteredPlayers.map((player) => (
-          <PlayerCard key={player.id} player={player} />
-        ))}
-
-        {/* Leaderboard Section */}
-        <View style={styles.leaderboardSection}>
-          <Text style={styles.sectionTitle}>Tournament Leaders</Text>
-          <View style={styles.leaderboardCard}>
-            {leaderboardData.map((item, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.leaderboardRow,
-                  index < leaderboardData.length - 1 && styles.leaderboardRowBorder,
-                ]}
-              >
-                <Text style={styles.leaderboardLabel}>{item.label}</Text>
-                <Text style={styles.leaderboardValue}>{item.value}</Text>
-              </View>
-            ))}
+        {/* Top Players */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>TOP PLAYERS</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See All</Text>
+            </TouchableOpacity>
           </View>
+          {filteredPlayers.map(player => (
+            <PlayerCard key={player.id} player={player} />
+          ))}
         </View>
+
+        {/* Leaderboards */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitlePadded}>LEADERBOARDS</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.leaderboardsRow}
+          >
+            {leaderboards.map((board, index) => (
+              <LeaderboardCard key={index} leaderboard={board} />
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -176,57 +307,133 @@ export default function PlayerStatsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.bgPrimary,
+    backgroundColor: '#000',
   },
-  scrollView: {
-    flex: 1,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
   },
-  content: {
-    paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing['2xl'],
+  headerButton: {
+    padding: Spacing.sm,
+  },
+  headerTitle: {
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
+    color: Colors.textPrimary,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.bgTertiary,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
-    marginHorizontal: Spacing.lg,
-    marginBottom: Spacing.lg,
-    paddingHorizontal: Spacing.base,
-  },
-  searchIcon: {
-    marginRight: Spacing.sm,
+    backgroundColor: '#111',
+    marginHorizontal: Spacing.md,
+    marginVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    borderRadius: BorderRadius.md,
+    gap: Spacing.sm,
   },
   searchInput: {
     flex: 1,
-    paddingVertical: Spacing.md,
-    fontSize: FontSizes.md,
+    paddingVertical: Spacing.sm,
+    fontSize: FontSizes.sm,
     color: Colors.textPrimary,
   },
-  playerCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.bgTertiary,
-    borderRadius: BorderRadius.xl,
+  filtersRow: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.sm,
+  },
+  filterPill: {
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    backgroundColor: '#111',
+    borderRadius: BorderRadius.full,
     borderWidth: 1,
-    borderColor: Colors.borderDefault,
-    padding: Spacing.base,
+    borderColor: '#222',
+  },
+  filterPillActive: {
+    backgroundColor: Colors.accentCyan,
+    borderColor: Colors.accentCyan,
+  },
+  filterPillText: {
+    fontSize: FontSizes.sm,
+    fontWeight: '500',
+    color: Colors.textMuted,
+  },
+  filterPillTextActive: {
+    color: '#000',
+    fontWeight: '600',
+  },
+  content: {
+    flex: 1,
+  },
+  section: {
+    paddingTop: Spacing.lg,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Spacing.md,
     marginBottom: Spacing.md,
   },
-  playerAvatar: {
-    width: 56,
-    height: 56,
-    borderRadius: BorderRadius.lg,
+  sectionTitle: {
+    fontSize: FontSizes.xs,
+    fontWeight: '700',
+    color: Colors.textMuted,
+    letterSpacing: 1,
+  },
+  sectionTitlePadded: {
+    fontSize: FontSizes.xs,
+    fontWeight: '700',
+    color: Colors.textMuted,
+    letterSpacing: 1,
+    paddingHorizontal: Spacing.md,
+    marginBottom: Spacing.md,
+  },
+  seeAllText: {
+    fontSize: FontSizes.sm,
+    color: Colors.accentCyan,
+    fontWeight: '600',
+  },
+  teamLogo: {
+    borderRadius: BorderRadius.sm,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: Spacing.md,
   },
-  playerInitials: {
-    fontSize: FontSizes.xl,
+  teamLogoText: {
     fontWeight: '700',
-    color: Colors.bgPrimary,
+    color: '#000',
+  },
+  playerCard: {
+    backgroundColor: '#111',
+    marginHorizontal: Spacing.md,
+    marginBottom: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+  },
+  playerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    marginBottom: Spacing.md,
+  },
+  rankBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#222',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rankText: {
+    fontSize: FontSizes.xs,
+    fontWeight: '700',
+    color: Colors.accentCyan,
   },
   playerInfo: {
     flex: 1,
@@ -237,75 +444,119 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   playerTeam: {
-    fontSize: FontSizes.sm,
+    fontSize: FontSizes.xs,
     color: Colors.textMuted,
-    marginBottom: Spacing.xs,
+    marginTop: 2,
+  },
+  mainStatBox: {
+    alignItems: 'flex-end',
+  },
+  mainStatValue: {
+    fontSize: FontSizes['2xl'],
+    fontWeight: '700',
+    color: Colors.accentCyan,
+  },
+  mainStatLabel: {
+    fontSize: FontSizes.xs,
+    color: Colors.textMuted,
   },
   statsRow: {
     flexDirection: 'row',
-    gap: Spacing.md,
+    backgroundColor: '#0a0a0a',
+    borderRadius: BorderRadius.sm,
+    padding: Spacing.sm,
   },
   statItem: {
-    flexDirection: 'row',
+    flex: 1,
     alignItems: 'center',
-    gap: Spacing.xs,
+  },
+  statValue: {
+    fontSize: FontSizes.md,
+    fontWeight: '600',
+    color: Colors.textPrimary,
   },
   statLabel: {
     fontSize: FontSizes.xs,
     color: Colors.textMuted,
+    marginTop: 2,
   },
-  statValue: {
-    fontSize: FontSizes.xs,
-    fontWeight: '600',
-    color: Colors.accentCyan,
+  trendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    paddingHorizontal: Spacing.sm,
   },
-  roleBadge: {
-    backgroundColor: Colors.bgElevated,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
-  },
-  roleText: {
-    fontSize: FontSizes.xs,
+  changeText: {
+    fontSize: FontSizes.sm,
     fontWeight: '600',
     color: Colors.textMuted,
-    textTransform: 'uppercase',
   },
-  leaderboardSection: {
-    marginTop: Spacing.lg,
-  },
-  sectionTitle: {
-    fontSize: FontSizes.md,
-    fontWeight: '600',
-    color: Colors.textSecondary,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: Spacing.md,
+  leaderboardsRow: {
+    paddingHorizontal: Spacing.md,
+    gap: Spacing.md,
   },
   leaderboardCard: {
-    backgroundColor: Colors.bgTertiary,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
+    width: 200,
+    backgroundColor: '#111',
+    borderRadius: BorderRadius.md,
     overflow: 'hidden',
+  },
+  leaderboardHeader: {
+    padding: Spacing.md,
+  },
+  leaderboardGame: {
+    fontSize: FontSizes.xs,
+    fontWeight: '600',
+    color: 'rgba(0,0,0,0.6)',
+    textTransform: 'uppercase',
+  },
+  leaderboardTitle: {
+    fontSize: FontSizes.md,
+    fontWeight: '700',
+    color: '#000',
+    marginTop: 2,
+  },
+  leaderboardContent: {
+    padding: Spacing.sm,
   },
   leaderboardRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    padding: Spacing.md,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.sm,
   },
-  leaderboardRowBorder: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderDefault,
+  leaderboardLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
   },
-  leaderboardLabel: {
-    fontSize: FontSizes.sm,
+  leaderboardRank: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#222',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  leaderboardRankFirst: {
+    backgroundColor: Colors.accentYellow,
+  },
+  leaderboardRankText: {
+    fontSize: FontSizes.xs,
+    fontWeight: '700',
     color: Colors.textMuted,
+  },
+  leaderboardRankTextFirst: {
+    color: '#000',
+  },
+  leaderboardName: {
+    fontSize: FontSizes.sm,
+    color: Colors.textPrimary,
   },
   leaderboardValue: {
     fontSize: FontSizes.sm,
-    fontWeight: '600',
-    color: Colors.textPrimary,
+    fontWeight: '700',
+    color: Colors.accentCyan,
   },
 });
-

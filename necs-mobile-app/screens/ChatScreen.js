@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,176 +12,256 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, FontSizes, BorderRadius } from '../constants/theme';
-import ScreenHeader from '../components/ScreenHeader';
 
-const channels = ['#general', '#valorant', '#rocketleague', '#smash'];
+const channels = [
+  { id: 'general', name: 'General Chat', icon: 'chatbubbles', unread: 12, online: '2.4K' },
+  { id: 'valorant', name: 'Valorant', icon: 'game-controller', unread: 5, online: '1.8K' },
+  { id: 'rocket', name: 'Rocket League', icon: 'game-controller', unread: 0, online: '892' },
+  { id: 'smash', name: 'Smash Bros', icon: 'game-controller', unread: 3, online: '756' },
+  { id: 'predictions', name: 'Predictions', icon: 'trophy', unread: 8, online: '1.2K' },
+];
 
-const messagesData = [
+const messages = [
   {
     id: 1,
-    author: 'MaxGamer',
-    initials: 'MG',
-    color: '#ff4655',
-    time: '2:34 PM',
-    badge: null,
-    message: 'That Phantom clutch was absolutely insane! 🔥',
+    user: 'NECS_Official',
+    avatar: '🏆',
+    avatarColor: '#ffd700',
+    message: '🎉 REMINDER: Grand Finals start at 6PM EST! Don\'t miss it! #NECS2026',
+    time: '5m',
+    likes: 156,
+    isPinned: true,
+    isVerified: true,
   },
   {
     id: 2,
-    author: 'ShadowFan92',
-    initials: 'SF',
-    color: '#22c55e',
-    time: '2:35 PM',
-    badge: 'VIP',
-    message: "Nova Vanguard is looking unstoppable today. Their coordination is on another level!",
+    user: 'GamingPro2026',
+    avatar: '🎮',
+    avatarColor: '#00f0ff',
+    message: 'This tournament is insane! Nova Vanguard looking unstoppable right now 🔥',
+    time: '2m',
+    likes: 24,
+    isVerified: false,
   },
   {
     id: 3,
-    author: 'EsportsPro',
-    initials: 'EP',
-    color: '#8b5cf6',
-    time: '2:36 PM',
-    badge: null,
-    message: 'Who else is hyped for the Rocket League semifinals later? 🚀',
+    user: 'EsportsEnthusiast',
+    avatar: '⚡',
+    avatarColor: '#8b5cf6',
+    message: 'Anyone else think Phantom is the MVP so far? That 4K ace was legendary!',
+    time: '8m',
+    likes: 42,
+    isVerified: false,
   },
   {
     id: 4,
-    author: 'TechNinja',
-    initials: 'TN',
-    color: '#f59e0b',
-    time: '2:37 PM',
-    badge: 'MOD',
-    badgeColor: Colors.accentCyan,
-    message: "Remember to keep the chat respectful everyone! Let's enjoy the matches together 🎮",
+    user: 'StreamerSam',
+    avatar: '📺',
+    avatarColor: '#ff4655',
+    message: 'Production quality has been amazing this year. Great job to the whole team! 👏',
+    time: '12m',
+    likes: 67,
+    isVerified: true,
   },
   {
     id: 5,
-    author: 'ArenaKing',
-    initials: 'AK',
-    color: '#ec4899',
-    time: '2:38 PM',
-    badge: null,
-    message: 'First time at NECS and this venue is incredible! Nashville knows how to do esports!',
+    user: 'NewViewer123',
+    avatar: '👋',
+    avatarColor: '#22c55e',
+    message: 'First time watching NECS - this is so much better than I expected!',
+    time: '15m',
+    likes: 31,
+    isVerified: false,
   },
   {
     id: 6,
-    author: 'ValorantFan',
-    initials: 'VF',
-    color: '#06b6d4',
-    time: '2:39 PM',
-    badge: null,
-    message: "Storm's controller plays are so clean. That smoke timing was perfect!",
-  },
-  {
-    id: 7,
-    author: 'GamerLegend',
-    initials: 'GL',
-    color: '#10b981',
-    time: '2:40 PM',
-    badge: null,
-    message: "Can't wait for the Smash finals tomorrow. Lightning vs Combo is going to be epic! 💥",
-  },
-  {
-    id: 8,
-    author: 'RocketPower',
-    initials: 'RP',
-    color: '#f97316',
-    time: '2:41 PM',
-    badge: null,
-    message: 'Supersonic Racers all the way! Their aerial game is unmatched 🚗💨',
+    user: 'CompetitiveGamer',
+    avatar: '🎯',
+    avatarColor: '#f59e0b',
+    message: 'The bracket reset potential is real. Shadow Elite could come back!',
+    time: '18m',
+    likes: 19,
+    isVerified: false,
   },
 ];
 
-function ChannelTab({ channel, isActive, onPress }) {
+const quickReactions = ['🔥', '👏', '💯', '🎉', '❤️', '😮'];
+
+function ChannelCard({ channel, isActive, onPress }) {
   return (
     <TouchableOpacity
-      style={[styles.channelTab, isActive && styles.channelTabActive]}
+      style={[styles.channelCard, isActive && styles.channelCardActive]}
       onPress={onPress}
     >
-      <Text style={[styles.channelText, isActive && styles.channelTextActive]}>
-        {channel}
-      </Text>
+      <View style={[styles.channelIcon, isActive && styles.channelIconActive]}>
+        <Ionicons name={channel.icon} size={18} color={isActive ? '#000' : Colors.textMuted} />
+      </View>
+      <View style={styles.channelInfo}>
+        <Text style={[styles.channelName, isActive && styles.channelNameActive]}>
+          #{channel.name}
+        </Text>
+        <Text style={styles.channelOnline}>{channel.online} online</Text>
+      </View>
+      {channel.unread > 0 && (
+        <View style={styles.unreadBadge}>
+          <Text style={styles.unreadText}>{channel.unread}</Text>
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
 
-function Message({ msg }) {
+function MessageCard({ message }) {
+  const [liked, setLiked] = useState(false);
+
   return (
-    <View style={styles.message}>
-      <View style={[styles.messageAvatar, { backgroundColor: msg.color }]}>
-        <Text style={styles.messageInitials}>{msg.initials}</Text>
-      </View>
-      <View style={styles.messageContent}>
-        <View style={styles.messageHeader}>
-          <Text style={styles.messageAuthor}>{msg.author}</Text>
-          {msg.badge && (
-            <View style={[styles.messageBadge, msg.badgeColor && { backgroundColor: msg.badgeColor }]}>
-              <Text style={styles.messageBadgeText}>{msg.badge}</Text>
-            </View>
-          )}
-          <Text style={styles.messageTime}>{msg.time}</Text>
+    <View style={[styles.messageCard, message.isPinned && styles.pinnedMessage]}>
+      {message.isPinned && (
+        <View style={styles.pinnedBadge}>
+          <Ionicons name="pin" size={12} color={Colors.accentCyan} />
+          <Text style={styles.pinnedText}>Pinned</Text>
         </View>
-        <Text style={styles.messageText}>{msg.message}</Text>
+      )}
+      <View style={styles.messageHeader}>
+        <View style={[styles.avatar, { backgroundColor: message.avatarColor }]}>
+          <Text style={styles.avatarEmoji}>{message.avatar}</Text>
+        </View>
+        <View style={styles.messageUserInfo}>
+          <View style={styles.userNameRow}>
+            <Text style={styles.userName}>{message.user}</Text>
+            {message.isVerified && (
+              <Ionicons name="checkmark-circle" size={14} color={Colors.accentCyan} />
+            )}
+            <Text style={styles.messageTime}>{message.time}</Text>
+          </View>
+        </View>
+      </View>
+      <Text style={styles.messageText}>{message.message}</Text>
+      <View style={styles.messageActions}>
+        <TouchableOpacity
+          style={[styles.likeButton, liked && styles.likeButtonActive]}
+          onPress={() => setLiked(!liked)}
+        >
+          <Ionicons
+            name={liked ? 'heart' : 'heart-outline'}
+            size={16}
+            color={liked ? Colors.statusLive : Colors.textMuted}
+          />
+          <Text style={[styles.likeCount, liked && styles.likeCountActive]}>
+            {message.likes + (liked ? 1 : 0)}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.replyButton}>
+          <Ionicons name="chatbubble-outline" size={14} color={Colors.textMuted} />
+          <Text style={styles.replyText}>Reply</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.shareButton}>
+          <Ionicons name="share-outline" size={14} color={Colors.textMuted} />
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 export default function ChatScreen() {
-  const [activeChannel, setActiveChannel] = useState('#general');
-  const [inputMessage, setInputMessage] = useState('');
+  const [activeChannel, setActiveChannel] = useState('general');
+  const [messageText, setMessageText] = useState('');
+  const scrollRef = useRef(null);
+
+  const currentChannel = channels.find(c => c.id === activeChannel);
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader
-        title="Community"
-        highlightedWord="Chat"
-        subtitle="1,247 fans online"
-      />
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.headerButton}>
+          <Ionicons name="menu" size={24} color={Colors.textPrimary} />
+        </TouchableOpacity>
+        <View style={styles.headerCenter}>
+          <Text style={styles.headerTitle}>#{currentChannel?.name}</Text>
+          <View style={styles.onlineIndicator}>
+            <View style={styles.onlineDot} />
+            <Text style={styles.onlineText}>{currentChannel?.online} online</Text>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.headerButton}>
+          <Ionicons name="people-outline" size={22} color={Colors.textPrimary} />
+        </TouchableOpacity>
+      </View>
 
       {/* Channel Tabs */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.channelTabs}
+        contentContainerStyle={styles.channelsRow}
       >
-        {channels.map((channel) => (
-          <ChannelTab
-            key={channel}
+        {channels.map(channel => (
+          <ChannelCard
+            key={channel.id}
             channel={channel}
-            isActive={activeChannel === channel}
-            onPress={() => setActiveChannel(channel)}
+            isActive={activeChannel === channel.id}
+            onPress={() => setActiveChannel(channel.id)}
           />
         ))}
       </ScrollView>
 
+      {/* Quick Reactions */}
+      <View style={styles.quickReactionsRow}>
+        {quickReactions.map((emoji, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.quickReactionButton}
+            onPress={() => setMessageText(prev => prev + emoji)}
+          >
+            <Text style={styles.quickReactionEmoji}>{emoji}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <KeyboardAvoidingView
-        style={styles.chatContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={100}
+        style={styles.keyboardView}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={90}
       >
         {/* Messages */}
         <ScrollView
+          ref={scrollRef}
           style={styles.messagesContainer}
           contentContainerStyle={styles.messagesContent}
           showsVerticalScrollIndicator={false}
         >
-          {messagesData.map((msg) => (
-            <Message key={msg.id} msg={msg} />
+          {messages.map(message => (
+            <MessageCard key={message.id} message={message} />
           ))}
         </ScrollView>
 
         {/* Input */}
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Type a message..."
-            placeholderTextColor={Colors.textMuted}
-            value={inputMessage}
-            onChangeText={setInputMessage}
-          />
-          <TouchableOpacity style={styles.sendButton}>
-            <Ionicons name="send" size={20} color={Colors.bgPrimary} />
+          <TouchableOpacity style={styles.attachButton}>
+            <Ionicons name="add-circle" size={28} color={Colors.textMuted} />
+          </TouchableOpacity>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.textInput}
+              placeholder={`Message #${currentChannel?.name}`}
+              placeholderTextColor={Colors.textMuted}
+              value={messageText}
+              onChangeText={setMessageText}
+              multiline
+            />
+            <TouchableOpacity style={styles.emojiButton}>
+              <Ionicons name="happy-outline" size={22} color={Colors.textMuted} />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={[styles.sendButton, messageText.trim() && styles.sendButtonActive]}
+            disabled={!messageText.trim()}
+          >
+            <Ionicons
+              name="send"
+              size={18}
+              color={messageText.trim() ? '#000' : Colors.textMuted}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -192,123 +272,271 @@ export default function ChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.bgPrimary,
+    backgroundColor: '#000',
   },
-  channelTabs: {
-    paddingHorizontal: Spacing.base,
-    paddingBottom: Spacing.base,
-    gap: Spacing.xs,
-  },
-  channelTab: {
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
-    backgroundColor: Colors.bgTertiary,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
-    marginRight: Spacing.xs,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
   },
-  channelTabActive: {
-    backgroundColor: Colors.accentCyan,
-    borderColor: Colors.accentCyan,
+  headerButton: {
+    padding: Spacing.sm,
   },
-  channelText: {
-    fontSize: FontSizes.sm,
+  headerCenter: {
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: FontSizes.md,
     fontWeight: '600',
+    color: Colors.textPrimary,
+  },
+  onlineIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 2,
+  },
+  onlineDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: Colors.statusCompleted,
+  },
+  onlineText: {
+    fontSize: FontSizes.xs,
     color: Colors.textMuted,
   },
-  channelTextActive: {
-    color: Colors.bgPrimary,
+  channelsRow: {
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.sm,
   },
-  chatContainer: {
+  channelCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#111',
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    borderRadius: BorderRadius.lg,
+    gap: Spacing.sm,
+  },
+  channelCardActive: {
+    backgroundColor: Colors.accentCyan,
+  },
+  channelIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#222',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  channelIconActive: {
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  channelInfo: {
+    gap: 2,
+  },
+  channelName: {
+    fontSize: FontSizes.sm,
+    fontWeight: '500',
+    color: Colors.textPrimary,
+  },
+  channelNameActive: {
+    color: '#000',
+    fontWeight: '600',
+  },
+  channelOnline: {
+    fontSize: 10,
+    color: Colors.textMuted,
+  },
+  unreadBadge: {
+    backgroundColor: Colors.statusLive,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 10,
+    minWidth: 20,
+    alignItems: 'center',
+  },
+  unreadText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#fff',
+  },
+  quickReactionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: Spacing.sm,
+    gap: Spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: '#111',
+  },
+  quickReactionButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#111',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quickReactionEmoji: {
+    fontSize: 18,
+  },
+  keyboardView: {
     flex: 1,
   },
   messagesContainer: {
     flex: 1,
   },
   messagesContent: {
-    paddingHorizontal: Spacing.base,
-    paddingBottom: Spacing.base,
+    padding: Spacing.md,
     gap: Spacing.md,
   },
-  message: {
-    flexDirection: 'row',
-    gap: Spacing.sm,
-  },
-  messageAvatar: {
-    width: 36,
-    height: 36,
+  messageCard: {
+    backgroundColor: '#111',
     borderRadius: BorderRadius.md,
-    justifyContent: 'center',
+    padding: Spacing.md,
+  },
+  pinnedMessage: {
+    borderLeftWidth: 3,
+    borderLeftColor: Colors.accentCyan,
+  },
+  pinnedBadge: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 4,
+    marginBottom: Spacing.sm,
   },
-  messageInitials: {
-    fontSize: FontSizes.sm,
-    fontWeight: '700',
-    color: Colors.textPrimary,
-  },
-  messageContent: {
-    flex: 1,
+  pinnedText: {
+    fontSize: FontSizes.xs,
+    color: Colors.accentCyan,
+    fontWeight: '600',
   },
   messageHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    marginBottom: Spacing.xs,
+    marginBottom: Spacing.sm,
   },
-  messageAuthor: {
+  avatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarEmoji: {
+    fontSize: 18,
+  },
+  messageUserInfo: {
+    flex: 1,
+  },
+  userNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
+  userName: {
     fontSize: FontSizes.sm,
     fontWeight: '600',
     color: Colors.textPrimary,
   },
-  messageBadge: {
-    paddingHorizontal: Spacing.xs,
-    paddingVertical: 2,
-    backgroundColor: Colors.accentOrange,
-    borderRadius: BorderRadius.sm,
-  },
-  messageBadgeText: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: Colors.bgPrimary,
-    textTransform: 'uppercase',
-  },
   messageTime: {
     fontSize: FontSizes.xs,
     color: Colors.textMuted,
+    marginLeft: 'auto',
   },
   messageText: {
-    fontSize: FontSizes.base,
+    fontSize: FontSizes.sm,
     color: Colors.textSecondary,
     lineHeight: 20,
   },
-  inputContainer: {
+  messageActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Spacing.base,
-    backgroundColor: Colors.bgSecondary,
+    gap: Spacing.lg,
+    marginTop: Spacing.md,
+    paddingTop: Spacing.sm,
     borderTopWidth: 1,
-    borderTopColor: Colors.borderDefault,
+    borderTopColor: '#1a1a1a',
+  },
+  likeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: BorderRadius.sm,
+  },
+  likeButtonActive: {
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+  },
+  likeCount: {
+    fontSize: FontSizes.sm,
+    color: Colors.textMuted,
+  },
+  likeCountActive: {
+    color: Colors.statusLive,
+  },
+  replyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  replyText: {
+    fontSize: FontSizes.sm,
+    color: Colors.textMuted,
+  },
+  shareButton: {
+    marginLeft: 'auto',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: '#1a1a1a',
     gap: Spacing.sm,
   },
-  input: {
+  attachButton: {
+    padding: 4,
+  },
+  inputWrapper: {
     flex: 1,
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.base,
-    backgroundColor: Colors.bgTertiary,
-    borderRadius: BorderRadius['2xl'],
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
-    fontSize: FontSizes.base,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    backgroundColor: '#111',
+    borderRadius: BorderRadius.xl,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    minHeight: 44,
+  },
+  textInput: {
+    flex: 1,
+    fontSize: FontSizes.sm,
     color: Colors.textPrimary,
+    maxHeight: 100,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  emojiButton: {
+    padding: 4,
+    marginLeft: Spacing.sm,
   },
   sendButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: Colors.accentCyan,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#222',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  sendButtonActive: {
+    backgroundColor: Colors.accentCyan,
+  },
 });
-

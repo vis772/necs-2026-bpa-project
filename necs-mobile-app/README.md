@@ -78,3 +78,4 @@ The PNG files in `/assets` are placeholders. Replace them with actual images:
 - `adaptive-icon.png` - 1024x1024px Android adaptive icon
 - `favicon.png` - 32x32px web favicon
 
+
