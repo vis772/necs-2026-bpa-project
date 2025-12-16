@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  TextInput,
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,98 +13,123 @@ import { Colors, Spacing, FontSizes, BorderRadius } from '../constants/theme';
 
 const { width } = Dimensions.get('window');
 
-const tabs = ['For You', 'Following', 'Live', 'Games'];
+const tabs = ['For You', 'Live', 'Highlights', 'Full Matches'];
 
-const featuredVideos = [
+const liveStreams = [
   {
     id: 1,
-    title: 'Nova Vanguard vs Shadow Elite - Grand Finals Highlights',
-    thumbnail: '🏆',
-    thumbnailColor: '#00f0ff',
-    duration: '12:34',
-    views: '245K',
-    time: '2 hours ago',
-    isLive: false,
+    title: 'NECS 2026 Day 3 - Playoffs',
     channel: 'NECS Official',
+    viewers: '48.2K',
+    game: 'Valorant',
+    color: '#ff4655',
   },
   {
     id: 2,
-    title: 'LIVE: Quarterfinals - Titan Force vs Cyber Guardians',
-    thumbnail: '🔴',
-    thumbnailColor: '#ff4655',
-    duration: 'LIVE',
-    views: '48K watching',
-    time: '',
-    isLive: true,
+    title: 'Rocket League Semifinals',
     channel: 'NECS Official',
+    viewers: '22.1K',
+    game: 'Rocket League',
+    color: '#0080ff',
   },
 ];
 
-const clips = [
+const highlights = [
   {
     id: 3,
-    title: 'Phantom 4K ACE - Insane Clutch!',
-    thumbnail: '🎯',
-    thumbnailColor: '#ff4655',
-    duration: '0:48',
-    views: '189K',
+    title: 'Phantom 4K ACE - Insane Clutch on Haven!',
     player: 'Phantom',
     team: 'Nova Vanguard',
+    teamColor: '#00f0ff',
+    duration: '0:48',
+    views: '189K',
+    time: '2h ago',
   },
   {
     id: 4,
-    title: 'Reaper 1v5 Clutch',
-    thumbnail: '💀',
-    thumbnailColor: '#8b5cf6',
-    duration: '1:23',
-    views: '312K',
+    title: 'Reaper 1v5 Clutch - Match Point Save',
     player: 'Reaper',
     team: 'Shadow Elite',
+    teamColor: '#ff4655',
+    duration: '1:23',
+    views: '312K',
+    time: '3h ago',
   },
   {
     id: 5,
-    title: 'Insane Aerial Goal',
-    thumbnail: '🚀',
-    thumbnailColor: '#0080ff',
-    duration: '0:32',
-    views: '89K',
+    title: 'Insane Aerial Goal in OT',
     player: 'Turbo',
     team: 'Supersonic Racers',
+    teamColor: '#0080ff',
+    duration: '0:32',
+    views: '89K',
+    time: '4h ago',
   },
   {
     id: 6,
-    title: 'Zero-to-Death Combo',
-    thumbnail: '💥',
-    thumbnailColor: '#e60012',
-    duration: '0:28',
-    views: '67K',
+    title: 'Zero-to-Death Fox Combo',
     player: 'Lightning',
     team: 'Smash Masters',
+    teamColor: '#e60012',
+    duration: '0:28',
+    views: '67K',
+    time: '5h ago',
+  },
+  {
+    id: 7,
+    title: 'Best Operator Shots - Day 3',
+    player: 'Various',
+    team: 'NECS',
+    teamColor: '#00f0ff',
+    duration: '8:45',
+    views: '156K',
+    time: '6h ago',
+  },
+  {
+    id: 8,
+    title: 'Top 10 Plays of the Day',
+    player: 'Various',
+    team: 'NECS',
+    teamColor: '#ffd700',
+    duration: '12:34',
+    views: '245K',
+    time: '8h ago',
   },
 ];
 
 const fullMatches = [
   {
-    id: 7,
-    title: 'Semifinals Game 1 - Full Match',
-    teams: [
-      { abbr: 'NV', color: '#00f0ff' },
-      { abbr: 'TF', color: '#ffd700' },
-    ],
+    id: 9,
+    title: 'Nova Vanguard vs Shadow Elite',
+    round: 'Quarterfinal 1',
+    game: 'Valorant',
+    team1: { abbr: 'NV', color: '#00f0ff' },
+    team2: { abbr: 'SE', color: '#ff4655' },
     score: '2-1',
     duration: '1:45:22',
     views: '98K',
   },
   {
-    id: 8,
-    title: 'Group Stage - Day 2 Recap',
-    teams: [
-      { abbr: 'SE', color: '#ff4655' },
-      { abbr: 'CG', color: '#22c55e' },
-    ],
+    id: 10,
+    title: 'Phoenix Rising vs Dark Knights',
+    round: 'Group A - Match 4',
+    game: 'Valorant',
+    team1: { abbr: 'PR', color: '#ff6b35' },
+    team2: { abbr: 'DK', color: '#6b7280' },
     score: '2-0',
-    duration: '1:12:08',
+    duration: '58:32',
     views: '67K',
+  },
+  {
+    id: 11,
+    title: 'Stock Crushers vs Final Destination',
+    round: 'Winners Bracket',
+    game: 'Smash Bros',
+    team1: { abbr: 'SC', color: '#22c55e' },
+    team2: { abbr: 'FD', color: '#ffd700' },
+    score: '3-1',
+    duration: '42:18',
+    views: '45K',
   },
 ];
 
@@ -118,97 +142,90 @@ function TabItem({ label, isActive, onPress }) {
   );
 }
 
-function FeaturedVideoCard({ video }) {
+function LiveStreamCard({ stream }) {
   return (
-    <TouchableOpacity style={styles.featuredCard} activeOpacity={0.9}>
-      <View style={[styles.featuredThumbnail, { backgroundColor: `${video.thumbnailColor}30` }]}>
-        <Text style={styles.featuredEmoji}>{video.thumbnail}</Text>
-        {video.isLive ? (
-          <View style={styles.liveBadgeFeatured}>
-            <View style={styles.liveDot} />
-            <Text style={styles.liveBadgeText}>LIVE</Text>
-          </View>
-        ) : (
-          <View style={styles.durationBadge}>
-            <Text style={styles.durationText}>{video.duration}</Text>
-          </View>
-        )}
-        <View style={styles.playOverlay}>
-          <View style={styles.playButton}>
-            <Ionicons name="play" size={32} color="#fff" />
-          </View>
+    <TouchableOpacity style={styles.liveStreamCard} activeOpacity={0.8}>
+      <View style={[styles.streamThumbnail, { backgroundColor: `${stream.color}20` }]}>
+        <View style={styles.streamContent}>
+          <Ionicons name="play-circle" size={48} color={stream.color} />
+        </View>
+        <View style={styles.liveBadge}>
+          <View style={styles.liveDot} />
+          <Text style={styles.liveText}>LIVE</Text>
+        </View>
+        <View style={styles.viewersBadge}>
+          <Ionicons name="eye" size={12} color="#fff" />
+          <Text style={styles.viewersText}>{stream.viewers}</Text>
         </View>
       </View>
-      <View style={styles.featuredInfo}>
-        <Text style={styles.featuredTitle} numberOfLines={2}>{video.title}</Text>
-        <View style={styles.featuredMeta}>
-          <Text style={styles.featuredChannel}>{video.channel}</Text>
-          <Text style={styles.metaDot}>•</Text>
-          <Text style={styles.featuredViews}>{video.views}</Text>
-          {video.time && (
-            <>
-              <Text style={styles.metaDot}>•</Text>
-              <Text style={styles.featuredTime}>{video.time}</Text>
-            </>
-          )}
-        </View>
+      <View style={styles.streamInfo}>
+        <Text style={styles.streamTitle} numberOfLines={1}>{stream.title}</Text>
+        <Text style={styles.streamChannel}>{stream.channel} • {stream.game}</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-function ClipCard({ clip }) {
+function HighlightCard({ highlight }) {
   return (
-    <TouchableOpacity style={styles.clipCard} activeOpacity={0.8}>
-      <View style={[styles.clipThumbnail, { backgroundColor: `${clip.thumbnailColor}30` }]}>
-        <Text style={styles.clipEmoji}>{clip.thumbnail}</Text>
-        <View style={styles.durationBadgeSmall}>
-          <Text style={styles.durationTextSmall}>{clip.duration}</Text>
+    <TouchableOpacity style={styles.highlightCard} activeOpacity={0.7}>
+      <View style={[styles.highlightThumbnail, { backgroundColor: `${highlight.teamColor}20` }]}>
+        <View style={[styles.highlightIcon, { backgroundColor: highlight.teamColor }]}>
+          <Text style={styles.highlightInitial}>{highlight.player.charAt(0)}</Text>
+        </View>
+        <View style={styles.durationBadge}>
+          <Text style={styles.durationText}>{highlight.duration}</Text>
+        </View>
+        <View style={styles.playOverlaySmall}>
+          <Ionicons name="play" size={20} color="#fff" />
         </View>
       </View>
-      <View style={styles.clipInfo}>
-        <Text style={styles.clipTitle} numberOfLines={2}>{clip.title}</Text>
-        <Text style={styles.clipPlayer}>{clip.player} • {clip.team}</Text>
-        <Text style={styles.clipViews}>{clip.views} views</Text>
+      <View style={styles.highlightInfo}>
+        <Text style={styles.highlightTitle} numberOfLines={2}>{highlight.title}</Text>
+        <Text style={styles.highlightMeta}>{highlight.player} • {highlight.team}</Text>
+        <Text style={styles.highlightStats}>{highlight.views} views • {highlight.time}</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-function MatchCard({ match }) {
+function FullMatchCard({ match }) {
   return (
-    <TouchableOpacity style={styles.matchCard} activeOpacity={0.8}>
+    <TouchableOpacity style={styles.matchCard} activeOpacity={0.7}>
       <View style={styles.matchTeams}>
-        {match.teams.map((team, index) => (
-          <React.Fragment key={index}>
-            <View style={[styles.matchTeamLogo, { backgroundColor: team.color }]}>
-              <Text style={styles.matchTeamAbbr}>{team.abbr}</Text>
-            </View>
-            {index === 0 && (
-              <View style={styles.matchScoreBadge}>
-                <Text style={styles.matchScoreText}>{match.score}</Text>
-              </View>
-            )}
-          </React.Fragment>
-        ))}
+        <View style={[styles.matchTeamLogo, { backgroundColor: match.team1.color }]}>
+          <Text style={styles.matchTeamAbbr}>{match.team1.abbr}</Text>
+        </View>
+        <View style={styles.matchScoreBox}>
+          <Text style={styles.matchScore}>{match.score}</Text>
+        </View>
+        <View style={[styles.matchTeamLogo, { backgroundColor: match.team2.color }]}>
+          <Text style={styles.matchTeamAbbr}>{match.team2.abbr}</Text>
+        </View>
       </View>
       <View style={styles.matchInfo}>
         <Text style={styles.matchTitle} numberOfLines={1}>{match.title}</Text>
-        <View style={styles.matchMeta}>
-          <Ionicons name="time-outline" size={12} color={Colors.textMuted} />
-          <Text style={styles.matchDuration}>{match.duration}</Text>
-          <Text style={styles.metaDot}>•</Text>
-          <Text style={styles.matchViews}>{match.views}</Text>
+        <Text style={styles.matchMeta}>{match.game} • {match.round}</Text>
+        <View style={styles.matchStats}>
+          <View style={styles.matchStatItem}>
+            <Ionicons name="time-outline" size={12} color={Colors.textMuted} />
+            <Text style={styles.matchStatText}>{match.duration}</Text>
+          </View>
+          <View style={styles.matchStatItem}>
+            <Ionicons name="eye-outline" size={12} color={Colors.textMuted} />
+            <Text style={styles.matchStatText}>{match.views}</Text>
+          </View>
         </View>
       </View>
-      <Ionicons name="play-circle" size={36} color={Colors.accentCyan} />
+      <TouchableOpacity style={styles.playButton}>
+        <Ionicons name="play" size={20} color={Colors.accentCyan} />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 }
 
 export default function ReplaysScreen() {
   const [activeTab, setActiveTab] = useState('For You');
-  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -245,21 +262,14 @@ export default function ReplaysScreen() {
         ))}
       </ScrollView>
 
-      <ScrollView
-        style={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Featured Videos */}
-        <View style={styles.section}>
-          {featuredVideos.map(video => (
-            <FeaturedVideoCard key={video.id} video={video} />
-          ))}
-        </View>
-
-        {/* Clips */}
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Live Streams */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>CLIPS & HIGHLIGHTS</Text>
+            <View style={styles.sectionTitleRow}>
+              <View style={styles.liveIndicator} />
+              <Text style={styles.sectionTitle}>LIVE NOW</Text>
+            </View>
             <TouchableOpacity>
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
@@ -267,12 +277,27 @@ export default function ReplaysScreen() {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.clipsRow}
+            contentContainerStyle={styles.liveStreamRow}
           >
-            {clips.map(clip => (
-              <ClipCard key={clip.id} clip={clip} />
+            {liveStreams.map(stream => (
+              <LiveStreamCard key={stream.id} stream={stream} />
             ))}
           </ScrollView>
+        </View>
+
+        {/* Highlights */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>CLIPS & HIGHLIGHTS</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See All</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.highlightsGrid}>
+            {highlights.map(highlight => (
+              <HighlightCard key={highlight.id} highlight={highlight} />
+            ))}
+          </View>
         </View>
 
         {/* Full Matches */}
@@ -284,7 +309,7 @@ export default function ReplaysScreen() {
             </TouchableOpacity>
           </View>
           {fullMatches.map(match => (
-            <MatchCard key={match.id} match={match} />
+            <FullMatchCard key={match.id} match={match} />
           ))}
         </View>
 
@@ -318,7 +343,6 @@ const styles = StyleSheet.create({
   },
   headerRight: {
     flexDirection: 'row',
-    gap: Spacing.xs,
   },
   tabsContainer: {
     borderBottomWidth: 1,
@@ -326,18 +350,16 @@ const styles = StyleSheet.create({
   },
   tabsContent: {
     paddingHorizontal: Spacing.md,
-    gap: Spacing.lg,
   },
   tab: {
     paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
     position: 'relative',
   },
   tabText: {
     fontSize: FontSizes.sm,
     fontWeight: '500',
     color: Colors.textMuted,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
   },
   tabTextActive: {
     color: Colors.textPrimary,
@@ -355,7 +377,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    paddingTop: Spacing.md,
+    marginTop: Spacing.lg,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -364,40 +386,54 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     marginBottom: Spacing.md,
   },
+  sectionTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
   sectionTitle: {
     fontSize: FontSizes.xs,
     fontWeight: '700',
     color: Colors.textMuted,
     letterSpacing: 1,
   },
+  liveIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: Colors.statusLive,
+  },
   seeAllText: {
     fontSize: FontSizes.sm,
     color: Colors.accentCyan,
     fontWeight: '600',
   },
-  featuredCard: {
-    marginHorizontal: Spacing.md,
-    marginBottom: Spacing.md,
+  // Live Stream Cards
+  liveStreamRow: {
+    paddingHorizontal: Spacing.md,
+    gap: Spacing.md,
   },
-  featuredThumbnail: {
-    height: 200,
+  liveStreamCard: {
+    width: 260,
+  },
+  streamThumbnail: {
+    height: 140,
     borderRadius: BorderRadius.lg,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    overflow: 'hidden',
   },
-  featuredEmoji: {
-    fontSize: 64,
+  streamContent: {
+    alignItems: 'center',
   },
-  liveBadgeFeatured: {
+  liveBadge: {
     position: 'absolute',
     top: Spacing.sm,
     left: Spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Colors.statusLive,
-    paddingHorizontal: Spacing.sm,
+    paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: BorderRadius.sm,
     gap: 4,
@@ -408,118 +444,114 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: '#fff',
   },
-  liveBadgeText: {
+  liveText: {
     fontSize: 10,
     fontWeight: '700',
     color: '#fff',
   },
-  durationBadge: {
+  viewersBadge: {
     position: 'absolute',
     bottom: Spacing.sm,
     right: Spacing.sm,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: BorderRadius.sm,
+    gap: 4,
   },
-  durationText: {
-    fontSize: FontSizes.xs,
+  viewersText: {
+    fontSize: 10,
     fontWeight: '600',
     color: '#fff',
   },
-  playOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
+  streamInfo: {
+    paddingTop: Spacing.sm,
   },
-  playButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  featuredInfo: {
-    paddingTop: Spacing.md,
-  },
-  featuredTitle: {
-    fontSize: FontSizes.md,
+  streamTitle: {
+    fontSize: FontSizes.sm,
     fontWeight: '600',
     color: Colors.textPrimary,
-    lineHeight: 22,
   },
-  featuredMeta: {
+  streamChannel: {
+    fontSize: FontSizes.xs,
+    color: Colors.textMuted,
+    marginTop: 2,
+  },
+  // Highlight Cards
+  highlightsGrid: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: Spacing.xs,
-  },
-  featuredChannel: {
-    fontSize: FontSizes.sm,
-    color: Colors.textMuted,
-  },
-  metaDot: {
-    color: Colors.textMuted,
-    marginHorizontal: 6,
-  },
-  featuredViews: {
-    fontSize: FontSizes.sm,
-    color: Colors.textMuted,
-  },
-  featuredTime: {
-    fontSize: FontSizes.sm,
-    color: Colors.textMuted,
-  },
-  clipsRow: {
+    flexWrap: 'wrap',
     paddingHorizontal: Spacing.md,
-    gap: Spacing.md,
+    gap: Spacing.sm,
   },
-  clipCard: {
-    width: 160,
+  highlightCard: {
+    width: (width - Spacing.md * 2 - Spacing.sm) / 2,
+    marginBottom: Spacing.sm,
   },
-  clipThumbnail: {
-    height: 100,
+  highlightThumbnail: {
+    height: 90,
     borderRadius: BorderRadius.md,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
-  clipEmoji: {
-    fontSize: 36,
+  highlightIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  durationBadgeSmall: {
+  highlightInitial: {
+    fontSize: FontSizes.lg,
+    fontWeight: '700',
+    color: '#000',
+  },
+  durationBadge: {
     position: 'absolute',
     bottom: 6,
     right: 6,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: BorderRadius.xs,
   },
-  durationTextSmall: {
+  durationText: {
     fontSize: 10,
     fontWeight: '600',
     color: '#fff',
   },
-  clipInfo: {
+  playOverlaySmall: {
+    position: 'absolute',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  highlightInfo: {
     paddingTop: Spacing.sm,
   },
-  clipTitle: {
-    fontSize: FontSizes.sm,
+  highlightTitle: {
+    fontSize: FontSizes.xs,
     fontWeight: '600',
     color: Colors.textPrimary,
-    lineHeight: 18,
+    lineHeight: 16,
   },
-  clipPlayer: {
-    fontSize: FontSizes.xs,
+  highlightMeta: {
+    fontSize: 10,
     color: Colors.textMuted,
     marginTop: 4,
   },
-  clipViews: {
-    fontSize: FontSizes.xs,
+  highlightStats: {
+    fontSize: 10,
     color: Colors.textMuted,
     marginTop: 2,
   },
+  // Match Cards
   matchCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -528,38 +560,38 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
     padding: Spacing.md,
     borderRadius: BorderRadius.md,
-    gap: Spacing.md,
   },
   matchTeams: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.xs,
+    gap: 6,
   },
   matchTeamLogo: {
-    width: 36,
-    height: 36,
+    width: 32,
+    height: 32,
     borderRadius: BorderRadius.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },
   matchTeamAbbr: {
-    fontSize: FontSizes.xs,
+    fontSize: 10,
     fontWeight: '700',
     color: '#000',
   },
-  matchScoreBadge: {
+  matchScoreBox: {
     backgroundColor: '#222',
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: BorderRadius.xs,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: BorderRadius.sm,
   },
-  matchScoreText: {
+  matchScore: {
     fontSize: FontSizes.xs,
-    fontWeight: '600',
+    fontWeight: '700',
     color: Colors.textPrimary,
   },
   matchInfo: {
     flex: 1,
+    marginLeft: Spacing.md,
   },
   matchTitle: {
     fontSize: FontSizes.sm,
@@ -567,17 +599,30 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
   },
   matchMeta: {
+    fontSize: 10,
+    color: Colors.textMuted,
+    marginTop: 2,
+  },
+  matchStats: {
+    flexDirection: 'row',
+    gap: Spacing.md,
+    marginTop: 4,
+  },
+  matchStatItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
     gap: 4,
   },
-  matchDuration: {
-    fontSize: FontSizes.xs,
+  matchStatText: {
+    fontSize: 10,
     color: Colors.textMuted,
   },
-  matchViews: {
-    fontSize: FontSizes.xs,
-    color: Colors.textMuted,
+  playButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#222',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

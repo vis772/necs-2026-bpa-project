@@ -10,43 +10,46 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, FontSizes, BorderRadius } from '../constants/theme';
 
-const games = ['Valorant', 'Rocket League', 'Smash Bros'];
-const gameColors = {
-  'Valorant': '#ff4655',
-  'Rocket League': '#0080ff',
-  'Smash Bros': '#e60012',
-};
+const games = [
+  { id: 'valorant', name: 'Valorant', color: '#ff4655' },
+  { id: 'rocket', name: 'Rocket League', color: '#0080ff' },
+  { id: 'smash', name: 'Smash Bros', color: '#e60012' },
+];
 
 const tabs = ['Bracket', 'Standings', 'Schedule'];
 
 const bracketData = {
-  'Valorant': {
+  valorant: {
     rounds: [
       {
         name: 'Quarterfinals',
+        date: 'May 8',
         matches: [
           {
             id: 1,
+            time: '10:00 AM',
             team1: { name: 'Nova Vanguard', abbr: 'NV', seed: 1, score: 2, color: '#00f0ff' },
             team2: { name: 'Shadow Elite', abbr: 'SE', seed: 8, score: 1, color: '#ff4655' },
             status: 'live',
-            time: 'Map 3',
+            map: 'Map 3 • Haven',
           },
           {
             id: 2,
+            time: '12:00 PM',
             team1: { name: 'Titan Force', abbr: 'TF', seed: 4, score: null, color: '#ffd700' },
             team2: { name: 'Cyber Guardians', abbr: 'CG', seed: 5, score: null, color: '#22c55e' },
             status: 'upcoming',
-            time: '12:00 PM',
           },
           {
             id: 3,
+            time: '2:00 PM',
             team1: { name: 'Phoenix Rising', abbr: 'PR', seed: 3, score: 2, color: '#ff6b35' },
             team2: { name: 'Dark Knights', abbr: 'DK', seed: 6, score: 0, color: '#6b7280' },
             status: 'final',
           },
           {
             id: 4,
+            time: '4:00 PM',
             team1: { name: 'Storm Surge', abbr: 'SS', seed: 2, score: 2, color: '#8b5cf6' },
             team2: { name: 'Iron Wall', abbr: 'IW', seed: 7, score: 1, color: '#78716c' },
             status: 'final',
@@ -55,29 +58,108 @@ const bracketData = {
       },
       {
         name: 'Semifinals',
+        date: 'May 9',
         matches: [
           {
             id: 5,
-            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
-            team2: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
+            time: '2:00 PM',
+            team1: { name: 'Winner QF1', abbr: '?', seed: null, score: null, color: '#444' },
+            team2: { name: 'Winner QF2', abbr: '?', seed: null, score: null, color: '#444' },
             status: 'pending',
           },
           {
             id: 6,
+            time: '5:00 PM',
             team1: { name: 'Phoenix Rising', abbr: 'PR', seed: 3, score: null, color: '#ff6b35' },
             team2: { name: 'Storm Surge', abbr: 'SS', seed: 2, score: null, color: '#8b5cf6' },
             status: 'upcoming',
-            time: '4:00 PM',
           },
         ],
       },
       {
         name: 'Grand Finals',
+        date: 'May 10',
         matches: [
           {
             id: 7,
-            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
-            team2: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
+            time: '7:00 PM',
+            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
+            team2: { name: 'Winner SF2', abbr: '?', seed: null, score: null, color: '#444' },
+            status: 'pending',
+          },
+        ],
+      },
+    ],
+  },
+  rocket: {
+    rounds: [
+      {
+        name: 'Semifinals',
+        date: 'May 8',
+        matches: [
+          {
+            id: 1,
+            time: '11:00 AM',
+            team1: { name: 'Supersonic Racers', abbr: 'SR', seed: 1, score: 3, color: '#0080ff' },
+            team2: { name: 'Aerial Experts', abbr: 'AE', seed: 4, score: 2, color: '#8b5cf6' },
+            status: 'live',
+            map: 'Overtime',
+          },
+          {
+            id: 2,
+            time: '1:00 PM',
+            team1: { name: 'Boost Overload', abbr: 'BO', seed: 2, score: null, color: '#22c55e' },
+            team2: { name: 'Goal Storm', abbr: 'GS', seed: 3, score: null, color: '#f59e0b' },
+            status: 'upcoming',
+          },
+        ],
+      },
+      {
+        name: 'Grand Finals',
+        date: 'May 9',
+        matches: [
+          {
+            id: 3,
+            time: '6:00 PM',
+            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
+            team2: { name: 'Winner SF2', abbr: '?', seed: null, score: null, color: '#444' },
+            status: 'pending',
+          },
+        ],
+      },
+    ],
+  },
+  smash: {
+    rounds: [
+      {
+        name: 'Semifinals',
+        date: 'May 8',
+        matches: [
+          {
+            id: 1,
+            time: '3:00 PM',
+            team1: { name: 'Smash Masters', abbr: 'SM', seed: 1, score: null, color: '#e60012' },
+            team2: { name: 'Knockout Brigade', abbr: 'KB', seed: 4, score: null, color: '#ff00aa' },
+            status: 'upcoming',
+          },
+          {
+            id: 2,
+            time: '5:00 PM',
+            team1: { name: 'Stock Crushers', abbr: 'SC', seed: 2, score: 3, color: '#22c55e' },
+            team2: { name: 'Final Destination', abbr: 'FD', seed: 3, score: 1, color: '#ffd700' },
+            status: 'final',
+          },
+        ],
+      },
+      {
+        name: 'Grand Finals',
+        date: 'May 9',
+        matches: [
+          {
+            id: 3,
+            time: '8:00 PM',
+            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
+            team2: { name: 'Stock Crushers', abbr: 'SC', seed: 2, score: null, color: '#22c55e' },
             status: 'pending',
           },
         ],
@@ -87,7 +169,7 @@ const bracketData = {
 };
 
 const standingsData = {
-  'Valorant': [
+  valorant: [
     { rank: 1, team: 'Nova Vanguard', abbr: 'NV', color: '#00f0ff', wins: 4, losses: 0, diff: '+8' },
     { rank: 2, team: 'Storm Surge', abbr: 'SS', color: '#8b5cf6', wins: 3, losses: 1, diff: '+5' },
     { rank: 3, team: 'Phoenix Rising', abbr: 'PR', color: '#ff6b35', wins: 3, losses: 1, diff: '+4' },
@@ -97,15 +179,60 @@ const standingsData = {
     { rank: 7, team: 'Dark Knights', abbr: 'DK', color: '#6b7280', wins: 1, losses: 3, diff: '-5' },
     { rank: 8, team: 'Iron Wall', abbr: 'IW', color: '#78716c', wins: 0, losses: 4, diff: '-9' },
   ],
+  rocket: [
+    { rank: 1, team: 'Supersonic Racers', abbr: 'SR', color: '#0080ff', wins: 3, losses: 0, diff: '+6' },
+    { rank: 2, team: 'Boost Overload', abbr: 'BO', color: '#22c55e', wins: 2, losses: 1, diff: '+3' },
+    { rank: 3, team: 'Goal Storm', abbr: 'GS', color: '#f59e0b', wins: 1, losses: 2, diff: '-2' },
+    { rank: 4, team: 'Aerial Experts', abbr: 'AE', color: '#8b5cf6', wins: 0, losses: 3, diff: '-7' },
+  ],
+  smash: [
+    { rank: 1, team: 'Smash Masters', abbr: 'SM', color: '#e60012', wins: 3, losses: 0, diff: '+7' },
+    { rank: 2, team: 'Stock Crushers', abbr: 'SC', color: '#22c55e', wins: 2, losses: 1, diff: '+4' },
+    { rank: 3, team: 'Final Destination', abbr: 'FD', color: '#ffd700', wins: 1, losses: 2, diff: '-3' },
+    { rank: 4, team: 'Knockout Brigade', abbr: 'KB', color: '#ff00aa', wins: 0, losses: 3, diff: '-8' },
+  ],
+};
+
+const scheduleData = {
+  valorant: [
+    { date: 'Today • May 8', matches: [
+      { time: '10:00 AM', teams: 'Nova Vanguard vs Shadow Elite', round: 'Quarterfinal 1', status: 'live' },
+      { time: '12:00 PM', teams: 'Titan Force vs Cyber Guardians', round: 'Quarterfinal 2', status: 'upcoming' },
+    ]},
+    { date: 'Tomorrow • May 9', matches: [
+      { time: '2:00 PM', teams: 'Winner QF1 vs Winner QF2', round: 'Semifinal 1', status: 'upcoming' },
+      { time: '5:00 PM', teams: 'Phoenix Rising vs Storm Surge', round: 'Semifinal 2', status: 'upcoming' },
+    ]},
+    { date: 'May 10', matches: [
+      { time: '7:00 PM', teams: 'Winner SF1 vs Winner SF2', round: 'Grand Finals', status: 'upcoming' },
+    ]},
+  ],
+  rocket: [
+    { date: 'Today • May 8', matches: [
+      { time: '11:00 AM', teams: 'Supersonic Racers vs Aerial Experts', round: 'Semifinal 1', status: 'live' },
+      { time: '1:00 PM', teams: 'Boost Overload vs Goal Storm', round: 'Semifinal 2', status: 'upcoming' },
+    ]},
+    { date: 'Tomorrow • May 9', matches: [
+      { time: '6:00 PM', teams: 'Winner SF1 vs Winner SF2', round: 'Grand Finals', status: 'upcoming' },
+    ]},
+  ],
+  smash: [
+    { date: 'Today • May 8', matches: [
+      { time: '3:00 PM', teams: 'Smash Masters vs Knockout Brigade', round: 'Semifinal 1', status: 'upcoming' },
+    ]},
+    { date: 'Tomorrow • May 9', matches: [
+      { time: '8:00 PM', teams: 'Winner SF1 vs Stock Crushers', round: 'Grand Finals', status: 'upcoming' },
+    ]},
+  ],
 };
 
 function GameTab({ game, isActive, onPress }) {
   return (
     <TouchableOpacity
-      style={[styles.gameTab, isActive && { backgroundColor: gameColors[game] }]}
+      style={[styles.gameTab, isActive && { backgroundColor: game.color }]}
       onPress={onPress}
     >
-      <Text style={[styles.gameTabText, isActive && styles.gameTabTextActive]}>{game}</Text>
+      <Text style={[styles.gameTabText, isActive && styles.gameTabTextActive]}>{game.name}</Text>
     </TouchableOpacity>
   );
 }
@@ -119,14 +246,6 @@ function ViewTab({ label, isActive, onPress }) {
   );
 }
 
-function TeamLogo({ team, size = 32 }) {
-  return (
-    <View style={[styles.teamLogo, { width: size, height: size, backgroundColor: team.color }]}>
-      <Text style={[styles.teamLogoText, { fontSize: size * 0.35 }]}>{team.abbr}</Text>
-    </View>
-  );
-}
-
 function BracketMatchCard({ match, gameColor }) {
   const isLive = match.status === 'live';
   const isFinal = match.status === 'final';
@@ -135,56 +254,42 @@ function BracketMatchCard({ match, gameColor }) {
   const team2Won = isFinal && match.team2.score > match.team1.score;
 
   return (
-    <View style={[styles.bracketMatch, isLive && { borderColor: gameColor, borderWidth: 1 }]}>
-      {/* Status */}
-      <View style={styles.matchStatus}>
+    <View style={[styles.bracketMatch, isLive && { borderLeftWidth: 3, borderLeftColor: gameColor }]}>
+      <View style={styles.matchTimeCol}>
+        <Text style={styles.matchTime}>{match.time}</Text>
         {isLive && (
-          <View style={[styles.statusBadge, { backgroundColor: 'rgba(239, 68, 68, 0.2)' }]}>
-            <View style={styles.liveDot} />
-            <Text style={styles.liveStatusText}>LIVE</Text>
-            <Text style={styles.timeText}>{match.time}</Text>
+          <View style={styles.liveBadgeSmall}>
+            <View style={styles.liveDotSmall} />
+            <Text style={styles.liveBadgeText}>LIVE</Text>
           </View>
         )}
-        {match.status === 'upcoming' && (
-          <View style={[styles.statusBadge, { backgroundColor: '#222' }]}>
-            <Ionicons name="time-outline" size={12} color={Colors.textMuted} />
-            <Text style={styles.upcomingText}>{match.time}</Text>
+        {isFinal && <Text style={styles.finalBadge}>Final</Text>}
+        {isPending && <Text style={styles.pendingBadge}>TBD</Text>}
+        {match.status === 'upcoming' && <Text style={styles.upcomingBadge}>Upcoming</Text>}
+      </View>
+      
+      <View style={styles.matchTeamsCol}>
+        <View style={[styles.matchTeamRow, team1Won && styles.winnerRow]}>
+          {match.team1.seed && <Text style={styles.seedText}>{match.team1.seed}</Text>}
+          <View style={[styles.teamLogo, { backgroundColor: match.team1.color }]}>
+            <Text style={styles.teamLogoText}>{match.team1.abbr}</Text>
           </View>
-        )}
-        {isFinal && (
-          <Text style={styles.finalStatusText}>FINAL</Text>
-        )}
-        {isPending && (
-          <Text style={styles.pendingStatusText}>TBD</Text>
-        )}
-      </View>
-
-      {/* Team 1 */}
-      <View style={[styles.matchTeamRow, team1Won && styles.winnerRow]}>
-        {match.team1.seed && (
-          <Text style={styles.seedText}>{match.team1.seed}</Text>
-        )}
-        <TeamLogo team={match.team1} size={28} />
-        <Text style={[styles.teamName, team1Won && styles.winnerName]} numberOfLines={1}>
-          {match.team1.name}
-        </Text>
-        <Text style={[styles.scoreText, team1Won && styles.winnerScore]}>
-          {match.team1.score ?? '-'}
-        </Text>
-      </View>
-
-      {/* Team 2 */}
-      <View style={[styles.matchTeamRow, team2Won && styles.winnerRow]}>
-        {match.team2.seed && (
-          <Text style={styles.seedText}>{match.team2.seed}</Text>
-        )}
-        <TeamLogo team={match.team2} size={28} />
-        <Text style={[styles.teamName, team2Won && styles.winnerName]} numberOfLines={1}>
-          {match.team2.name}
-        </Text>
-        <Text style={[styles.scoreText, team2Won && styles.winnerScore]}>
-          {match.team2.score ?? '-'}
-        </Text>
+          <Text style={[styles.teamName, team1Won && styles.winnerName]}>{match.team1.name}</Text>
+          <Text style={[styles.scoreText, team1Won && styles.winnerScore]}>
+            {match.team1.score ?? '-'}
+          </Text>
+        </View>
+        <View style={[styles.matchTeamRow, team2Won && styles.winnerRow]}>
+          {match.team2.seed && <Text style={styles.seedText}>{match.team2.seed}</Text>}
+          <View style={[styles.teamLogo, { backgroundColor: match.team2.color }]}>
+            <Text style={styles.teamLogoText}>{match.team2.abbr}</Text>
+          </View>
+          <Text style={[styles.teamName, team2Won && styles.winnerName]}>{match.team2.name}</Text>
+          <Text style={[styles.scoreText, team2Won && styles.winnerScore]}>
+            {match.team2.score ?? '-'}
+          </Text>
+        </View>
+        {match.map && <Text style={styles.mapText}>{match.map}</Text>}
       </View>
     </View>
   );
@@ -214,13 +319,46 @@ function StandingsRow({ team, isQualified }) {
   );
 }
 
+function ScheduleCard({ schedule, gameColor }) {
+  return (
+    <View style={styles.scheduleCard}>
+      <Text style={styles.scheduleDate}>{schedule.date}</Text>
+      {schedule.matches.map((match, index) => (
+        <View key={index} style={[
+          styles.scheduleMatch,
+          match.status === 'live' && { borderLeftWidth: 3, borderLeftColor: gameColor }
+        ]}>
+          <View style={styles.scheduleTimeCol}>
+            <Text style={styles.scheduleTime}>{match.time}</Text>
+            {match.status === 'live' && (
+              <View style={styles.liveBadgeTiny}>
+                <Text style={styles.liveBadgeTinyText}>LIVE</Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.scheduleInfo}>
+            <Text style={styles.scheduleTeams}>{match.teams}</Text>
+            <Text style={styles.scheduleRound}>{match.round}</Text>
+          </View>
+          {match.status === 'live' && (
+            <TouchableOpacity style={[styles.watchBtn, { backgroundColor: gameColor }]}>
+              <Ionicons name="play" size={12} color="#fff" />
+            </TouchableOpacity>
+          )}
+        </View>
+      ))}
+    </View>
+  );
+}
+
 export default function BracketsScreen() {
-  const [activeGame, setActiveGame] = useState('Valorant');
+  const [activeGame, setActiveGame] = useState('valorant');
   const [activeView, setActiveView] = useState('Bracket');
 
-  const gameColor = gameColors[activeGame];
+  const currentGame = games.find(g => g.id === activeGame);
   const bracket = bracketData[activeGame];
   const standings = standingsData[activeGame] || [];
+  const schedule = scheduleData[activeGame] || [];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -243,10 +381,10 @@ export default function BracketsScreen() {
       >
         {games.map(game => (
           <GameTab
-            key={game}
+            key={game.id}
             game={game}
-            isActive={activeGame === game}
-            onPress={() => setActiveGame(game)}
+            isActive={activeGame === game.id}
+            onPress={() => setActiveGame(game.id)}
           />
         ))}
       </ScrollView>
@@ -263,21 +401,20 @@ export default function BracketsScreen() {
         ))}
       </View>
 
-      <ScrollView
-        style={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {activeView === 'Bracket' && bracket && (
           <View style={styles.bracketContainer}>
             {bracket.rounds.map((round, roundIndex) => (
               <View key={roundIndex} style={styles.roundSection}>
                 <View style={styles.roundHeader}>
-                  <View style={[styles.roundLine, { backgroundColor: gameColor }]} />
-                  <Text style={styles.roundName}>{round.name}</Text>
-                  <View style={[styles.roundLineRight, { backgroundColor: '#222' }]} />
+                  <View style={[styles.roundDot, { backgroundColor: currentGame.color }]} />
+                  <View>
+                    <Text style={styles.roundName}>{round.name}</Text>
+                    <Text style={styles.roundDate}>{round.date}</Text>
+                  </View>
                 </View>
                 {round.matches.map(match => (
-                  <BracketMatchCard key={match.id} match={match} gameColor={gameColor} />
+                  <BracketMatchCard key={match.id} match={match} gameColor={currentGame.color} />
                 ))}
               </View>
             ))}
@@ -295,7 +432,7 @@ export default function BracketsScreen() {
               </View>
             </View>
             {standings.map((team, index) => (
-              <StandingsRow key={team.rank} team={team} isQualified={index < 4} />
+              <StandingsRow key={team.rank} team={team} isQualified={index < Math.ceil(standings.length / 2)} />
             ))}
             <View style={styles.qualifiedLegend}>
               <View style={[styles.qualifiedDot, { backgroundColor: Colors.accentCyan }]} />
@@ -306,28 +443,9 @@ export default function BracketsScreen() {
 
         {activeView === 'Schedule' && (
           <View style={styles.scheduleContainer}>
-            <Text style={styles.scheduleDate}>Today • May 8</Text>
-            <View style={styles.scheduleCard}>
-              <Text style={styles.scheduleTime}>12:00 PM</Text>
-              <View style={styles.scheduleMatch}>
-                <Text style={styles.scheduleTeams}>Titan Force vs Cyber Guardians</Text>
-                <Text style={styles.scheduleRound}>Quarterfinal 2</Text>
-              </View>
-            </View>
-            <View style={styles.scheduleCard}>
-              <Text style={styles.scheduleTime}>4:00 PM</Text>
-              <View style={styles.scheduleMatch}>
-                <Text style={styles.scheduleTeams}>Phoenix Rising vs Storm Surge</Text>
-                <Text style={styles.scheduleRound}>Semifinal 2</Text>
-              </View>
-            </View>
-            <View style={styles.scheduleCard}>
-              <Text style={styles.scheduleTime}>7:00 PM</Text>
-              <View style={styles.scheduleMatch}>
-                <Text style={styles.scheduleTeams}>TBD vs TBD</Text>
-                <Text style={styles.scheduleRound}>Grand Finals</Text>
-              </View>
-            </View>
+            {schedule.map((day, index) => (
+              <ScheduleCard key={index} schedule={day} gameColor={currentGame.color} />
+            ))}
           </View>
         )}
 
@@ -390,7 +508,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  viewTabActive: {},
   viewTabText: {
     fontSize: FontSizes.sm,
     fontWeight: '500',
@@ -411,6 +528,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  // Bracket Styles
   bracketContainer: {
     padding: Spacing.md,
   },
@@ -420,118 +538,134 @@ const styles = StyleSheet.create({
   roundHeader: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: Spacing.sm,
     marginBottom: Spacing.md,
   },
-  roundLine: {
-    width: 4,
-    height: 20,
-    borderRadius: 2,
-    marginRight: Spacing.sm,
+  roundDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
   },
   roundName: {
     fontSize: FontSizes.md,
     fontWeight: '600',
     color: Colors.textPrimary,
   },
-  roundLineRight: {
-    flex: 1,
-    height: 1,
-    marginLeft: Spacing.md,
+  roundDate: {
+    fontSize: FontSizes.xs,
+    color: Colors.textMuted,
   },
   bracketMatch: {
+    flexDirection: 'row',
     backgroundColor: '#111',
     borderRadius: BorderRadius.md,
     marginBottom: Spacing.sm,
     overflow: 'hidden',
   },
-  matchStatus: {
-    paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.sm,
-    paddingBottom: Spacing.xs,
+  matchTimeCol: {
+    width: 70,
+    padding: Spacing.sm,
+    backgroundColor: '#0a0a0a',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  statusBadge: {
+  matchTime: {
+    fontSize: FontSizes.xs,
+    color: Colors.textMuted,
+    fontWeight: '500',
+  },
+  liveBadgeSmall: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-start',
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 3,
-    borderRadius: BorderRadius.sm,
-    gap: 4,
+    gap: 3,
+    marginTop: 4,
   },
-  liveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+  liveDotSmall: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
     backgroundColor: Colors.statusLive,
   },
-  liveStatusText: {
-    fontSize: 10,
+  liveBadgeText: {
+    fontSize: 9,
     fontWeight: '700',
     color: Colors.statusLive,
   },
-  timeText: {
-    fontSize: 10,
+  finalBadge: {
+    fontSize: 9,
     color: Colors.textMuted,
-    marginLeft: 4,
+    marginTop: 4,
   },
-  upcomingText: {
-    fontSize: 10,
+  pendingBadge: {
+    fontSize: 9,
     color: Colors.textMuted,
+    marginTop: 4,
   },
-  finalStatusText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: Colors.textMuted,
+  upcomingBadge: {
+    fontSize: 9,
+    color: Colors.statusUpcoming,
+    marginTop: 4,
   },
-  pendingStatusText: {
-    fontSize: 10,
-    fontWeight: '600',
-    color: Colors.textMuted,
+  matchTeamsCol: {
+    flex: 1,
+    padding: Spacing.sm,
   },
   matchTeamRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: 4,
     gap: Spacing.sm,
   },
   winnerRow: {
-    backgroundColor: 'rgba(0, 240, 255, 0.08)',
+    backgroundColor: 'rgba(0, 240, 255, 0.05)',
+    marginHorizontal: -Spacing.sm,
+    paddingHorizontal: Spacing.sm,
+    borderRadius: BorderRadius.sm,
   },
   seedText: {
-    width: 20,
-    fontSize: FontSizes.xs,
+    width: 16,
+    fontSize: 10,
     color: Colors.textMuted,
     textAlign: 'center',
   },
   teamLogo: {
-    borderRadius: BorderRadius.sm,
+    width: 24,
+    height: 24,
+    borderRadius: BorderRadius.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
   teamLogoText: {
+    fontSize: 9,
     fontWeight: '700',
     color: '#000',
   },
   teamName: {
     flex: 1,
     fontSize: FontSizes.sm,
-    color: Colors.textPrimary,
+    color: Colors.textSecondary,
   },
   winnerName: {
-    color: Colors.accentCyan,
+    color: Colors.textPrimary,
     fontWeight: '600',
   },
   scoreText: {
-    fontSize: FontSizes.lg,
+    fontSize: FontSizes.md,
     fontWeight: '700',
     color: Colors.textMuted,
-    minWidth: 24,
+    minWidth: 20,
     textAlign: 'center',
   },
   winnerScore: {
     color: Colors.accentCyan,
   },
+  mapText: {
+    fontSize: 10,
+    color: Colors.statusLive,
+    marginTop: 4,
+    marginLeft: 40,
+  },
+  // Standings Styles
   standingsContainer: {
     padding: Spacing.md,
   },
@@ -646,30 +780,49 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     color: Colors.textMuted,
   },
+  // Schedule Styles
   scheduleContainer: {
     padding: Spacing.md,
   },
+  scheduleCard: {
+    marginBottom: Spacing.lg,
+  },
   scheduleDate: {
-    fontSize: FontSizes.md,
+    fontSize: FontSizes.sm,
     fontWeight: '600',
     color: Colors.textPrimary,
-    marginBottom: Spacing.md,
+    marginBottom: Spacing.sm,
   },
-  scheduleCard: {
+  scheduleMatch: {
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#111',
     borderRadius: BorderRadius.md,
     padding: Spacing.md,
-    marginBottom: Spacing.sm,
-    gap: Spacing.md,
+    marginBottom: Spacing.xs,
+  },
+  scheduleTimeCol: {
+    width: 70,
+    alignItems: 'center',
   },
   scheduleTime: {
     fontSize: FontSizes.sm,
     fontWeight: '600',
     color: Colors.accentCyan,
-    width: 80,
   },
-  scheduleMatch: {
+  liveBadgeTiny: {
+    backgroundColor: Colors.statusLive,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+    marginTop: 4,
+  },
+  liveBadgeTinyText: {
+    fontSize: 8,
+    fontWeight: '700',
+    color: '#fff',
+  },
+  scheduleInfo: {
     flex: 1,
   },
   scheduleTeams: {
@@ -681,5 +834,12 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.xs,
     color: Colors.textMuted,
     marginTop: 2,
+  },
+  watchBtn: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
