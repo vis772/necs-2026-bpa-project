@@ -1,41 +1,59 @@
-// NECS 2026 Design System - Theme Constants
+// NECS 2026 Design System - NBA-Style Theme Constants
 
 export const Colors = {
-  // Background colors
-  bgPrimary: '#0a0a0f',
-  bgSecondary: '#12121a',
-  bgTertiary: '#1a1a24',
-  bgElevated: '#222230',
+  // Core Background Colors (Black & Dark Blue)
+  bgPrimary: '#0d1117',
+  bgSecondary: '#161b22',
+  bgTertiary: '#1c2128',
+  bgElevated: '#21262d',
+  bgCard: '#1a1f26',
   
-  // Text colors
+  // Accent Background (Beige/Light Brown tones)
+  bgBeige: '#f5f0e8',
+  bgLightBrown: '#e8e0d5',
+  bgCream: '#faf8f5',
+  
+  // Text Colors
   textPrimary: '#ffffff',
-  textSecondary: '#b8b8c8',
-  textMuted: '#6b6b7b',
+  textSecondary: '#8b949e',
+  textMuted: '#6e7681',
+  textDark: '#1a1a1a',
+  textBeige: '#d4c5b0',
   
-  // Accent colors
-  accentCyan: '#00f0ff',
-  accentMagenta: '#ff00aa',
-  accentYellow: '#ffd700',
-  accentOrange: '#ff6b35',
+  // Primary Accent Colors
+  accentBlue: '#58a6ff',
+  accentLightBlue: '#79c0ff',
+  accentNavy: '#1f3a5f',
+  accentGold: '#d4a853',
+  accentBrown: '#8b7355',
   
-  // Status colors
-  statusLive: '#ef4444',
-  statusUpcoming: '#f59e0b',
-  statusCompleted: '#22c55e',
-  statusPending: '#6b7280',
+  // Status Colors
+  statusLive: '#f85149',
+  statusLiveGlow: 'rgba(248, 81, 73, 0.3)',
+  statusUpcoming: '#d29922',
+  statusCompleted: '#3fb950',
+  statusFinal: '#8b949e',
   
-  // Border colors
-  borderDefault: '#2a2a3a',
-  borderFocused: '#00f0ff',
-  
-  // Game-specific colors
+  // Game-Specific Colors (subtle accents)
   gameValorant: '#ff4655',
   gameRocketLeague: '#0080ff',
   gameSmash: '#e60012',
   
-  // Gradients (as arrays for linear gradients)
-  gradientPrimary: ['#00f0ff', '#ff00aa'],
-  gradientDark: ['#0a0a0f', '#1a1a24'],
+  // Border Colors
+  borderDefault: '#30363d',
+  borderSubtle: '#21262d',
+  borderAccent: '#58a6ff',
+  
+  // Tab Bar
+  tabActive: '#58a6ff',
+  tabInactive: '#6e7681',
+  tabBarBg: '#0d1117',
+  
+  // Gradients
+  gradientPrimary: ['#1f3a5f', '#0d1117'],
+  gradientCard: ['#1c2128', '#161b22'],
+  gradientGold: ['#d4a853', '#8b7355'],
+  gradientLive: ['#f85149', '#da3633'],
 };
 
 export const Spacing = {
@@ -43,10 +61,11 @@ export const Spacing = {
   sm: 8,
   md: 12,
   lg: 16,
-  xl: 24,
-  '2xl': 32,
-  '3xl': 48,
-  '4xl': 64,
+  xl: 20,
+  '2xl': 24,
+  '3xl': 32,
+  '4xl': 48,
+  '5xl': 64,
 };
 
 export const FontSizes = {
@@ -55,9 +74,18 @@ export const FontSizes = {
   md: 14,
   lg: 16,
   xl: 18,
-  '2xl': 22,
-  '3xl': 28,
-  '4xl': 36,
+  '2xl': 20,
+  '3xl': 24,
+  '4xl': 32,
+  '5xl': 40,
+};
+
+export const FontWeights = {
+  regular: '400',
+  medium: '500',
+  semibold: '600',
+  bold: '700',
+  extrabold: '800',
 };
 
 export const BorderRadius = {
@@ -66,7 +94,8 @@ export const BorderRadius = {
   md: 8,
   lg: 12,
   xl: 16,
-  '2xl': 24,
+  '2xl': 20,
+  '3xl': 24,
   full: 9999,
 };
 
@@ -74,46 +103,55 @@ export const Shadows = {
   sm: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
     elevation: 2,
   },
   md: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
     elevation: 4,
   },
   lg: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
     elevation: 8,
   },
+  card: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 3,
+  },
   glow: {
-    shadowColor: '#00f0ff',
+    shadowColor: '#58a6ff',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 12,
-    elevation: 12,
+    shadowOpacity: 0.4,
+    shadowRadius: 16,
+    elevation: 10,
   },
 };
 
-// Tab bar icon mapping
+// 6-Tab Navigation Icons (left 3 - Home - right 2)
 export const TabIcons = {
-  scores: { active: 'podium', inactive: 'podium-outline' },
-  stats: { active: 'stats-chart', inactive: 'stats-chart-outline' },
-  replays: { active: 'play-circle', inactive: 'play-circle-outline' },
+  news: { active: 'newspaper', inactive: 'newspaper-outline' },
+  games: { active: 'trophy', inactive: 'trophy-outline' },
   brackets: { active: 'git-network', inactive: 'git-network-outline' },
-  chat: { active: 'chatbubbles', inactive: 'chatbubbles-outline' },
+  home: { active: 'home', inactive: 'home-outline' },
+  stats: { active: 'stats-chart', inactive: 'stats-chart-outline' },
+  more: { active: 'grid', inactive: 'grid-outline' },
 };
 
 export default {
   Colors,
   Spacing,
   FontSizes,
+  FontWeights,
   BorderRadius,
   Shadows,
   TabIcons,
