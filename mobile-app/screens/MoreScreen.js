@@ -173,13 +173,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderSubtle,
+    paddingVertical: Spacing.sm,
   },
   headerTitle: {
-    fontSize: FontSizes['2xl'],
-    fontWeight: '700',
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
     color: Colors.textPrimary,
   },
   headerButton: {
@@ -227,9 +225,9 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: FontSizes.xs,
-    fontWeight: '700',
-    color: Colors.textSecondary,
-    letterSpacing: 1,
+    fontWeight: '600',
+    color: Colors.textMuted,
+    letterSpacing: 0.5,
     marginBottom: Spacing.md,
   },
   // Grid

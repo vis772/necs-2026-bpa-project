@@ -274,13 +274,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderSubtle,
+    paddingVertical: Spacing.sm,
   },
   headerTitle: {
-    fontSize: FontSizes['2xl'],
-    fontWeight: '700',
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
     color: Colors.textPrimary,
   },
   headerRight: {

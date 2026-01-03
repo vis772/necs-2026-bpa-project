@@ -230,11 +230,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
+    paddingVertical: Spacing.sm,
   },
   headerTitle: {
-    fontSize: FontSizes['2xl'],
-    fontWeight: '700',
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
     color: Colors.textPrimary,
   },
   headerRight: {
@@ -280,10 +280,10 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   sectionTitle: {
-    fontSize: FontSizes.sm,
-    fontWeight: '700',
-    color: Colors.textSecondary,
-    letterSpacing: 1,
+    fontSize: FontSizes.xs,
+    fontWeight: '600',
+    color: Colors.textMuted,
+    letterSpacing: 0.5,
   },
   // Quick Updates
   quickUpdatesSection: {
@@ -369,10 +369,10 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
   },
   featuredTitle: {
-    fontSize: FontSizes.xl,
-    fontWeight: '700',
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
     color: Colors.textPrimary,
-    lineHeight: 26,
+    lineHeight: 24,
     marginBottom: Spacing.sm,
   },
   featuredSubtitle: {

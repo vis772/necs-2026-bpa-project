@@ -289,11 +289,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
+    paddingVertical: Spacing.sm,
   },
   headerTitle: {
-    fontSize: FontSizes['2xl'],
-    fontWeight: '700',
+    fontSize: FontSizes.lg,
+    fontWeight: '600',
     color: Colors.textPrimary,
   },
   headerButton: {
@@ -395,10 +395,11 @@ const styles = StyleSheet.create({
     padding: Spacing.lg,
   },
   roundTitle: {
-    fontSize: FontSizes.lg,
-    fontWeight: '700',
-    color: Colors.textPrimary,
-    marginBottom: Spacing.lg,
+    fontSize: FontSizes.sm,
+    fontWeight: '600',
+    color: Colors.textSecondary,
+    marginBottom: Spacing.md,
+    letterSpacing: 0.5,
   },
   matchesList: {
     gap: Spacing.lg,
