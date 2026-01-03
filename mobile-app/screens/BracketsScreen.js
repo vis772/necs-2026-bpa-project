@@ -63,8 +63,8 @@ const bracketData = {
           {
             id: 5,
             time: '2:00 PM',
-            team1: { name: 'Winner QF1', abbr: '?', seed: null, score: null, color: '#444' },
-            team2: { name: 'Winner QF2', abbr: '?', seed: null, score: null, color: '#444' },
+            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
+            team2: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
             status: 'pending',
           },
           {
@@ -83,8 +83,8 @@ const bracketData = {
           {
             id: 7,
             time: '7:00 PM',
-            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
-            team2: { name: 'Winner SF2', abbr: '?', seed: null, score: null, color: '#444' },
+            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
+            team2: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
             status: 'pending',
           },
         ],
@@ -121,8 +121,8 @@ const bracketData = {
           {
             id: 3,
             time: '6:00 PM',
-            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
-            team2: { name: 'Winner SF2', abbr: '?', seed: null, score: null, color: '#444' },
+            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
+            team2: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
             status: 'pending',
           },
         ],
@@ -158,7 +158,7 @@ const bracketData = {
           {
             id: 3,
             time: '8:00 PM',
-            team1: { name: 'Winner SF1', abbr: '?', seed: null, score: null, color: '#444' },
+            team1: { name: 'TBD', abbr: '?', seed: null, score: null, color: '#333' },
             team2: { name: 'Stock Crushers', abbr: 'SC', seed: 2, score: null, color: '#22c55e' },
             status: 'pending',
           },
@@ -237,15 +237,16 @@ function GameTab({ game, isActive, onPress }) {
   );
 }
 
-function ViewTab({ label, isActive, onPress }) {
+function ViewTab({ label, isActive, onPress, color }) {
   return (
     <TouchableOpacity style={[styles.viewTab, isActive && styles.viewTabActive]} onPress={onPress}>
       <Text style={[styles.viewTabText, isActive && styles.viewTabTextActive]}>{label}</Text>
-      {isActive && <View style={styles.viewTabIndicator} />}
+      {isActive && <View style={[styles.viewTabIndicator, { backgroundColor: color }]} />}
     </TouchableOpacity>
   );
 }
 
+// Clean horizontal bracket match card
 function BracketMatchCard({ match, gameColor }) {
   const isLive = match.status === 'live';
   const isFinal = match.status === 'final';
@@ -254,68 +255,106 @@ function BracketMatchCard({ match, gameColor }) {
   const team2Won = isFinal && match.team2.score > match.team1.score;
 
   return (
-    <View style={[styles.bracketMatch, isLive && { borderLeftWidth: 3, borderLeftColor: gameColor }]}>
-      <View style={styles.matchTimeCol}>
-        <Text style={styles.matchTime}>{match.time}</Text>
+    <TouchableOpacity 
+      style={[styles.matchCard, isLive && { borderLeftWidth: 3, borderLeftColor: gameColor }]}
+      activeOpacity={0.7}
+    >
+      {/* Match Header */}
+      <View style={styles.matchHeader}>
+        <View style={styles.matchTimeBox}>
+          <Text style={styles.matchTime}>{match.time}</Text>
+        </View>
         {isLive && (
-          <View style={styles.liveBadgeSmall}>
-            <View style={styles.liveDotSmall} />
-            <Text style={styles.liveBadgeText}>LIVE</Text>
+          <View style={[styles.statusBadge, { backgroundColor: '#d00' }]}>
+            <View style={styles.liveDot} />
+            <Text style={styles.statusText}>LIVE</Text>
           </View>
         )}
-        {isFinal && <Text style={styles.finalBadge}>Final</Text>}
-        {isPending && <Text style={styles.pendingBadge}>TBD</Text>}
-        {match.status === 'upcoming' && <Text style={styles.upcomingBadge}>Upcoming</Text>}
-      </View>
-      
-      <View style={styles.matchTeamsCol}>
-        <View style={[styles.matchTeamRow, team1Won && styles.winnerRow]}>
-          {match.team1.seed && <Text style={styles.seedText}>{match.team1.seed}</Text>}
-          <View style={[styles.teamLogo, { backgroundColor: match.team1.color }]}>
-            <Text style={styles.teamLogoText}>{match.team1.abbr}</Text>
+        {isFinal && (
+          <View style={[styles.statusBadge, { backgroundColor: '#333' }]}>
+            <Text style={styles.statusText}>FINAL</Text>
           </View>
-          <Text style={[styles.teamName, team1Won && styles.winnerName]}>{match.team1.name}</Text>
-          <Text style={[styles.scoreText, team1Won && styles.winnerScore]}>
-            {match.team1.score ?? '-'}
-          </Text>
-        </View>
-        <View style={[styles.matchTeamRow, team2Won && styles.winnerRow]}>
-          {match.team2.seed && <Text style={styles.seedText}>{match.team2.seed}</Text>}
-          <View style={[styles.teamLogo, { backgroundColor: match.team2.color }]}>
-            <Text style={styles.teamLogoText}>{match.team2.abbr}</Text>
+        )}
+        {isPending && (
+          <View style={[styles.statusBadge, { backgroundColor: '#222' }]}>
+            <Text style={styles.statusText}>TBD</Text>
           </View>
-          <Text style={[styles.teamName, team2Won && styles.winnerName]}>{match.team2.name}</Text>
-          <Text style={[styles.scoreText, team2Won && styles.winnerScore]}>
-            {match.team2.score ?? '-'}
-          </Text>
-        </View>
-        {match.map && <Text style={styles.mapText}>{match.map}</Text>}
+        )}
+        {match.status === 'upcoming' && (
+          <View style={[styles.statusBadge, { backgroundColor: '#1a3a1a' }]}>
+            <Text style={[styles.statusText, { color: '#4ade80' }]}>UPCOMING</Text>
+          </View>
+        )}
       </View>
-    </View>
+
+      {/* Team 1 - Horizontal Rectangle */}
+      <View style={[styles.teamRow, team1Won && styles.winnerRow]}>
+        {match.team1.seed && <Text style={styles.seedText}>{match.team1.seed}</Text>}
+        <View style={[styles.teamLogo, { backgroundColor: match.team1.color }]}>
+          <Text style={styles.teamLogoText}>{match.team1.abbr}</Text>
+        </View>
+        <Text style={[styles.teamName, team1Won && styles.winnerName]} numberOfLines={1}>
+          {match.team1.name}
+        </Text>
+        <Text style={[styles.scoreText, team1Won && styles.winnerScore]}>
+          {match.team1.score ?? '-'}
+        </Text>
+      </View>
+
+      {/* Team 2 - Horizontal Rectangle */}
+      <View style={[styles.teamRow, team2Won && styles.winnerRow]}>
+        {match.team2.seed && <Text style={styles.seedText}>{match.team2.seed}</Text>}
+        <View style={[styles.teamLogo, { backgroundColor: match.team2.color }]}>
+          <Text style={styles.teamLogoText}>{match.team2.abbr}</Text>
+        </View>
+        <Text style={[styles.teamName, team2Won && styles.winnerName]} numberOfLines={1}>
+          {match.team2.name}
+        </Text>
+        <Text style={[styles.scoreText, team2Won && styles.winnerScore]}>
+          {match.team2.score ?? '-'}
+        </Text>
+      </View>
+
+      {/* Map Info */}
+      {match.map && (
+        <View style={styles.mapInfo}>
+          <Ionicons name="game-controller" size={12} color={gameColor} />
+          <Text style={[styles.mapText, { color: gameColor }]}>{match.map}</Text>
+        </View>
+      )}
+    </TouchableOpacity>
   );
 }
 
-function StandingsRow({ team, isQualified }) {
+// Clean horizontal standings row
+function StandingsRow({ team, isQualified, gameColor }) {
   return (
-    <View style={[styles.standingsRow, isQualified && styles.qualifiedRow]}>
-      <View style={styles.standingsLeft}>
-        <View style={[styles.rankCircle, isQualified && { backgroundColor: Colors.accentCyan }]}>
-          <Text style={[styles.rankNumber, isQualified && { color: '#000' }]}>{team.rank}</Text>
-        </View>
-        <View style={[styles.teamLogoSmall, { backgroundColor: team.color }]}>
-          <Text style={styles.teamLogoSmallText}>{team.abbr}</Text>
-        </View>
-        <Text style={styles.standingsTeamName}>{team.team}</Text>
+    <TouchableOpacity style={[styles.standingsRow, isQualified && styles.qualifiedRow]} activeOpacity={0.7}>
+      <View style={[styles.rankCircle, isQualified && { backgroundColor: gameColor }]}>
+        <Text style={[styles.rankNumber, isQualified && { color: '#000' }]}>{team.rank}</Text>
       </View>
-      <View style={styles.standingsRight}>
-        <Text style={styles.standingsStat}>{team.wins}</Text>
-        <Text style={styles.standingsStat}>{team.losses}</Text>
-        <Text style={[
-          styles.standingsDiff,
-          team.diff.startsWith('+') ? styles.positiveDiff : styles.negativeDiff
-        ]}>{team.diff}</Text>
+      <View style={[styles.teamLogoSmall, { backgroundColor: team.color }]}>
+        <Text style={styles.teamLogoSmallText}>{team.abbr}</Text>
       </View>
-    </View>
+      <Text style={styles.standingsTeamName} numberOfLines={1}>{team.team}</Text>
+      <View style={styles.statsRow}>
+        <View style={styles.statBox}>
+          <Text style={styles.statLabel}>W</Text>
+          <Text style={styles.statValue}>{team.wins}</Text>
+        </View>
+        <View style={styles.statBox}>
+          <Text style={styles.statLabel}>L</Text>
+          <Text style={styles.statValue}>{team.losses}</Text>
+        </View>
+        <View style={styles.statBox}>
+          <Text style={styles.statLabel}>+/-</Text>
+          <Text style={[
+            styles.statValue,
+            team.diff.startsWith('+') ? styles.positiveDiff : styles.negativeDiff
+          ]}>{team.diff}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
@@ -324,12 +363,13 @@ function ScheduleCard({ schedule, gameColor }) {
     <View style={styles.scheduleCard}>
       <Text style={styles.scheduleDate}>{schedule.date}</Text>
       {schedule.matches.map((match, index) => (
-        <View key={index} style={[
-          styles.scheduleMatch,
-          match.status === 'live' && { borderLeftWidth: 3, borderLeftColor: gameColor }
-        ]}>
+        <TouchableOpacity 
+          key={index} 
+          style={[styles.scheduleMatch, match.status === 'live' && { borderLeftWidth: 3, borderLeftColor: gameColor }]}
+          activeOpacity={0.7}
+        >
           <View style={styles.scheduleTimeCol}>
-            <Text style={styles.scheduleTime}>{match.time}</Text>
+            <Text style={[styles.scheduleTime, { color: gameColor }]}>{match.time}</Text>
             {match.status === 'live' && (
               <View style={styles.liveBadgeTiny}>
                 <Text style={styles.liveBadgeTinyText}>LIVE</Text>
@@ -340,12 +380,14 @@ function ScheduleCard({ schedule, gameColor }) {
             <Text style={styles.scheduleTeams}>{match.teams}</Text>
             <Text style={styles.scheduleRound}>{match.round}</Text>
           </View>
-          {match.status === 'live' && (
+          {match.status === 'live' ? (
             <TouchableOpacity style={[styles.watchBtn, { backgroundColor: gameColor }]}>
-              <Ionicons name="play" size={12} color="#fff" />
+              <Ionicons name="play" size={14} color="#fff" />
             </TouchableOpacity>
+          ) : (
+            <Ionicons name="chevron-forward" size={18} color="#444" />
           )}
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -364,12 +406,9 @@ export default function BracketsScreen() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
-          <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Brackets</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <Ionicons name="share-outline" size={22} color={Colors.textPrimary} />
+        <TouchableOpacity>
+          <Ionicons name="share-outline" size={22} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -397,6 +436,7 @@ export default function BracketsScreen() {
             label={tab}
             isActive={activeView === tab}
             onPress={() => setActiveView(tab)}
+            color={currentGame.color}
           />
         ))}
       </View>
@@ -423,19 +463,16 @@ export default function BracketsScreen() {
 
         {activeView === 'Standings' && (
           <View style={styles.standingsContainer}>
-            <View style={styles.standingsHeader}>
-              <Text style={styles.standingsHeaderText}>Team</Text>
-              <View style={styles.standingsHeaderRight}>
-                <Text style={styles.standingsHeaderStat}>W</Text>
-                <Text style={styles.standingsHeaderStat}>L</Text>
-                <Text style={styles.standingsHeaderStat}>+/-</Text>
-              </View>
-            </View>
             {standings.map((team, index) => (
-              <StandingsRow key={team.rank} team={team} isQualified={index < Math.ceil(standings.length / 2)} />
+              <StandingsRow 
+                key={team.rank} 
+                team={team} 
+                isQualified={index < Math.ceil(standings.length / 2)}
+                gameColor={currentGame.color}
+              />
             ))}
             <View style={styles.qualifiedLegend}>
-              <View style={[styles.qualifiedDot, { backgroundColor: Colors.accentCyan }]} />
+              <View style={[styles.qualifiedDot, { backgroundColor: currentGame.color }]} />
               <Text style={styles.qualifiedText}>Qualified for Playoffs</Text>
             </View>
           </View>
@@ -464,34 +501,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.sm,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#1a1a1a',
   },
-  headerButton: {
-    padding: Spacing.sm,
-  },
   headerTitle: {
-    fontSize: FontSizes.lg,
-    fontWeight: '600',
-    color: Colors.textPrimary,
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#fff',
   },
   gameTabsRow: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.md,
-    gap: Spacing.sm,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 10,
   },
   gameTab: {
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.lg,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: '#111',
-    borderRadius: BorderRadius.full,
+    borderRadius: 20,
   },
   gameTabText: {
-    fontSize: FontSizes.sm,
+    fontSize: 13,
     fontWeight: '500',
-    color: Colors.textMuted,
+    color: '#888',
   },
   gameTabTextActive: {
     color: '#fff',
@@ -504,272 +538,241 @@ const styles = StyleSheet.create({
   },
   viewTab: {
     flex: 1,
-    paddingVertical: Spacing.md,
+    paddingVertical: 14,
     alignItems: 'center',
     position: 'relative',
   },
   viewTabText: {
-    fontSize: FontSizes.sm,
+    fontSize: 14,
     fontWeight: '500',
-    color: Colors.textMuted,
+    color: '#666',
   },
   viewTabTextActive: {
-    color: Colors.textPrimary,
+    color: '#fff',
     fontWeight: '600',
   },
   viewTabIndicator: {
     position: 'absolute',
     bottom: 0,
-    left: Spacing.lg,
-    right: Spacing.lg,
+    left: 24,
+    right: 24,
     height: 3,
-    backgroundColor: Colors.accentCyan,
+    borderRadius: 2,
   },
   content: {
     flex: 1,
   },
   // Bracket Styles
   bracketContainer: {
-    padding: Spacing.md,
+    padding: 16,
   },
   roundSection: {
-    marginBottom: Spacing.xl,
+    marginBottom: 24,
   },
   roundHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
-    marginBottom: Spacing.md,
+    gap: 10,
+    marginBottom: 12,
   },
   roundDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
   roundName: {
-    fontSize: FontSizes.md,
+    fontSize: 16,
     fontWeight: '600',
-    color: Colors.textPrimary,
+    color: '#fff',
   },
   roundDate: {
-    fontSize: FontSizes.xs,
-    color: Colors.textMuted,
+    fontSize: 12,
+    color: '#666',
   },
-  bracketMatch: {
-    flexDirection: 'row',
+  // Match Card - Clean Horizontal Layout
+  matchCard: {
     backgroundColor: '#111',
-    borderRadius: BorderRadius.md,
-    marginBottom: Spacing.sm,
+    borderRadius: 10,
+    marginBottom: 10,
     overflow: 'hidden',
   },
-  matchTimeCol: {
-    width: 70,
-    padding: Spacing.sm,
-    backgroundColor: '#0a0a0a',
-    justifyContent: 'center',
+  matchHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
+  },
+  matchTimeBox: {
+    backgroundColor: '#0a0a0a',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 4,
   },
   matchTime: {
-    fontSize: FontSizes.xs,
-    color: Colors.textMuted,
-    fontWeight: '500',
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#888',
   },
-  liveBadgeSmall: {
+  statusBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 3,
-    marginTop: 4,
-  },
-  liveDotSmall: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: Colors.statusLive,
-  },
-  liveBadgeText: {
-    fontSize: 9,
-    fontWeight: '700',
-    color: Colors.statusLive,
-  },
-  finalBadge: {
-    fontSize: 9,
-    color: Colors.textMuted,
-    marginTop: 4,
-  },
-  pendingBadge: {
-    fontSize: 9,
-    color: Colors.textMuted,
-    marginTop: 4,
-  },
-  upcomingBadge: {
-    fontSize: 9,
-    color: Colors.statusUpcoming,
-    marginTop: 4,
-  },
-  matchTeamsCol: {
-    flex: 1,
-    padding: Spacing.sm,
-  },
-  matchTeamRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    paddingHorizontal: 8,
     paddingVertical: 4,
-    gap: Spacing.sm,
+    borderRadius: 4,
+    gap: 4,
+  },
+  liveDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+  },
+  statusText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#fff',
+  },
+  // Team Row - Horizontal Rectangle
+  teamRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    gap: 10,
   },
   winnerRow: {
-    backgroundColor: 'rgba(0, 240, 255, 0.05)',
-    marginHorizontal: -Spacing.sm,
-    paddingHorizontal: Spacing.sm,
-    borderRadius: BorderRadius.sm,
+    backgroundColor: 'rgba(0, 240, 255, 0.08)',
   },
   seedText: {
-    width: 16,
-    fontSize: 10,
-    color: Colors.textMuted,
+    width: 18,
+    fontSize: 11,
+    color: '#666',
     textAlign: 'center',
+    fontWeight: '600',
   },
   teamLogo: {
-    width: 24,
-    height: 24,
-    borderRadius: BorderRadius.xs,
+    width: 32,
+    height: 32,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   teamLogoText: {
-    fontSize: 9,
-    fontWeight: '700',
+    fontSize: 11,
+    fontWeight: '800',
     color: '#000',
   },
   teamName: {
     flex: 1,
-    fontSize: FontSizes.sm,
-    color: Colors.textSecondary,
+    fontSize: 14,
+    color: '#aaa',
   },
   winnerName: {
-    color: Colors.textPrimary,
+    color: '#fff',
     fontWeight: '600',
   },
   scoreText: {
-    fontSize: FontSizes.md,
+    fontSize: 18,
     fontWeight: '700',
-    color: Colors.textMuted,
-    minWidth: 20,
+    color: '#555',
+    minWidth: 24,
     textAlign: 'center',
   },
   winnerScore: {
-    color: Colors.accentCyan,
+    color: '#00f0ff',
+  },
+  mapInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingBottom: 10,
+    marginLeft: 60,
   },
   mapText: {
-    fontSize: 10,
-    color: Colors.statusLive,
-    marginTop: 4,
-    marginLeft: 40,
+    fontSize: 11,
+    fontWeight: '600',
   },
-  // Standings Styles
+  // Standings - Horizontal Rectangles
   standingsContainer: {
-    padding: Spacing.md,
-  },
-  standingsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: Spacing.md,
-    paddingBottom: Spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: '#222',
-  },
-  standingsHeaderText: {
-    fontSize: FontSizes.xs,
-    fontWeight: '600',
-    color: Colors.textMuted,
-    textTransform: 'uppercase',
-  },
-  standingsHeaderRight: {
-    flexDirection: 'row',
-    gap: Spacing.xl,
-  },
-  standingsHeaderStat: {
-    fontSize: FontSizes.xs,
-    fontWeight: '600',
-    color: Colors.textMuted,
-    width: 28,
-    textAlign: 'center',
+    padding: 16,
   },
   standingsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: '#111',
+    backgroundColor: '#111',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginBottom: 8,
+    gap: 10,
   },
   qualifiedRow: {
-    backgroundColor: 'rgba(0, 240, 255, 0.05)',
-  },
-  standingsLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    flex: 1,
+    backgroundColor: 'rgba(0, 240, 255, 0.08)',
   },
   rankCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: '#222',
     justifyContent: 'center',
     alignItems: 'center',
   },
   rankNumber: {
-    fontSize: FontSizes.xs,
+    fontSize: 12,
     fontWeight: '700',
-    color: Colors.textMuted,
+    color: '#888',
   },
   teamLogoSmall: {
-    width: 28,
-    height: 28,
-    borderRadius: BorderRadius.sm,
+    width: 32,
+    height: 32,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
   teamLogoSmallText: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '700',
     color: '#000',
   },
   standingsTeamName: {
-    fontSize: FontSizes.sm,
-    color: Colors.textPrimary,
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff',
   },
-  standingsRight: {
+  statsRow: {
     flexDirection: 'row',
-    gap: Spacing.xl,
+    gap: 12,
   },
-  standingsStat: {
-    fontSize: FontSizes.sm,
-    fontWeight: '600',
-    color: Colors.textPrimary,
-    width: 28,
-    textAlign: 'center',
+  statBox: {
+    alignItems: 'center',
+    minWidth: 28,
   },
-  standingsDiff: {
-    fontSize: FontSizes.sm,
+  statLabel: {
+    fontSize: 9,
+    color: '#555',
     fontWeight: '600',
-    width: 28,
-    textAlign: 'center',
+  },
+  statValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#fff',
   },
   positiveDiff: {
-    color: Colors.statusCompleted,
+    color: '#4ade80',
   },
   negativeDiff: {
-    color: Colors.statusLive,
+    color: '#f87171',
   },
   qualifiedLegend: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
-    paddingTop: Spacing.lg,
-    paddingHorizontal: Spacing.md,
+    gap: 8,
+    paddingTop: 16,
   },
   qualifiedDot: {
     width: 10,
@@ -777,48 +780,48 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   qualifiedText: {
-    fontSize: FontSizes.xs,
-    color: Colors.textMuted,
+    fontSize: 12,
+    color: '#666',
   },
   // Schedule Styles
   scheduleContainer: {
-    padding: Spacing.md,
+    padding: 16,
   },
   scheduleCard: {
-    marginBottom: Spacing.lg,
+    marginBottom: 20,
   },
   scheduleDate: {
-    fontSize: FontSizes.sm,
+    fontSize: 14,
     fontWeight: '600',
-    color: Colors.textPrimary,
-    marginBottom: Spacing.sm,
+    color: '#fff',
+    marginBottom: 10,
   },
   scheduleMatch: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#111',
-    borderRadius: BorderRadius.md,
-    padding: Spacing.md,
-    marginBottom: Spacing.xs,
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 8,
+    gap: 12,
   },
   scheduleTimeCol: {
-    width: 70,
     alignItems: 'center',
+    minWidth: 65,
   },
   scheduleTime: {
-    fontSize: FontSizes.sm,
+    fontSize: 13,
     fontWeight: '600',
-    color: Colors.accentCyan,
   },
   liveBadgeTiny: {
-    backgroundColor: Colors.statusLive,
+    backgroundColor: '#d00',
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: BorderRadius.sm,
+    borderRadius: 4,
     marginTop: 4,
   },
   liveBadgeTinyText: {
-    fontSize: 8,
+    fontSize: 9,
     fontWeight: '700',
     color: '#fff',
   },
@@ -826,19 +829,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scheduleTeams: {
-    fontSize: FontSizes.sm,
+    fontSize: 14,
     fontWeight: '500',
-    color: Colors.textPrimary,
+    color: '#fff',
   },
   scheduleRound: {
-    fontSize: FontSizes.xs,
-    color: Colors.textMuted,
+    fontSize: 12,
+    color: '#666',
     marginTop: 2,
   },
   watchBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },

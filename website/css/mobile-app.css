@@ -181,7 +181,9 @@ body {
 
 .game-tabs {
   display: flex;
-  gap: 8px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
   padding: 0 20px;
   margin-bottom: 20px;
   overflow-x: auto;
@@ -194,16 +196,19 @@ body {
 
 .game-tab {
   flex-shrink: 0;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  height: 40px;
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border-default);
-  border-radius: 24px;
+  border-radius: 8px;
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 600;
   color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.2s ease;
 }

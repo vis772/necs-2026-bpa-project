@@ -1,0 +1,249 @@
+{
+  "eventInfo": {
+    "name": "National Esports Championship Series 2026",
+    "shortName": "NECS 2026",
+    "startDate": "2026-05-06",
+    "endDate": "2026-05-10",
+    "venue": "Bridgestone Arena",
+    "location": "Nashville, Tennessee",
+    "games": ["Valorant", "Rocket League", "Super Smash Bros"]
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-05-06",
+      "label": "Day 1 - May 6",
+      "matches": [
+        {
+          "id": "d1-m1",
+          "time": "09:00",
+          "title": "Opening Ceremony",
+          "game": "all",
+          "stage": "All Stages",
+          "status": "upcoming"
+        },
+        {
+          "id": "d1-m2",
+          "time": "10:00",
+          "teams": ["Nova Vanguard", "Shadow Elite"],
+          "game": "valorant",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d1-m3",
+          "time": "12:00",
+          "teams": ["Supersonic Racers", "Aerial Experts"],
+          "game": "rocketLeague",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d1-m4",
+          "time": "14:00",
+          "teams": ["Smash Masters", "Knockout Brigade"],
+          "game": "smash",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d1-m5",
+          "time": "16:00",
+          "teams": ["Titan Force", "Cyber Guardians"],
+          "game": "valorant",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d1-m6",
+          "time": "18:00",
+          "teams": ["Boost Overload", "Goal Storm"],
+          "game": "rocketLeague",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-05-07",
+      "label": "Day 2 - May 7",
+      "matches": [
+        {
+          "id": "d2-m1",
+          "time": "10:00",
+          "teams": ["Stock Crushers", "Final Destination"],
+          "game": "smash",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d2-m2",
+          "time": "12:00",
+          "teams": ["Shadow Elite", "Titan Force"],
+          "game": "valorant",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d2-m3",
+          "time": "14:00",
+          "teams": ["Aerial Experts", "Boost Overload"],
+          "game": "rocketLeague",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d2-m4",
+          "time": "16:00",
+          "teams": ["Nova Vanguard", "Cyber Guardians"],
+          "game": "valorant",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        },
+        {
+          "id": "d2-m5",
+          "time": "18:00",
+          "teams": ["Smash Masters", "Stock Crushers"],
+          "game": "smash",
+          "stage": "Group Stage",
+          "status": "upcoming"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-05-08",
+      "label": "Day 3 - May 8",
+      "matches": [
+        {
+          "id": "d3-m1",
+          "time": "10:00",
+          "title": "Valorant Quarterfinal 1",
+          "game": "valorant",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d3-m2",
+          "time": "12:00",
+          "title": "Valorant Quarterfinal 2",
+          "game": "valorant",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d3-m3",
+          "time": "14:00",
+          "title": "Rocket League Semifinal 1",
+          "game": "rocketLeague",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d3-m4",
+          "time": "16:00",
+          "title": "Rocket League Semifinal 2",
+          "game": "rocketLeague",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d3-m5",
+          "time": "18:00",
+          "title": "Smash Bros Semifinal 1",
+          "game": "smash",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-05-09",
+      "label": "Day 4 - May 9",
+      "matches": [
+        {
+          "id": "d4-m1",
+          "time": "10:00",
+          "title": "Smash Bros Semifinal 2",
+          "game": "smash",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d4-m2",
+          "time": "12:00",
+          "title": "Valorant Semifinal 1",
+          "game": "valorant",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d4-m3",
+          "time": "14:00",
+          "title": "Valorant Semifinal 2",
+          "game": "valorant",
+          "stage": "Playoffs",
+          "status": "upcoming"
+        },
+        {
+          "id": "d4-m4",
+          "time": "16:00",
+          "title": "Rocket League Grand Final",
+          "game": "rocketLeague",
+          "stage": "Championship",
+          "status": "upcoming"
+        },
+        {
+          "id": "d4-m5",
+          "time": "18:00",
+          "title": "Smash Bros Grand Final",
+          "game": "smash",
+          "stage": "Championship",
+          "status": "upcoming"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-05-10",
+      "label": "Day 5 - May 10",
+      "matches": [
+        {
+          "id": "d5-m1",
+          "time": "12:00",
+          "title": "All-Star Showmatch",
+          "game": "all",
+          "stage": "Exhibition Match",
+          "status": "upcoming"
+        },
+        {
+          "id": "d5-m2",
+          "time": "14:00",
+          "title": "Valorant Grand Final",
+          "game": "valorant",
+          "stage": "Championship",
+          "status": "upcoming"
+        },
+        {
+          "id": "d5-m3",
+          "time": "17:00",
+          "title": "Award Ceremony",
+          "game": "all",
+          "stage": "All Champions",
+          "status": "upcoming"
+        },
+        {
+          "id": "d5-m4",
+          "time": "19:00",
+          "title": "Closing Ceremony & After Party",
+          "game": "all",
+          "stage": "Main Stage",
+          "status": "upcoming"
+        }
+      ]
+    }
+  ]
+}
+

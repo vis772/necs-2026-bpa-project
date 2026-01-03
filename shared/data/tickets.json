@@ -1,0 +1,49 @@
+{
+  "tickets": [
+    {
+      "id": "day-pass",
+      "name": "Day Pass",
+      "price": 49,
+      "priceLabel": "$49 / day",
+      "featured": false,
+      "features": [
+        "Single day venue access",
+        "General admission seating",
+        "Access to vendor hall",
+        "Event lanyard & badge"
+      ]
+    },
+    {
+      "id": "full-event",
+      "name": "Full Event Pass",
+      "price": 179,
+      "priceLabel": "$179 / all days",
+      "featured": true,
+      "badge": "Best Value",
+      "features": [
+        "All 5 days venue access",
+        "Premium reserved seating",
+        "Early venue entry",
+        "Exclusive event merchandise",
+        "Meet & greet access",
+        "Digital event program"
+      ]
+    },
+    {
+      "id": "vip",
+      "name": "VIP Experience",
+      "price": 399,
+      "priceLabel": "$399 / all days",
+      "featured": false,
+      "features": [
+        "All Full Event Pass perks",
+        "VIP lounge access",
+        "Backstage tour",
+        "Player autograph session",
+        "Exclusive VIP gift bag",
+        "Priority parking"
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,149 @@
+{
+  "valorant": [
+    {
+      "id": "nova-vanguard",
+      "name": "Nova Vanguard",
+      "abbreviation": "NV",
+      "game": "valorant",
+      "roster": [
+        { "name": "Alex Chen", "ign": "Phantom", "role": "Duelist" },
+        { "name": "Maria Rodriguez", "ign": "Sage", "role": "Sentinel" },
+        { "name": "James Thompson", "ign": "Bolt", "role": "Initiator" },
+        { "name": "Yuki Tanaka", "ign": "Storm", "role": "Controller" },
+        { "name": "Derek Wilson", "ign": "Hawk", "role": "Flex" }
+      ]
+    },
+    {
+      "id": "shadow-elite",
+      "name": "Shadow Elite",
+      "abbreviation": "SE",
+      "game": "valorant",
+      "roster": [
+        { "name": "Ryan Kim", "ign": "Reaper", "role": "Duelist" },
+        { "name": "Sofia Petrov", "ign": "Nova", "role": "Sentinel" },
+        { "name": "Marcus Johnson", "ign": "Cipher", "role": "Initiator" },
+        { "name": "Lisa Anderson", "ign": "Viper", "role": "Controller" },
+        { "name": "Kevin Park", "ign": "Ace", "role": "Flex" }
+      ]
+    },
+    {
+      "id": "titan-force",
+      "name": "Titan Force",
+      "abbreviation": "TF",
+      "game": "valorant",
+      "roster": [
+        { "name": "Nathan Harris", "ign": "Blaze", "role": "Duelist" },
+        { "name": "Emma Martinez", "ign": "Shield", "role": "Sentinel" },
+        { "name": "David Lee", "ign": "Flash", "role": "Initiator" },
+        { "name": "Rachel Taylor", "ign": "Smoke", "role": "Controller" },
+        { "name": "Tyler Brown", "ign": "Ghost", "role": "Flex" }
+      ]
+    },
+    {
+      "id": "cyber-guardians",
+      "name": "Cyber Guardians",
+      "abbreviation": "CG",
+      "game": "valorant",
+      "roster": [
+        { "name": "Chris Williams", "ign": "Strike", "role": "Duelist" },
+        { "name": "Anna Kowalski", "ign": "Wall", "role": "Sentinel" },
+        { "name": "Mike Davis", "ign": "Arrow", "role": "Initiator" },
+        { "name": "Sarah O'Connor", "ign": "Mist", "role": "Controller" },
+        { "name": "Josh Miller", "ign": "Clutch", "role": "Flex" }
+      ]
+    }
+  ],
+  "rocketLeague": [
+    {
+      "id": "supersonic-racers",
+      "name": "Supersonic Racers",
+      "abbreviation": "SR",
+      "game": "rocketLeague",
+      "roster": [
+        { "name": "Jake Reynolds", "ign": "Turbo", "role": "Striker" },
+        { "name": "Sam Carter", "ign": "Boost", "role": "Midfielder" },
+        { "name": "Max Anderson", "ign": "Wall", "role": "Defender" }
+      ]
+    },
+    {
+      "id": "aerial-experts",
+      "name": "Aerial Experts",
+      "abbreviation": "AE",
+      "game": "rocketLeague",
+      "roster": [
+        { "name": "Dylan Hughes", "ign": "Flip", "role": "Striker" },
+        { "name": "Ethan Morgan", "ign": "Reset", "role": "Midfielder" },
+        { "name": "Luke Patterson", "ign": "Save", "role": "Defender" }
+      ]
+    },
+    {
+      "id": "boost-overload",
+      "name": "Boost Overload",
+      "abbreviation": "BO",
+      "game": "rocketLeague",
+      "roster": [
+        { "name": "Zack Wright", "ign": "Aerial", "role": "Striker" },
+        { "name": "Ben Scott", "ign": "Demo", "role": "Midfielder" },
+        { "name": "Cole Turner", "ign": "Block", "role": "Defender" }
+      ]
+    },
+    {
+      "id": "goal-storm",
+      "name": "Goal Storm",
+      "abbreviation": "GS",
+      "game": "rocketLeague",
+      "roster": [
+        { "name": "Owen James", "ign": "Flick", "role": "Striker" },
+        { "name": "Liam Cooper", "ign": "Pass", "role": "Midfielder" },
+        { "name": "Noah Reed", "ign": "Anchor", "role": "Defender" }
+      ]
+    }
+  ],
+  "smash": [
+    {
+      "id": "smash-masters",
+      "name": "Smash Masters",
+      "abbreviation": "SM",
+      "game": "smash",
+      "roster": [
+        { "name": "Leo Nakamura", "ign": "Lightning", "role": "Main: Fox" },
+        { "name": "Adam Gonzalez", "ign": "Thunder", "role": "Main: Pikachu" },
+        { "name": "Kyle Foster", "ign": "Edge", "role": "Main: Cloud" }
+      ]
+    },
+    {
+      "id": "knockout-brigade",
+      "name": "Knockout Brigade",
+      "abbreviation": "KB",
+      "game": "smash",
+      "roster": [
+        { "name": "Victor Chen", "ign": "Combo", "role": "Main: Mario" },
+        { "name": "Eric Johnson", "ign": "Spike", "role": "Main: Captain Falcon" },
+        { "name": "Ray Kim", "ign": "Zero", "role": "Main: Samus" }
+      ]
+    },
+    {
+      "id": "stock-crushers",
+      "name": "Stock Crushers",
+      "abbreviation": "SC",
+      "game": "smash",
+      "roster": [
+        { "name": "Matt Phillips", "ign": "Meteor", "role": "Main: Falco" },
+        { "name": "Dan Martinez", "ign": "Ledge", "role": "Main: Marth" },
+        { "name": "Nick Wilson", "ign": "Grab", "role": "Main: Luigi" }
+      ]
+    },
+    {
+      "id": "final-destination",
+      "name": "Final Destination",
+      "abbreviation": "FD",
+      "game": "smash",
+      "roster": [
+        { "name": "Alan Roberts", "ign": "Stock", "role": "Main: Peach" },
+        { "name": "Brad Evans", "ign": "Shield", "role": "Main: Link" },
+        { "name": "Carl White", "ign": "Gimp", "role": "Main: Kirby" }
+      ]
+    }
+  ]
+}
+
