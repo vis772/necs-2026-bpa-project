@@ -81,24 +81,26 @@ const quickUpdates = [
 
 function CategoryTabs({ selected, onSelect }) {
   return (
-    <ScrollView 
-      horizontal 
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.categoriesRow}
-    >
-      {categories.map(cat => (
-        <TouchableOpacity
-          key={cat}
-          style={[styles.categoryTab, selected === cat && styles.categoryTabActive]}
-          onPress={() => onSelect(cat)}
-        >
-          <Text style={[styles.categoryText, selected === cat && styles.categoryTextActive]}>
-            {cat}
-          </Text>
-          {selected === cat && <View style={styles.categoryIndicator} />}
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <View style={styles.categoriesWrapper}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categoriesRow}
+      >
+        {categories.map(cat => (
+          <TouchableOpacity
+            key={cat}
+            style={[styles.categoryTab, selected === cat && styles.categoryTabActive]}
+            onPress={() => onSelect(cat)}
+          >
+            <Text style={[styles.categoryText, selected === cat && styles.categoryTextActive]}>
+              {cat}
+            </Text>
+            {selected === cat && <View style={styles.categoryIndicator} />}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 
@@ -246,14 +248,15 @@ const styles = StyleSheet.create({
     padding: Spacing.sm,
   },
   // Categories
+  categoriesWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderSubtle,
+  },
   categoriesRow: {
     flexDirection: 'row',
     paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.xs,
-    paddingBottom: Spacing.sm,
+    paddingVertical: Spacing.sm,
     gap: Spacing.xl,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderSubtle,
   },
   categoryTab: {
     paddingVertical: Spacing.xs,
@@ -296,7 +299,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     backgroundColor: Colors.bgCard,
     marginHorizontal: Spacing.lg,
-    marginTop: Spacing.sm,
+    marginTop: 8,
     borderRadius: BorderRadius.md,
   },
   quickUpdatesHeader: {
