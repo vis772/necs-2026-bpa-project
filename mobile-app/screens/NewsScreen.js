@@ -280,11 +280,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    paddingTop: Spacing.lg,
+    paddingTop: Spacing.md,
   },
   sectionHeader: {
     paddingHorizontal: Spacing.lg,
-    marginBottom: Spacing.md,
+    marginBottom: Spacing.sm,
   },
   sectionTitle: {
     fontSize: FontSizes.xs,
@@ -294,12 +294,12 @@ const styles = StyleSheet.create({
   },
   // Quick Updates
   quickUpdatesSection: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
     backgroundColor: Colors.bgCard,
     marginHorizontal: Spacing.lg,
-    marginTop: Spacing.lg,
-    borderRadius: BorderRadius.lg,
+    marginTop: Spacing.sm,
+    borderRadius: BorderRadius.md,
   },
   quickUpdatesHeader: {
     flexDirection: 'row',
@@ -338,12 +338,12 @@ const styles = StyleSheet.create({
   featuredCard: {
     marginHorizontal: Spacing.lg,
     backgroundColor: Colors.bgCard,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.lg,
     overflow: 'hidden',
-    ...Shadows.card,
+    ...Shadows.sm,
   },
   featuredImagePlaceholder: {
-    height: 180,
+    height: 160,
     backgroundColor: Colors.bgElevated,
     justifyContent: 'center',
     alignItems: 'center',
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   featuredContent: {
-    padding: Spacing.lg,
+    padding: Spacing.md,
   },
   featuredTitle: {
     fontSize: FontSizes.lg,
@@ -412,16 +412,16 @@ const styles = StyleSheet.create({
   newsCard: {
     flexDirection: 'row',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    gap: Spacing.md,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.sm,
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderSubtle,
   },
   newsImagePlaceholder: {
-    width: 80,
-    height: 80,
+    width: 68,
+    height: 68,
     backgroundColor: Colors.bgCard,
-    borderRadius: BorderRadius.md,
+    borderRadius: BorderRadius.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },
