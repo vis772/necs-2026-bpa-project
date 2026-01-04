@@ -95,6 +95,7 @@ function CategoryTabs({ selected, onSelect }) {
           <Text style={[styles.categoryText, selected === cat && styles.categoryTextActive]}>
             {cat}
           </Text>
+          {selected === cat && <View style={styles.categoryIndicator} />}
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -247,27 +248,33 @@ const styles = StyleSheet.create({
   // Categories
   categoriesRow: {
     paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.md,
-    gap: Spacing.sm,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.xl,
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderSubtle,
   },
   categoryTab: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
-    backgroundColor: Colors.bgCard,
+    paddingVertical: Spacing.xs,
+    position: 'relative',
   },
-  categoryTabActive: {
-    backgroundColor: Colors.accentBlue,
-  },
+  categoryTabActive: {},
   categoryText: {
     fontSize: FontSizes.sm,
-    fontWeight: '600',
-    color: Colors.textSecondary,
+    fontWeight: '500',
+    color: Colors.textMuted,
   },
   categoryTextActive: {
-    color: Colors.bgPrimary,
+    color: Colors.textPrimary,
+    fontWeight: '600',
+  },
+  categoryIndicator: {
+    position: 'absolute',
+    bottom: -Spacing.sm,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: Colors.accentBlue,
+    borderRadius: 1,
   },
   content: {
     flex: 1,

@@ -247,6 +247,7 @@ export default function GamesScreen() {
               <Text style={[styles.filterText, selectedFilter === filter && styles.filterTextActive]}>
                 {filter}
               </Text>
+              {selectedFilter === filter && <View style={styles.filterIndicator} />}
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -349,28 +350,31 @@ const styles = StyleSheet.create({
   // Filters
   filtersRow: {
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.lg,
-    gap: Spacing.sm,
+    paddingVertical: Spacing.md,
+    gap: Spacing.xl,
   },
   filterChip: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
-    backgroundColor: Colors.bgCard,
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
+    paddingVertical: Spacing.xs,
+    position: 'relative',
   },
-  filterChipActive: {
-    backgroundColor: Colors.accentBlue,
-    borderColor: Colors.accentBlue,
-  },
+  filterChipActive: {},
   filterText: {
     fontSize: FontSizes.sm,
-    fontWeight: '600',
-    color: Colors.textSecondary,
+    fontWeight: '500',
+    color: Colors.textMuted,
   },
   filterTextActive: {
-    color: Colors.bgPrimary,
+    color: Colors.textPrimary,
+    fontWeight: '600',
+  },
+  filterIndicator: {
+    position: 'absolute',
+    bottom: -Spacing.xs,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: Colors.accentBlue,
+    borderRadius: 1,
   },
   // Scores Section
   scoresSection: {

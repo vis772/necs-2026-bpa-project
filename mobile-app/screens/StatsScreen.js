@@ -193,6 +193,7 @@ export default function StatsScreen() {
             <Text style={[styles.gameTabText, selectedGame === game && styles.gameTabTextActive]}>
               {game}
             </Text>
+            {selectedGame === game && <View style={styles.gameTabIndicator} />}
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -304,28 +305,31 @@ const styles = StyleSheet.create({
   // Game Tabs
   gameTabsRow: {
     paddingHorizontal: Spacing.lg,
-    paddingBottom: Spacing.md,
-    gap: Spacing.sm,
+    paddingVertical: Spacing.sm,
+    gap: Spacing.xl,
   },
   gameTab: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
-    backgroundColor: Colors.bgCard,
-    borderWidth: 1,
-    borderColor: Colors.borderDefault,
+    paddingVertical: Spacing.xs,
+    position: 'relative',
   },
-  gameTabActive: {
-    backgroundColor: Colors.accentBlue,
-    borderColor: Colors.accentBlue,
-  },
+  gameTabActive: {},
   gameTabText: {
     fontSize: FontSizes.sm,
-    fontWeight: '600',
-    color: Colors.textSecondary,
+    fontWeight: '500',
+    color: Colors.textMuted,
   },
   gameTabTextActive: {
-    color: Colors.bgPrimary,
+    color: Colors.textPrimary,
+    fontWeight: '600',
+  },
+  gameTabIndicator: {
+    position: 'absolute',
+    bottom: -Spacing.xs,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: Colors.accentBlue,
+    borderRadius: 1,
   },
   // Category Tabs
   categoryTabs: {
