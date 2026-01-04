@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    paddingTop: Spacing.md,
+    paddingTop: Spacing.sm,
   },
   sectionHeader: {
     paddingHorizontal: Spacing.lg,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     backgroundColor: Colors.bgCard,
     marginHorizontal: Spacing.lg,
-    marginTop: Spacing.sm,
+    marginTop: Spacing.xs,
     borderRadius: BorderRadius.md,
   },
   quickUpdatesHeader: {

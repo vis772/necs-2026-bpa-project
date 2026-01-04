@@ -366,14 +366,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    paddingTop: Spacing.lg,
+    paddingTop: Spacing.sm,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: Spacing.lg,
-    marginBottom: Spacing.md,
+    marginBottom: Spacing.sm,
   },
   sectionTitle: {
     fontSize: FontSizes.xs,
@@ -391,10 +391,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: Spacing.lg,
-    marginBottom: Spacing.sm,
-    padding: Spacing.md,
+    marginBottom: Spacing.xs,
+    padding: Spacing.sm,
     backgroundColor: Colors.bgCard,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     gap: Spacing.md,
   },
   playerCardTop3: {
