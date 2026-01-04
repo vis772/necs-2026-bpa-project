@@ -304,13 +304,14 @@ const styles = StyleSheet.create({
   },
   // Game Tabs
   gameTabsRow: {
+    flexDirection: 'row',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
+    paddingTop: Spacing.xs,
+    paddingBottom: Spacing.sm,
     gap: Spacing.xl,
   },
   gameTab: {
     paddingVertical: Spacing.xs,
-    position: 'relative',
   },
   gameTabActive: {},
   gameTabText: {
@@ -323,10 +324,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   gameTabIndicator: {
-    position: 'absolute',
-    bottom: -Spacing.xs,
-    left: 0,
-    right: 0,
+    marginTop: Spacing.xs,
     height: 2,
     backgroundColor: Colors.accentBlue,
     borderRadius: 1,

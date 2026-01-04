@@ -247,15 +247,16 @@ const styles = StyleSheet.create({
   },
   // Categories
   categoriesRow: {
+    flexDirection: 'row',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
+    paddingTop: Spacing.xs,
+    paddingBottom: Spacing.sm,
     gap: Spacing.xl,
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderSubtle,
   },
   categoryTab: {
     paddingVertical: Spacing.xs,
-    position: 'relative',
   },
   categoryTabActive: {},
   categoryText: {
@@ -268,10 +269,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   categoryIndicator: {
-    position: 'absolute',
-    bottom: -Spacing.sm,
-    left: 0,
-    right: 0,
+    marginTop: Spacing.xs,
     height: 2,
     backgroundColor: Colors.accentBlue,
     borderRadius: 1,
@@ -298,7 +296,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     backgroundColor: Colors.bgCard,
     marginHorizontal: Spacing.lg,
-    marginTop: Spacing.xs,
+    marginTop: Spacing.sm,
     borderRadius: BorderRadius.md,
   },
   quickUpdatesHeader: {

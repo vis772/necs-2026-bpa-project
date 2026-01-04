@@ -349,13 +349,14 @@ const styles = StyleSheet.create({
   },
   // Filters
   filtersRow: {
+    flexDirection: 'row',
     paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
+    paddingTop: Spacing.xs,
+    paddingBottom: Spacing.sm,
     gap: Spacing.xl,
   },
   filterChip: {
     paddingVertical: Spacing.xs,
-    position: 'relative',
   },
   filterChipActive: {},
   filterText: {
@@ -368,10 +369,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   filterIndicator: {
-    position: 'absolute',
-    bottom: -Spacing.xs,
-    left: 0,
-    right: 0,
+    marginTop: Spacing.xs,
     height: 2,
     backgroundColor: Colors.accentBlue,
     borderRadius: 1,
