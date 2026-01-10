@@ -3,6 +3,7 @@
  * National Esports Championship Series 2026
  * 
  * Interactive functionality for the promotional website.
+ * Features smooth scroll animations and refined interactions.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScheduleTabs();
   initTeamTabs();
   initScrollAnimations();
+  initStaggeredAnimations();
 });
 
 /* ========================================
@@ -20,11 +22,21 @@ document.addEventListener('DOMContentLoaded', () => {
 function initNavbar() {
   const toggle = document.querySelector('.navbar-toggle');
   const menu = document.querySelector('.navbar-menu');
+  const navbar = document.querySelector('.navbar');
   
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
-      menu.classList.toggle('active');
+      const isActive = menu.classList.toggle('active');
       toggle.classList.toggle('active');
+      toggle.setAttribute('aria-expanded', isActive);
+    });
+    
+    // Handle keyboard navigation
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle.click();
+      }
     });
   }
 
@@ -34,19 +46,39 @@ function initNavbar() {
     link.addEventListener('click', () => {
       menu?.classList.remove('active');
       toggle?.classList.remove('active');
+      toggle?.setAttribute('aria-expanded', 'false');
     });
   });
 
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('active')) {
+      menu.classList.remove('active');
+      toggle?.classList.remove('active');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.focus();
+    }
+  });
+
   // Navbar background on scroll
-  const navbar = document.querySelector('.navbar');
   if (navbar) {
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+    
+    const updateNavbar = () => {
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
+      ticking = false;
+    };
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateNavbar);
+        ticking = true;
+      }
+    }, { passive: true });
   }
 }
 
@@ -62,6 +94,9 @@ function initCountdown() {
     seconds: document.getElementById('countdown-seconds')
   };
 
+  // Check if elements exist
+  if (!countdownElements.days) return;
+
   // Event date: May 6, 2026
   const eventDate = new Date('2026-05-06T09:00:00').getTime();
 
@@ -75,10 +110,25 @@ function initCountdown() {
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (countdownElements.days) countdownElements.days.textContent = String(days).padStart(2, '0');
-      if (countdownElements.hours) countdownElements.hours.textContent = String(hours).padStart(2, '0');
-      if (countdownElements.minutes) countdownElements.minutes.textContent = String(minutes).padStart(2, '0');
-      if (countdownElements.seconds) countdownElements.seconds.textContent = String(seconds).padStart(2, '0');
+      // Animate number changes
+      animateValue(countdownElements.days, days);
+      animateValue(countdownElements.hours, hours);
+      animateValue(countdownElements.minutes, minutes);
+      animateValue(countdownElements.seconds, seconds);
+    } else {
+      // Event has started
+      if (countdownElements.days) countdownElements.days.textContent = '00';
+      if (countdownElements.hours) countdownElements.hours.textContent = '00';
+      if (countdownElements.minutes) countdownElements.minutes.textContent = '00';
+      if (countdownElements.seconds) countdownElements.seconds.textContent = '00';
+    }
+  }
+  
+  function animateValue(element, newValue) {
+    if (!element) return;
+    const formattedValue = String(newValue).padStart(2, '0');
+    if (element.textContent !== formattedValue) {
+      element.textContent = formattedValue;
     }
   }
 
@@ -95,12 +145,19 @@ function initScheduleTabs() {
   const dayButtons = document.querySelectorAll('.schedule-day');
   const scheduleContents = document.querySelectorAll('.schedule-content');
 
+  if (!dayButtons.length) return;
+
   dayButtons.forEach(button => {
     button.addEventListener('click', () => {
       // Remove active class from all buttons
-      dayButtons.forEach(btn => btn.classList.remove('active'));
+      dayButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+      
       // Add active class to clicked button
       button.classList.add('active');
+      button.setAttribute('aria-selected', 'true');
 
       // Hide all schedule contents
       scheduleContents.forEach(content => {
@@ -108,12 +165,43 @@ function initScheduleTabs() {
         content.classList.remove('active');
       });
 
-      // Show the corresponding schedule content
+      // Show the corresponding schedule content with animation
       const day = button.dataset.day;
       const targetContent = document.getElementById(`schedule-day-${day}`);
       if (targetContent) {
         targetContent.style.display = 'block';
         targetContent.classList.add('active');
+        
+        // Trigger stagger animation for schedule items
+        const items = targetContent.querySelectorAll('.schedule-item');
+        items.forEach((item, index) => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(12px)';
+          
+          setTimeout(() => {
+            item.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, index * 60);
+        });
+      }
+    });
+    
+    // Keyboard navigation
+    button.addEventListener('keydown', (e) => {
+      const buttons = Array.from(dayButtons);
+      const currentIndex = buttons.indexOf(button);
+      
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % buttons.length;
+        buttons[nextIndex].focus();
+        buttons[nextIndex].click();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+        buttons[prevIndex].focus();
+        buttons[prevIndex].click();
       }
     });
   });
@@ -127,12 +215,19 @@ function initTeamTabs() {
   const teamTabs = document.querySelectorAll('.team-tab');
   const teamGrids = document.querySelectorAll('.teams-grid');
 
+  if (!teamTabs.length) return;
+
   teamTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       // Remove active class from all tabs
-      teamTabs.forEach(t => t.classList.remove('active'));
+      teamTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
       // Add active class to clicked tab
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
 
       // Hide all team grids
       teamGrids.forEach(grid => {
@@ -140,12 +235,43 @@ function initTeamTabs() {
         grid.classList.remove('active');
       });
 
-      // Show the corresponding team grid
+      // Show the corresponding team grid with stagger animation
       const game = tab.dataset.game;
       const targetGrid = document.getElementById(`teams-${game}`);
       if (targetGrid) {
         targetGrid.style.display = 'grid';
         targetGrid.classList.add('active');
+        
+        // Animate cards
+        const cards = targetGrid.querySelectorAll('.team-card');
+        cards.forEach((card, index) => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(16px)';
+          
+          setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, index * 80);
+        });
+      }
+    });
+    
+    // Keyboard navigation
+    tab.addEventListener('keydown', (e) => {
+      const tabs = Array.from(teamTabs);
+      const currentIndex = tabs.indexOf(tab);
+      
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % tabs.length;
+        tabs[nextIndex].focus();
+        tabs[nextIndex].click();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        tabs[prevIndex].focus();
+        tabs[prevIndex].click();
       }
     });
   });
@@ -156,22 +282,75 @@ function initTeamTabs() {
    ======================================== */
 
 function initScrollAnimations() {
-  const animatedElements = document.querySelectorAll('.animate-on-scroll');
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) {
+    // Show all elements immediately
+    document.querySelectorAll('.animate-fade-up, .animate-fade-in, .animate-scale-in').forEach(el => {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  const animatedElements = document.querySelectorAll('.animate-fade-up, .animate-fade-in, .animate-scale-in');
+
+  if (!animatedElements.length) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animated');
-        // Optional: unobserve after animation
-        // observer.unobserve(entry.target);
+        entry.target.classList.add('is-visible');
+        // Optionally unobserve after animation
+        observer.unobserve(entry.target);
       }
     });
   }, {
     threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    rootMargin: '0px 0px -40px 0px'
   });
 
   animatedElements.forEach(el => observer.observe(el));
+}
+
+/* ========================================
+   STAGGERED ANIMATIONS FOR GRIDS
+   ======================================== */
+
+function initStaggeredAnimations() {
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) return;
+
+  const staggerContainers = document.querySelectorAll('.stagger-children');
+  
+  if (!staggerContainers.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const children = entry.target.children;
+        Array.from(children).forEach((child, index) => {
+          child.style.opacity = '0';
+          child.style.transform = 'translateY(20px)';
+          
+          setTimeout(() => {
+            child.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            child.style.opacity = '1';
+            child.style.transform = 'translateY(0)';
+          }, index * 60);
+        });
+        
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  staggerContainers.forEach(container => observer.observe(container));
 }
 
 /* ========================================
@@ -180,34 +359,72 @@ function initScrollAnimations() {
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    
+    // Skip if it's just "#"
+    if (href === '#') return;
+    
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    const target = document.querySelector(href);
+    
     if (target) {
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
       target.scrollIntoView({
-        behavior: 'smooth',
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
         block: 'start'
       });
+      
+      // Update focus for accessibility
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
     }
   });
 });
 
 /* ========================================
-   TICKET PURCHASE (Placeholder)
+   FLOW SECTION ANIMATION
    ======================================== */
 
-function initTicketPurchase() {
-  const buyButtons = document.querySelectorAll('.ticket-card .btn');
+function initFlowAnimation() {
+  const flowBars = document.querySelectorAll('.flow-bar');
   
-  buyButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      // Placeholder for ticket purchase functionality
-      alert('Ticket purchasing will be available soon! Stay tuned for updates.');
+  if (!flowBars.length) return;
+  
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) {
+    flowBars.forEach(bar => {
+      bar.style.animation = 'none';
     });
-  });
+  }
 }
 
-// Initialize ticket purchase
-document.addEventListener('DOMContentLoaded', initTicketPurchase);
+// Initialize flow animation
+document.addEventListener('DOMContentLoaded', initFlowAnimation);
 
+/* ========================================
+   UTILITY: THROTTLE FUNCTION
+   ======================================== */
 
+function throttle(func, limit) {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+/* ========================================
+   PERFORMANCE: LAZY LOADING SUPPORT
+   ======================================== */
+
+// Add loading="lazy" to images if not already present
+document.querySelectorAll('img:not([loading])').forEach(img => {
+  img.setAttribute('loading', 'lazy');
+});
