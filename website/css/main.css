@@ -2,8 +2,8 @@
  * NECS 2026 - Main Stylesheet
  * National Esports Championship Series 2026
  * 
- * Core styles, components, and utilities for the promotional website.
- * Modern, clean design with subtle flow and refined aesthetics.
+ * Nashville Rhythm Theme: Flow, tempo, cadence, and structure
+ * Dark navy base with warm tan/beige neutrals and muted gold accent
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -51,23 +51,23 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-accent-primary);
+  background: var(--color-accent-gold);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-magenta);
+  background: var(--color-accent-gold-light);
 }
 
 /* Selection */
 ::selection {
-  background-color: var(--color-accent-primary);
-  color: var(--color-text-primary);
+  background-color: var(--color-accent-gold);
+  color: var(--color-bg-primary);
 }
 
 /* Focus Styles - Accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-accent-gold);
   outline-offset: 2px;
 }
 
@@ -101,13 +101,13 @@ p {
 }
 
 a {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   text-decoration: none;
   transition: color var(--transition-fast) var(--ease-out);
 }
 
 a:hover {
-  color: var(--color-accent-magenta);
+  color: var(--color-accent-gold-light);
 }
 
 /* ========================================
@@ -127,14 +127,18 @@ a:hover {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-cyan));
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.text-gold {
+  color: var(--color-accent-gold);
+}
+
 .text-glow {
-  text-shadow: 0 0 30px var(--color-glow-primary);
+  text-shadow: 0 0 30px var(--color-glow-gold);
 }
 
 .sr-only {
@@ -150,53 +154,22 @@ a:hover {
 }
 
 /* ========================================
-   VISUAL FLOW DIVIDERS
+   RHYTHM SECTION - Nashville Theme
    ======================================== */
 
-.flow-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--color-accent-primary) 20%, 
-    var(--color-accent-cyan) 50%, 
-    var(--color-accent-primary) 80%, 
-    transparent 100%
-  );
-  opacity: 0.4;
-}
-
-.flow-divider-subtle {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--color-border-default) 30%, 
-    var(--color-border-hover) 50%, 
-    var(--color-border-default) 70%, 
-    transparent 100%
-  );
-}
-
-/* ========================================
-   VISUAL FLOW TRANSITION SECTION
-   ======================================== */
-
-.flow-section {
-  padding: var(--space-12) 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.rhythm-section {
+  padding: var(--space-16) 0;
   background: linear-gradient(180deg, 
     var(--color-bg-primary) 0%, 
-    var(--color-bg-secondary) 100%
+    var(--color-bg-secondary) 50%,
+    var(--color-bg-primary) 100%
   );
   position: relative;
   overflow: hidden;
 }
 
-.flow-section::before,
-.flow-section::after {
+.rhythm-section::before,
+.rhythm-section::after {
   content: '';
   position: absolute;
   left: 0;
@@ -204,78 +177,184 @@ a:hover {
   height: 1px;
   background: linear-gradient(90deg, 
     transparent 0%, 
-    var(--color-accent-primary) 25%, 
-    var(--color-accent-cyan) 50%, 
-    var(--color-accent-primary) 75%, 
+    var(--color-accent-gold) 30%, 
+    var(--color-accent-gold) 70%, 
     transparent 100%
   );
-  opacity: 0.3;
+  opacity: 0.25;
 }
 
-.flow-section::before {
+.rhythm-section::before {
   top: 0;
 }
 
-.flow-section::after {
+.rhythm-section::after {
   bottom: 0;
 }
 
-.flow-bars {
+.rhythm-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.rhythm-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  margin-bottom: var(--space-3);
+}
+
+.rhythm-text {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-8);
+}
+
+/* Equalizer Bars Visual */
+.rhythm-visual {
   display: flex;
   align-items: flex-end;
-  gap: var(--space-3);
-  height: 48px;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 40px;
+  margin-top: var(--space-4);
 }
 
-.flow-bar {
-  width: 3px;
+.rhythm-bar {
+  width: 4px;
   background: linear-gradient(180deg, 
-    var(--color-accent-primary) 0%, 
-    var(--color-accent-cyan) 100%
+    var(--color-accent-gold) 0%, 
+    var(--color-accent-gold-dark) 100%
   );
   border-radius: var(--radius-full);
-  animation: flowPulse 2s var(--ease-flow) infinite;
-  opacity: 0.7;
+  animation: rhythmPulse 1.8s var(--ease-flow) infinite;
+  opacity: 0.8;
 }
 
-.flow-bar:nth-child(1) {
-  height: 20px;
+.rhythm-bar:nth-child(1) {
+  height: 16px;
   animation-delay: 0ms;
 }
 
-.flow-bar:nth-child(2) {
-  height: 32px;
-  animation-delay: 150ms;
+.rhythm-bar:nth-child(2) {
+  height: 28px;
+  animation-delay: 200ms;
 }
 
-.flow-bar:nth-child(3) {
-  height: 48px;
-  animation-delay: 300ms;
+.rhythm-bar:nth-child(3) {
+  height: 40px;
+  animation-delay: 400ms;
 }
 
-.flow-bar:nth-child(4) {
-  height: 32px;
-  animation-delay: 450ms;
-}
-
-.flow-bar:nth-child(5) {
-  height: 20px;
+.rhythm-bar:nth-child(4) {
+  height: 28px;
   animation-delay: 600ms;
 }
 
-@keyframes flowPulse {
+.rhythm-bar:nth-child(5) {
+  height: 16px;
+  animation-delay: 800ms;
+}
+
+@keyframes rhythmPulse {
   0%, 100% {
     transform: scaleY(1);
-    opacity: 0.6;
+    opacity: 0.7;
   }
   50% {
-    transform: scaleY(0.6);
+    transform: scaleY(0.5);
     opacity: 1;
   }
 }
 
+/* Tempo Line Alternative */
+.tempo-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: 280px;
+  margin-top: var(--space-4);
+}
+
+.tempo-track {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
+}
+
+.tempo-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, 
+    var(--color-accent-gold) 0%, 
+    transparent 100%
+  );
+  animation: tempoFlow 3s var(--ease-flow) infinite;
+}
+
+@keyframes tempoFlow {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.tempo-marker {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent-gold);
+  border-radius: var(--radius-full);
+  opacity: 0.6;
+  animation: markerPulse 2s ease-in-out infinite;
+}
+
+.tempo-marker:nth-child(2) {
+  animation-delay: 300ms;
+}
+
+.tempo-marker:nth-child(4) {
+  animation-delay: 600ms;
+}
+
+@keyframes markerPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .flow-bar {
+  .rhythm-bar,
+  .tempo-track::after,
+  .tempo-marker {
     animation: none;
     opacity: 0.7;
   }
@@ -379,13 +458,13 @@ a:hover {
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-accent-gold);
   outline-offset: 3px;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
-  color: var(--color-text-primary);
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
+  color: var(--color-bg-primary);
   border-color: transparent;
   box-shadow: var(--shadow-glow-subtle);
 }
@@ -402,25 +481,25 @@ a:hover {
 .btn-secondary {
   background: transparent;
   color: var(--color-text-primary);
-  border-color: var(--color-accent-magenta);
+  border-color: var(--color-accent-blue);
 }
 
 .btn-secondary:hover {
-  background: var(--color-accent-magenta);
+  background: var(--color-accent-blue);
   color: var(--color-bg-primary);
-  box-shadow: var(--shadow-glow-magenta);
+  box-shadow: var(--shadow-glow-blue);
   transform: translateY(-2px);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-accent-primary);
-  border-color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
 }
 
 .btn-outline:hover {
-  background: var(--color-accent-primary);
-  color: var(--color-text-primary);
+  background: var(--color-accent-gold);
+  color: var(--color-bg-primary);
   transform: translateY(-2px);
 }
 
@@ -451,9 +530,9 @@ a:hover {
 }
 
 .card:hover {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-subtle);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .card-header {
@@ -479,7 +558,7 @@ a:hover {
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  background: rgba(8, 8, 13, 0.85);
+  background: rgba(10, 12, 16, 0.85);
   backdrop-filter: var(--glass-blur);
   border-bottom: var(--border-width-thin) solid var(--color-border-subtle);
   padding: var(--space-4) 0;
@@ -489,7 +568,7 @@ a:hover {
 }
 
 .navbar.scrolled {
-  background: rgba(8, 8, 13, 0.95);
+  background: rgba(10, 12, 16, 0.95);
   border-color: var(--color-border-default);
 }
 
@@ -520,13 +599,13 @@ a:hover {
 .navbar-logo-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-cyan));
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: var(--font-extrabold);
-  color: var(--color-text-primary);
+  color: var(--color-bg-primary);
   font-size: var(--text-lg);
 }
 
@@ -556,7 +635,7 @@ a:hover {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-cyan));
+  background: var(--color-accent-gold);
   transition: width var(--transition-base) var(--ease-out);
   border-radius: var(--radius-full);
 }
@@ -624,9 +703,9 @@ a:hover {
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at 20% 30%, rgba(124, 58, 237, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 30%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(74, 158, 206, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(184, 168, 144, 0.04) 0%, transparent 60%);
 }
 
 .hero-bg::after {
@@ -634,8 +713,8 @@ a:hover {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(124, 58, 237, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 58, 237, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(201, 162, 39, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.015) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
@@ -670,13 +749,13 @@ a:hover {
   align-items: center;
   gap: var(--space-2);
   background: var(--glass-bg);
-  border: var(--border-width-thin) solid var(--color-accent-primary);
+  border: var(--border-width-thin) solid var(--color-accent-gold);
   border-radius: var(--radius-full);
   padding: var(--space-2) var(--space-4);
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
   margin-bottom: var(--space-6);
@@ -685,10 +764,10 @@ a:hover {
 
 @keyframes badgePulse {
   0%, 100% { 
-    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.3); 
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.25); 
   }
   50% { 
-    box-shadow: 0 0 0 8px rgba(124, 58, 237, 0); 
+    box-shadow: 0 0 0 8px rgba(201, 162, 39, 0); 
   }
 }
 
@@ -701,7 +780,7 @@ a:hover {
 .hero-badge-dot {
   width: 8px;
   height: 8px;
-  background: var(--color-accent-primary);
+  background: var(--color-accent-gold);
   border-radius: var(--radius-full);
   animation: dotBlink 1.5s ease-in-out infinite;
 }
@@ -771,7 +850,7 @@ a:hover {
 }
 
 .hero-meta-item:hover .hero-meta-icon {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   background: var(--color-bg-elevated);
 }
 
@@ -797,7 +876,7 @@ a:hover {
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-widest);
   margin-bottom: var(--space-4);
@@ -811,7 +890,7 @@ a:hover {
   top: 50%;
   width: 24px;
   height: 1px;
-  background: var(--color-accent-primary);
+  background: var(--color-accent-gold);
   opacity: 0.5;
 }
 
@@ -850,8 +929,8 @@ a:hover {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent-primary), var(--color-accent-cyan), var(--color-accent-primary), transparent);
-  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  opacity: 0.3;
 }
 
 .teams-tabs {
@@ -878,20 +957,20 @@ a:hover {
 }
 
 .team-tab:hover {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   color: var(--color-text-primary);
   transform: translateY(-2px);
 }
 
 .team-tab:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-accent-gold);
   outline-offset: 2px;
 }
 
 .team-tab.active {
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
   border-color: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-bg-primary);
 }
 
 .teams-grid {
@@ -919,16 +998,16 @@ a:hover {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-cyan));
+  background: linear-gradient(90deg, var(--color-accent-gold), var(--color-accent-blue));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--transition-base) var(--ease-out);
 }
 
 .team-card:hover {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   transform: translateY(-6px);
-  box-shadow: var(--shadow-lg), var(--shadow-glow-subtle);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .team-card:hover::before {
@@ -948,12 +1027,12 @@ a:hover {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   transition: border-color var(--transition-fast) var(--ease-out);
 }
 
 .team-card:hover .team-logo {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
 }
 
 .team-name {
@@ -963,7 +1042,7 @@ a:hover {
 
 .team-game {
   font-size: var(--text-sm);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   margin-bottom: var(--space-4);
   font-weight: var(--font-medium);
 }
@@ -1018,7 +1097,7 @@ a:hover {
   right: 0;
   height: 50%;
   transform: translateY(-50%);
-  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(201, 162, 39, 0.04) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -1079,20 +1158,20 @@ a:hover {
 }
 
 .schedule-day:hover {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   color: var(--color-text-primary);
   transform: translateY(-2px);
 }
 
 .schedule-day:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-accent-gold);
   outline-offset: 2px;
 }
 
 .schedule-day.active {
-  background: var(--color-accent-primary);
-  border-color: var(--color-accent-primary);
-  color: var(--color-text-primary);
+  background: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+  color: var(--color-bg-primary);
 }
 
 .schedule-grid {
@@ -1115,7 +1194,7 @@ a:hover {
 }
 
 .schedule-item:hover {
-  border-color: var(--color-accent-primary);
+  border-color: var(--color-accent-gold);
   background: var(--color-bg-elevated);
   transform: translateX(4px);
 }
@@ -1124,7 +1203,7 @@ a:hover {
   font-family: var(--font-mono);
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
 }
 
 .schedule-match {
@@ -1154,7 +1233,7 @@ a:hover {
 }
 
 .status-live {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(220, 76, 76, 0.15);
   color: var(--color-status-live);
   animation: liveStatus 2s ease-in-out infinite;
 }
@@ -1171,12 +1250,12 @@ a:hover {
 }
 
 .status-upcoming {
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(228, 199, 102, 0.15);
   color: var(--color-status-upcoming);
 }
 
 .status-completed {
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(46, 170, 110, 0.15);
   color: var(--color-status-completed);
 }
 
@@ -1197,8 +1276,8 @@ a:hover {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent-primary), var(--color-accent-cyan), var(--color-accent-primary), transparent);
-  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  opacity: 0.3;
 }
 
 .tickets-section::after {
@@ -1208,7 +1287,7 @@ a:hover {
   right: -150px;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -1234,13 +1313,13 @@ a:hover {
 
 .ticket-card:hover {
   transform: translateY(-8px);
-  border-color: var(--color-accent-primary);
-  box-shadow: var(--shadow-xl), var(--shadow-glow-subtle);
+  border-color: var(--color-accent-gold);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .ticket-card.featured {
-  border-color: var(--color-accent-magenta);
-  background: linear-gradient(180deg, var(--color-bg-tertiary) 0%, rgba(124, 58, 237, 0.05) 100%);
+  border-color: var(--color-accent-gold);
+  background: linear-gradient(180deg, var(--color-bg-tertiary) 0%, rgba(201, 162, 39, 0.05) 100%);
 }
 
 @media (min-width: 1024px) {
@@ -1257,14 +1336,14 @@ a:hover {
   position: absolute;
   top: var(--space-4);
   right: var(--space-4);
-  background: linear-gradient(135deg, var(--color-accent-magenta), var(--color-accent-primary));
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--font-bold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
-  color: var(--color-text-primary);
+  color: var(--color-bg-primary);
 }
 
 .ticket-name {
@@ -1326,8 +1405,8 @@ a:hover {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent-primary), transparent);
-  opacity: 0.3;
+  background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+  opacity: 0.2;
 }
 
 .footer-grid {
@@ -1356,13 +1435,13 @@ a:hover {
 .footer-logo-icon {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-cyan));
+  background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: var(--font-extrabold);
-  color: var(--color-text-primary);
+  color: var(--color-bg-primary);
   font-size: var(--text-lg);
 }
 
@@ -1394,14 +1473,14 @@ a:hover {
 }
 
 .social-link:hover {
-  background: var(--color-accent-primary);
-  border-color: var(--color-accent-primary);
-  color: var(--color-text-primary);
+  background: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+  color: var(--color-bg-primary);
   transform: translateY(-3px);
 }
 
 .social-link:focus-visible {
-  outline: 2px solid var(--color-accent-primary);
+  outline: 2px solid var(--color-accent-gold);
   outline-offset: 2px;
 }
 
@@ -1429,7 +1508,7 @@ a:hover {
 }
 
 .footer-links a:hover {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
   padding-left: var(--space-2);
 }
 
@@ -1460,7 +1539,7 @@ a:hover {
 }
 
 .footer-legal-links a:hover {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-gold);
 }
 
 /* ========================================
@@ -1542,8 +1621,8 @@ a:hover {
     text-align: center;
   }
   
-  .flow-bars {
-    gap: var(--space-2);
+  .rhythm-section {
+    padding: var(--space-12) 0;
   }
 }
 
@@ -1587,7 +1666,7 @@ a:hover {
 @media print {
   .navbar,
   .hero-badge,
-  .flow-section,
+  .rhythm-section,
   .hero-cta .btn-secondary,
   .hero-cta .btn-outline,
   .footer-social,
@@ -1609,3 +1688,4 @@ a:hover {
     padding: 2rem 0;
   }
 }
+
