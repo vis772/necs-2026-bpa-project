@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTeamTabs();
   initScrollAnimations();
   initStaggeredAnimations();
+  initTeamsScrollReveal();
 });
 
 /* ========================================
@@ -167,7 +168,7 @@ function initScheduleTabs() {
 
       // Show the corresponding schedule content with animation
       const day = button.dataset.day;
-      const targetContent = document.getElementById(`schedule-day-${day}`);
+      const targetContent = document.getElementById('schedule-day-' + day);
       if (targetContent) {
         targetContent.style.display = 'block';
         targetContent.classList.add('active');
@@ -235,24 +236,26 @@ function initTeamTabs() {
         grid.classList.remove('active');
       });
 
-      // Show the corresponding team grid with stagger animation
+      // Show the corresponding team grid with cinematic animation
       const game = tab.dataset.game;
-      const targetGrid = document.getElementById(`teams-${game}`);
+      const targetGrid = document.getElementById('teams-' + game);
       if (targetGrid) {
         targetGrid.style.display = 'grid';
         targetGrid.classList.add('active');
         
-        // Animate cards
+        // Animate cards with Apple-style reveal
         const cards = targetGrid.querySelectorAll('.team-card');
         cards.forEach((card, index) => {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(16px)';
+          // Reset state
+          card.classList.remove('is-revealed');
+          card.style.transitionDelay = (0.05 + (index * 0.1)) + 's';
           
-          setTimeout(() => {
-            card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, index * 80);
+          // Trigger reveal after a frame
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              card.classList.add('is-revealed');
+            });
+          });
         });
       }
     });
@@ -301,7 +304,6 @@ function initScrollAnimations() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
-        // Optionally unobserve after animation
         observer.unobserve(entry.target);
       }
     });
@@ -323,7 +325,7 @@ function initStaggeredAnimations() {
   
   if (prefersReducedMotion) return;
 
-  const staggerContainers = document.querySelectorAll('.stagger-children');
+  const staggerContainers = document.querySelectorAll('.stagger-children:not(.teams-grid)');
   
   if (!staggerContainers.length) return;
 
@@ -351,6 +353,93 @@ function initStaggeredAnimations() {
   });
 
   staggerContainers.forEach(container => observer.observe(container));
+}
+
+/* ========================================
+   TEAMS SECTION - Apple-Style Scroll Reveal
+   ======================================== */
+
+function initTeamsScrollReveal() {
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (prefersReducedMotion) {
+    // Show all elements immediately
+    document.querySelectorAll('.teams-section .section-header').forEach(el => el.classList.add('is-revealed'));
+    document.querySelectorAll('.teams-tabs').forEach(el => el.classList.add('is-revealed'));
+    document.querySelectorAll('.team-card').forEach(el => el.classList.add('is-revealed'));
+    return;
+  }
+
+  const teamsSection = document.querySelector('.teams-section');
+  if (!teamsSection) return;
+
+  // Elements to animate
+  const sectionHeader = teamsSection.querySelector('.section-header');
+  const teamsTabs = teamsSection.querySelector('.teams-tabs');
+
+  // Create scroll-based reveal with Intersection Observer
+  const createObserver = (element, options) => {
+    options = options || {};
+    const defaultOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -80px 0px'
+    };
+    
+    const mergedOptions = Object.assign({}, defaultOptions, options);
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, mergedOptions);
+    
+    observer.observe(element);
+  };
+
+  // Observe section header
+  if (sectionHeader) {
+    createObserver(sectionHeader, { threshold: 0.3, rootMargin: '0px 0px -50px 0px' });
+  }
+
+  // Observe tabs with slight delay after header
+  if (teamsTabs) {
+    createObserver(teamsTabs, { threshold: 0.5, rootMargin: '0px 0px -30px 0px' });
+  }
+
+  // Observe team cards in the initially visible grid
+  const observeTeamCards = () => {
+    const visibleGrid = teamsSection.querySelector('.teams-grid.active, .teams-grid[style*="display: grid"]');
+    if (!visibleGrid) return;
+    
+    const cards = visibleGrid.querySelectorAll('.team-card');
+    
+    cards.forEach((card, index) => {
+      // Add custom transition delay for stagger effect
+      const baseDelay = 0.1;
+      const staggerDelay = index * 0.12;
+      
+      // Center card (index 1) gets emphasis - slightly earlier reveal
+      if (index === 1) {
+        card.style.transitionDelay = baseDelay + 's';
+        card.style.transitionDuration = '0.8s';
+      } else {
+        card.style.transitionDelay = (baseDelay + staggerDelay) + 's';
+      }
+      
+      const threshold = index === 1 ? 0.08 : 0.12;
+      
+      createObserver(card, { 
+        threshold: threshold, 
+        rootMargin: '0px 0px -60px 0px' 
+      });
+    });
+  };
+  
+  observeTeamCards();
 }
 
 /* ========================================
@@ -411,11 +500,13 @@ document.addEventListener('DOMContentLoaded', initFlowAnimation);
 
 function throttle(func, limit) {
   let inThrottle;
-  return function(...args) {
+  return function() {
+    const args = arguments;
+    const context = this;
     if (!inThrottle) {
-      func.apply(this, args);
+      func.apply(context, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(function() { inThrottle = false; }, limit);
     }
   };
 }
