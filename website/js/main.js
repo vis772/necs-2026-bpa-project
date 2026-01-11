@@ -2,8 +2,8 @@
  * NECS 2026 - Main JavaScript
  * National Esports Championship Series 2026
  * 
- * Interactive functionality for the promotional website.
- * Features smooth scroll animations and refined interactions.
+ * Apple-style scroll-driven storytelling animations
+ * Features cinematic, controlled, subtle motion tied to scroll position
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   initScheduleTabs();
   initTeamTabs();
-  initScrollAnimations();
-  initStaggeredAnimations();
-  initTeamsScrollReveal();
+  initAppleScrollReveal();
 });
 
 /* ========================================
@@ -32,7 +30,6 @@ function initNavbar() {
       toggle.setAttribute('aria-expanded', isActive);
     });
     
-    // Handle keyboard navigation
     toggle.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -41,7 +38,6 @@ function initNavbar() {
     });
   }
 
-  // Close menu on link click
   const navLinks = document.querySelectorAll('.navbar-link');
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -51,7 +47,6 @@ function initNavbar() {
     });
   });
 
-  // Close menu on escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu?.classList.contains('active')) {
       menu.classList.remove('active');
@@ -61,7 +56,6 @@ function initNavbar() {
     }
   });
 
-  // Navbar background on scroll
   if (navbar) {
     let ticking = false;
     
@@ -95,10 +89,8 @@ function initCountdown() {
     seconds: document.getElementById('countdown-seconds')
   };
 
-  // Check if elements exist
   if (!countdownElements.days) return;
 
-  // Event date: May 6, 2026
   const eventDate = new Date('2026-05-06T09:00:00').getTime();
 
   function updateCountdown() {
@@ -111,13 +103,11 @@ function initCountdown() {
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      // Animate number changes
       animateValue(countdownElements.days, days);
       animateValue(countdownElements.hours, hours);
       animateValue(countdownElements.minutes, minutes);
       animateValue(countdownElements.seconds, seconds);
     } else {
-      // Event has started
       if (countdownElements.days) countdownElements.days.textContent = '00';
       if (countdownElements.hours) countdownElements.hours.textContent = '00';
       if (countdownElements.minutes) countdownElements.minutes.textContent = '00';
@@ -133,7 +123,6 @@ function initCountdown() {
     }
   }
 
-  // Initial call and interval
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
@@ -150,45 +139,40 @@ function initScheduleTabs() {
 
   dayButtons.forEach(button => {
     button.addEventListener('click', () => {
-      // Remove active class from all buttons
       dayButtons.forEach(btn => {
         btn.classList.remove('active');
         btn.setAttribute('aria-selected', 'false');
       });
       
-      // Add active class to clicked button
       button.classList.add('active');
       button.setAttribute('aria-selected', 'true');
 
-      // Hide all schedule contents
       scheduleContents.forEach(content => {
         content.style.display = 'none';
         content.classList.remove('active');
       });
 
-      // Show the corresponding schedule content with animation
       const day = button.dataset.day;
       const targetContent = document.getElementById('schedule-day-' + day);
       if (targetContent) {
         targetContent.style.display = 'block';
         targetContent.classList.add('active');
         
-        // Trigger stagger animation for schedule items
+        // Animate schedule items with stagger
         const items = targetContent.querySelectorAll('.schedule-item');
         items.forEach((item, index) => {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(12px)';
+          item.classList.remove('is-revealed');
+          item.style.transitionDelay = (index * 0.08) + 's';
           
-          setTimeout(() => {
-            item.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
-            item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-          }, index * 60);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              item.classList.add('is-revealed');
+            });
+          });
         });
       }
     });
     
-    // Keyboard navigation
     button.addEventListener('keydown', (e) => {
       const buttons = Array.from(dayButtons);
       const currentIndex = buttons.indexOf(button);
@@ -220,23 +204,19 @@ function initTeamTabs() {
 
   teamTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Remove active class from all tabs
       teamTabs.forEach(t => {
         t.classList.remove('active');
         t.setAttribute('aria-selected', 'false');
       });
       
-      // Add active class to clicked tab
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
 
-      // Hide all team grids
       teamGrids.forEach(grid => {
         grid.style.display = 'none';
         grid.classList.remove('active');
       });
 
-      // Show the corresponding team grid with cinematic animation
       const game = tab.dataset.game;
       const targetGrid = document.getElementById('teams-' + game);
       if (targetGrid) {
@@ -246,11 +226,11 @@ function initTeamTabs() {
         // Animate cards with Apple-style reveal
         const cards = targetGrid.querySelectorAll('.team-card');
         cards.forEach((card, index) => {
-          // Reset state
           card.classList.remove('is-revealed');
-          card.style.transitionDelay = (0.05 + (index * 0.1)) + 's';
+          // Center card (index 1) appears first
+          const delay = index === 1 ? 0 : 0.05 + (index * 0.1);
+          card.style.transitionDelay = delay + 's';
           
-          // Trigger reveal after a frame
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
               card.classList.add('is-revealed');
@@ -260,7 +240,6 @@ function initTeamTabs() {
       }
     });
     
-    // Keyboard navigation
     tab.addEventListener('keydown', (e) => {
       const tabs = Array.from(teamTabs);
       const currentIndex = tabs.indexOf(tab);
@@ -281,136 +260,129 @@ function initTeamTabs() {
 }
 
 /* ========================================
-   SCROLL ANIMATIONS
+   APPLE-STYLE SCROLL REVEAL SYSTEM
    ======================================== */
 
-function initScrollAnimations() {
+function initAppleScrollReveal() {
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
   if (prefersReducedMotion) {
-    // Show all elements immediately
-    document.querySelectorAll('.animate-fade-up, .animate-fade-in, .animate-scale-in').forEach(el => {
-      el.classList.add('is-visible');
-    });
+    // Immediately reveal all elements
+    revealAllElements();
     return;
   }
 
-  const animatedElements = document.querySelectorAll('.animate-fade-up, .animate-fade-in, .animate-scale-in');
+  // Initialize all section observers
+  initHeroReveal();
+  initRhythmReveal();
+  initTeamsReveal();
+  initScheduleReveal();
+  initTicketsReveal();
+  initFooterReveal();
+}
 
-  if (!animatedElements.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
-  animatedElements.forEach(el => observer.observe(el));
+function revealAllElements() {
+  // Reveal all scroll-animated elements immediately
+  document.querySelectorAll('.scroll-reveal-item').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.section-header').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.team-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.ticket-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.schedule-item').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.teams-tabs').forEach(el => el.classList.add('is-revealed'));
 }
 
 /* ========================================
-   STAGGERED ANIMATIONS FOR GRIDS
+   HERO SECTION REVEAL
    ======================================== */
 
-function initStaggeredAnimations() {
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (prefersReducedMotion) return;
+function initHeroReveal() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
 
-  const staggerContainers = document.querySelectorAll('.stagger-children:not(.teams-grid)');
+  const heroItems = hero.querySelectorAll('.scroll-reveal-item');
   
-  if (!staggerContainers.length) return;
+  // Hero reveals on page load with slight delay
+  setTimeout(() => {
+    heroItems.forEach(item => {
+      item.classList.add('is-revealed');
+    });
+  }, 100);
+}
 
+/* ========================================
+   RHYTHM SECTION REVEAL
+   ======================================== */
+
+function initRhythmReveal() {
+  const rhythmSection = document.querySelector('.rhythm-section');
+  if (!rhythmSection) return;
+
+  const rhythmItems = rhythmSection.querySelectorAll('.scroll-reveal-item');
+  
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const children = entry.target.children;
-        Array.from(children).forEach((child, index) => {
-          child.style.opacity = '0';
-          child.style.transform = 'translateY(20px)';
-          
-          setTimeout(() => {
-            child.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-            child.style.opacity = '1';
-            child.style.transform = 'translateY(0)';
-          }, index * 60);
+        rhythmItems.forEach(item => {
+          item.classList.add('is-revealed');
         });
-        
         observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -30px 0px'
+    threshold: 0.3,
+    rootMargin: '0px 0px -50px 0px'
   });
 
-  staggerContainers.forEach(container => observer.observe(container));
+  observer.observe(rhythmSection);
 }
 
 /* ========================================
-   TEAMS SECTION - Apple-Style Scroll Reveal
+   TEAMS SECTION REVEAL
    ======================================== */
 
-function initTeamsScrollReveal() {
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (prefersReducedMotion) {
-    // Show all elements immediately
-    document.querySelectorAll('.teams-section .section-header').forEach(el => el.classList.add('is-revealed'));
-    document.querySelectorAll('.teams-tabs').forEach(el => el.classList.add('is-revealed'));
-    document.querySelectorAll('.team-card').forEach(el => el.classList.add('is-revealed'));
-    return;
-  }
-
+function initTeamsReveal() {
   const teamsSection = document.querySelector('.teams-section');
   if (!teamsSection) return;
 
-  // Elements to animate
   const sectionHeader = teamsSection.querySelector('.section-header');
   const teamsTabs = teamsSection.querySelector('.teams-tabs');
-
-  // Create scroll-based reveal with Intersection Observer
-  const createObserver = (element, options) => {
-    options = options || {};
-    const defaultOptions = {
-      threshold: 0.15,
-      rootMargin: '0px 0px -80px 0px'
-    };
-    
-    const mergedOptions = Object.assign({}, defaultOptions, options);
-    
-    const observer = new IntersectionObserver((entries) => {
+  
+  // Observer for section header
+  if (sectionHeader) {
+    const headerObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
+          headerObserver.unobserve(entry.target);
         }
       });
-    }, mergedOptions);
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    });
     
-    observer.observe(element);
-  };
-
-  // Observe section header
-  if (sectionHeader) {
-    createObserver(sectionHeader, { threshold: 0.3, rootMargin: '0px 0px -50px 0px' });
+    headerObserver.observe(sectionHeader);
   }
 
-  // Observe tabs with slight delay after header
+  // Observer for tabs
   if (teamsTabs) {
-    createObserver(teamsTabs, { threshold: 0.5, rootMargin: '0px 0px -30px 0px' });
+    const tabsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          tabsObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.5,
+      rootMargin: '0px 0px -30px 0px'
+    });
+    
+    tabsObserver.observe(teamsTabs);
   }
 
-  // Observe team cards in the initially visible grid
+  // Observer for team cards
   const observeTeamCards = () => {
     const visibleGrid = teamsSection.querySelector('.teams-grid.active, .teams-grid[style*="display: grid"]');
     if (!visibleGrid) return;
@@ -418,28 +390,191 @@ function initTeamsScrollReveal() {
     const cards = visibleGrid.querySelectorAll('.team-card');
     
     cards.forEach((card, index) => {
-      // Add custom transition delay for stagger effect
-      const baseDelay = 0.1;
-      const staggerDelay = index * 0.12;
+      // Center card (index 1) gets emphasis
+      const baseDelay = index === 1 ? 0 : 0.1 + (index * 0.12);
+      card.style.transitionDelay = baseDelay + 's';
       
-      // Center card (index 1) gets emphasis - slightly earlier reveal
-      if (index === 1) {
-        card.style.transitionDelay = baseDelay + 's';
-        card.style.transitionDuration = '0.8s';
-      } else {
-        card.style.transitionDelay = (baseDelay + staggerDelay) + 's';
-      }
-      
-      const threshold = index === 1 ? 0.08 : 0.12;
-      
-      createObserver(card, { 
-        threshold: threshold, 
-        rootMargin: '0px 0px -60px 0px' 
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: index === 1 ? 0.08 : 0.12,
+        rootMargin: '0px 0px -60px 0px'
       });
+      
+      cardObserver.observe(card);
     });
   };
   
   observeTeamCards();
+}
+
+/* ========================================
+   SCHEDULE SECTION REVEAL
+   ======================================== */
+
+function initScheduleReveal() {
+  const scheduleSection = document.querySelector('.schedule-section');
+  if (!scheduleSection) return;
+
+  const sectionHeader = scheduleSection.querySelector('.section-header');
+  const countdown = scheduleSection.querySelector('.countdown-wrapper');
+  const scheduleDays = scheduleSection.querySelector('.schedule-days');
+  const scheduleItems = scheduleSection.querySelectorAll('.schedule-content.active .schedule-item, #schedule-day-1 .schedule-item');
+
+  // Observer for section header
+  if (sectionHeader) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          headerObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    headerObserver.observe(sectionHeader);
+  }
+
+  // Observer for countdown
+  if (countdown) {
+    const countdownObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          countdownObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.4,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    
+    countdownObserver.observe(countdown);
+  }
+
+  // Observer for day selector
+  if (scheduleDays) {
+    const daysObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          daysObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.5,
+      rootMargin: '0px 0px -30px 0px'
+    });
+    
+    daysObserver.observe(scheduleDays);
+  }
+
+  // Observer for schedule items with stagger
+  scheduleItems.forEach((item, index) => {
+    item.style.transitionDelay = (index * 0.08) + 's';
+    
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          itemObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    
+    itemObserver.observe(item);
+  });
+}
+
+/* ========================================
+   TICKETS SECTION REVEAL
+   ======================================== */
+
+function initTicketsReveal() {
+  const ticketsSection = document.querySelector('.tickets-section');
+  if (!ticketsSection) return;
+
+  const sectionHeader = ticketsSection.querySelector('.section-header');
+  const ticketCards = ticketsSection.querySelectorAll('.ticket-card');
+
+  // Observer for section header
+  if (sectionHeader) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          headerObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    headerObserver.observe(sectionHeader);
+  }
+
+  // Observer for ticket cards with stagger
+  ticketCards.forEach((card, index) => {
+    // Featured card (center) reveals first
+    const isFeatured = card.classList.contains('featured');
+    const delay = isFeatured ? 0 : (index * 0.12);
+    card.style.transitionDelay = delay + 's';
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: isFeatured ? 0.1 : 0.15,
+      rootMargin: '0px 0px -60px 0px'
+    });
+    
+    cardObserver.observe(card);
+  });
+}
+
+/* ========================================
+   FOOTER REVEAL
+   ======================================== */
+
+function initFooterReveal() {
+  const footer = document.querySelector('.footer');
+  if (!footer) return;
+
+  const footerItems = footer.querySelectorAll('.scroll-reveal-item');
+  
+  footerItems.forEach((item, index) => {
+    item.style.transitionDelay = (index * 0.08) + 's';
+    
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          itemObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -30px 0px'
+    });
+    
+    itemObserver.observe(item);
+  });
 }
 
 /* ========================================
@@ -450,14 +585,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const href = this.getAttribute('href');
     
-    // Skip if it's just "#"
     if (href === '#') return;
     
     e.preventDefault();
     const target = document.querySelector(href);
     
     if (target) {
-      // Check for reduced motion preference
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
       target.scrollIntoView({
@@ -465,34 +598,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         block: 'start'
       });
       
-      // Update focus for accessibility
       target.setAttribute('tabindex', '-1');
       target.focus({ preventScroll: true });
     }
   });
 });
-
-/* ========================================
-   FLOW SECTION ANIMATION
-   ======================================== */
-
-function initFlowAnimation() {
-  const flowBars = document.querySelectorAll('.flow-bar');
-  
-  if (!flowBars.length) return;
-  
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (prefersReducedMotion) {
-    flowBars.forEach(bar => {
-      bar.style.animation = 'none';
-    });
-  }
-}
-
-// Initialize flow animation
-document.addEventListener('DOMContentLoaded', initFlowAnimation);
 
 /* ========================================
    UTILITY: THROTTLE FUNCTION
@@ -515,7 +625,6 @@ function throttle(func, limit) {
    PERFORMANCE: LAZY LOADING SUPPORT
    ======================================== */
 
-// Add loading="lazy" to images if not already present
 document.querySelectorAll('img:not([loading])').forEach(img => {
   img.setAttribute('loading', 'lazy');
 });

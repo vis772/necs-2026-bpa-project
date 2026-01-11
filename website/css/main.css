@@ -361,15 +361,76 @@ a:hover {
 }
 
 /* ========================================
-   SCROLL ANIMATIONS
+   APPLE-STYLE SCROLL ANIMATIONS
    ======================================== */
 
+/* Base easing for all scroll animations - slow, cinematic, natural */
+:root {
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-apple-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-reveal: 0.9s;
+  --duration-reveal-fast: 0.7s;
+}
+
+/* ========================================
+   SCROLL REVEAL - Base Classes
+   ======================================== */
+
+/* Fade up - primary reveal animation */
+[data-scroll-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+  will-change: opacity, transform;
+}
+
+[data-scroll-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scale reveal - for cards and containers */
+[data-scroll-reveal="scale"] {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+[data-scroll-reveal="scale"].is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Fade only - for subtle elements */
+[data-scroll-reveal="fade"] {
+  opacity: 0;
+  transform: none;
+  transition: opacity var(--duration-reveal) var(--ease-apple-out);
+}
+
+[data-scroll-reveal="fade"].is-revealed {
+  opacity: 1;
+}
+
+/* Stagger delay system */
+[data-scroll-delay="1"] { transition-delay: 0.1s; }
+[data-scroll-delay="2"] { transition-delay: 0.2s; }
+[data-scroll-delay="3"] { transition-delay: 0.3s; }
+[data-scroll-delay="4"] { transition-delay: 0.4s; }
+[data-scroll-delay="5"] { transition-delay: 0.5s; }
+[data-scroll-delay="6"] { transition-delay: 0.6s; }
+
+/* Legacy animation classes (compatibility) */
 .animate-fade-up {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(30px);
   transition: 
-    opacity var(--transition-slow) var(--ease-out-expo),
-    transform var(--transition-slow) var(--ease-out-expo);
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
 }
 
 .animate-fade-up.is-visible {
@@ -379,7 +440,7 @@ a:hover {
 
 .animate-fade-in {
   opacity: 0;
-  transition: opacity var(--transition-slow) var(--ease-out);
+  transition: opacity var(--duration-reveal) var(--ease-apple-out);
 }
 
 .animate-fade-in.is-visible {
@@ -388,10 +449,10 @@ a:hover {
 
 .animate-scale-in {
   opacity: 0;
-  transform: scale(0.95);
+  transform: scale(0.97);
   transition: 
-    opacity var(--transition-slow) var(--ease-out-expo),
-    transform var(--transition-slow) var(--ease-out-expo);
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
 }
 
 .animate-scale-in.is-visible {
@@ -400,22 +461,246 @@ a:hover {
 }
 
 /* Stagger delays for children */
-.stagger-children > *:nth-child(1) { transition-delay: var(--stagger-1); }
-.stagger-children > *:nth-child(2) { transition-delay: var(--stagger-2); }
-.stagger-children > *:nth-child(3) { transition-delay: var(--stagger-3); }
-.stagger-children > *:nth-child(4) { transition-delay: var(--stagger-4); }
-.stagger-children > *:nth-child(5) { transition-delay: var(--stagger-5); }
-.stagger-children > *:nth-child(6) { transition-delay: var(--stagger-6); }
-.stagger-children > *:nth-child(7) { transition-delay: var(--stagger-7); }
-.stagger-children > *:nth-child(8) { transition-delay: var(--stagger-8); }
+.stagger-children > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-children > *:nth-child(2) { transition-delay: 80ms; }
+.stagger-children > *:nth-child(3) { transition-delay: 160ms; }
+.stagger-children > *:nth-child(4) { transition-delay: 240ms; }
+.stagger-children > *:nth-child(5) { transition-delay: 320ms; }
+.stagger-children > *:nth-child(6) { transition-delay: 400ms; }
+.stagger-children > *:nth-child(7) { transition-delay: 480ms; }
+.stagger-children > *:nth-child(8) { transition-delay: 560ms; }
+
+/* ========================================
+   HERO SECTION - Scroll Animations
+   ======================================== */
+
+.hero-content {
+  animation: none;
+}
+
+.hero .scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.hero .scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-badge.scroll-reveal-item { transition-delay: 0s; }
+.hero-title.scroll-reveal-item { transition-delay: 0.15s; }
+.hero-subtitle.scroll-reveal-item { transition-delay: 0.3s; }
+.hero-meta.scroll-reveal-item { transition-delay: 0.45s; }
+.hero-cta.scroll-reveal-item { transition-delay: 0.6s; }
+
+/* ========================================
+   RHYTHM SECTION - Scroll Animations  
+   ======================================== */
+
+.rhythm-section .scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.rhythm-section .scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rhythm-title.scroll-reveal-item { transition-delay: 0s; }
+.rhythm-text.scroll-reveal-item { transition-delay: 0.15s; }
+.rhythm-visual.scroll-reveal-item { transition-delay: 0.3s; }
+
+/* ========================================
+   SCHEDULE SECTION - Scroll Animations
+   ======================================== */
+
+.schedule-section .section-header .section-label,
+.schedule-section .section-header .section-title,
+.schedule-section .section-header .section-description {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.schedule-section .section-header.is-revealed .section-label {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.schedule-section .section-header.is-revealed .section-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.schedule-section .section-header.is-revealed .section-description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.countdown-wrapper.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.countdown-wrapper.scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.schedule-days.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity var(--duration-reveal-fast) var(--ease-apple-out),
+    transform var(--duration-reveal-fast) var(--ease-apple-out);
+}
+
+.schedule-days.scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.schedule-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 
+    opacity 0.6s var(--ease-apple-out),
+    transform 0.6s var(--ease-apple-out),
+    border-color var(--transition-base) var(--ease-out),
+    background-color var(--transition-base) var(--ease-out);
+}
+
+.schedule-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+   TICKETS SECTION - Scroll Animations
+   ======================================== */
+
+.tickets-section .section-header .section-label,
+.tickets-section .section-header .section-title,
+.tickets-section .section-header .section-description {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.tickets-section .section-header.is-revealed .section-label {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.tickets-section .section-header.is-revealed .section-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.tickets-section .section-header.is-revealed .section-description {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.ticket-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out),
+    border-color var(--transition-base) var(--ease-out),
+    box-shadow var(--transition-base) var(--ease-out);
+}
+
+.ticket-card.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Featured card appears slightly earlier */
+.ticket-card.featured {
+  transition-delay: 0s;
+}
+
+.ticket-card:first-child {
+  transition-delay: 0.1s;
+}
+
+.ticket-card:last-child {
+  transition-delay: 0.2s;
+}
+
+/* ========================================
+   FOOTER - Scroll Animations
+   ======================================== */
+
+.footer .scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: 
+    opacity var(--duration-reveal) var(--ease-apple-out),
+    transform var(--duration-reveal) var(--ease-apple-out);
+}
+
+.footer .scroll-reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footer-brand.scroll-reveal-item { transition-delay: 0s; }
+.footer-column:nth-child(2).scroll-reveal-item { transition-delay: 0.1s; }
+.footer-column:nth-child(3).scroll-reveal-item { transition-delay: 0.15s; }
+.footer-column:nth-child(4).scroll-reveal-item { transition-delay: 0.2s; }
+.footer-bottom.scroll-reveal-item { transition-delay: 0.3s; }
+
+/* ========================================
+   REDUCED MOTION - Accessibility
+   ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal],
+  [data-scroll-reveal="scale"],
+  [data-scroll-reveal="fade"],
   .animate-fade-up,
   .animate-fade-in,
-  .animate-scale-in {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .animate-scale-in,
+  .hero .scroll-reveal-item,
+  .rhythm-section .scroll-reveal-item,
+  .schedule-section .section-header .section-label,
+  .schedule-section .section-header .section-title,
+  .schedule-section .section-header .section-description,
+  .countdown-wrapper.scroll-reveal-item,
+  .schedule-days.scroll-reveal-item,
+  .schedule-item,
+  .tickets-section .section-header .section-label,
+  .tickets-section .section-header .section-title,
+  .tickets-section .section-header .section-description,
+  .ticket-card,
+  .footer .scroll-reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
