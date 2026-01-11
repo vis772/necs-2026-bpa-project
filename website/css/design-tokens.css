@@ -2,90 +2,90 @@
  * NECS 2026 Design System - Design Tokens
  * National Esports Championship Series 2026
  * 
- * Nashville Rhythm Theme: Dark navy base with warm neutrals and muted gold accent
+ * Purple-Blue Theme: Deep backgrounds with vibrant purple-blue accents
  */
 
 :root {
   /* ========================================
-     COLOR PALETTE - Nashville Rhythm Theme
+     COLOR PALETTE - Purple-Blue Theme
      ======================================== */
   
-  /* Primary Background Colors - Deep Navy/Black */
-  --color-bg-primary: #0a0c10;
-  --color-bg-secondary: #0f1218;
-  --color-bg-tertiary: #161a22;
-  --color-bg-elevated: #1c2129;
+  /* Primary Background Colors - Deep Purple-Black */
+  --color-bg-primary: #0a0a12;
+  --color-bg-secondary: #0f0f1a;
+  --color-bg-tertiary: #161622;
+  --color-bg-elevated: #1c1c2a;
   
-  /* Warm Neutral Colors - Tan/Beige */
-  --color-neutral-50: #faf8f5;
-  --color-neutral-100: #f5f0e8;
-  --color-neutral-200: #e8e0d4;
-  --color-neutral-300: #d4c9b8;
-  --color-neutral-400: #b8a890;
-  --color-neutral-500: #9a8970;
-  --color-neutral-600: #7a6d58;
-  --color-neutral-700: #5c5242;
-  --color-neutral-800: #3d362c;
-  --color-neutral-900: #1f1b16;
+  /* Cool Neutral Colors */
+  --color-neutral-50: #f5f5fa;
+  --color-neutral-100: #e8e8f0;
+  --color-neutral-200: #d4d4e0;
+  --color-neutral-300: #b8b8cc;
+  --color-neutral-400: #9090a8;
+  --color-neutral-500: #707088;
+  --color-neutral-600: #585870;
+  --color-neutral-700: #424258;
+  --color-neutral-800: #2c2c40;
+  --color-neutral-900: #161628;
   
-  /* Accent Colors - Muted Gold & Soft Electric Blue */
-  --color-accent-gold: #c9a227;
-  --color-accent-gold-light: #e4c766;
-  --color-accent-gold-dark: #9a7b1c;
-  --color-accent-blue: #4a9ece;
-  --color-accent-blue-light: #7fbde5;
-  --color-accent-blue-dark: #2d7ba8;
+  /* Accent Colors - Purple & Blue */
+  --color-accent-gold: #8b5cf6;
+  --color-accent-gold-light: #a78bfa;
+  --color-accent-gold-dark: #7c3aed;
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-light: #60a5fa;
+  --color-accent-blue-dark: #2563eb;
   
-  /* Primary accent - muted gold */
+  /* Primary accent - purple */
   --color-accent-primary: var(--color-accent-gold);
   --color-accent-secondary: var(--color-accent-blue);
   
   /* Legacy compatibility */
-  --color-accent-cyan: var(--color-accent-blue);
-  --color-accent-magenta: #a855f7;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-magenta: #d946ef;
   --color-accent-purple: #8b5cf6;
   
-  /* Extended Accent Shades */
-  --color-gold-50: #fefce8;
-  --color-gold-100: #fef9c3;
-  --color-gold-200: #fef08a;
-  --color-gold-300: #fde047;
-  --color-gold-400: #e4c766;
-  --color-gold-500: #c9a227;
-  --color-gold-600: #a37e1c;
-  --color-gold-700: #7a5d15;
-  --color-gold-800: #523e0e;
-  --color-gold-900: #2b2007;
+  /* Extended Accent Shades - Purple */
+  --color-gold-50: #faf5ff;
+  --color-gold-100: #f3e8ff;
+  --color-gold-200: #e9d5ff;
+  --color-gold-300: #d8b4fe;
+  --color-gold-400: #c084fc;
+  --color-gold-500: #a855f7;
+  --color-gold-600: #9333ea;
+  --color-gold-700: #7e22ce;
+  --color-gold-800: #6b21a8;
+  --color-gold-900: #581c87;
   
   /* Secondary Accent Colors */
-  --color-accent-orange: #e07a3d;
-  --color-accent-green: #2eaa6e;
-  --color-accent-red: #dc4c4c;
+  --color-accent-orange: #f97316;
+  --color-accent-green: #22c55e;
+  --color-accent-red: #ef4444;
   
   /* Glow Variants */
-  --color-glow-gold: rgba(201, 162, 39, 0.35);
-  --color-glow-blue: rgba(74, 158, 206, 0.35);
+  --color-glow-gold: rgba(139, 92, 246, 0.35);
+  --color-glow-blue: rgba(59, 130, 246, 0.35);
   --color-glow-primary: var(--color-glow-gold);
   
   /* Text Colors */
-  --color-text-primary: #faf8f5;
-  --color-text-secondary: #b8a890;
-  --color-text-muted: #7a6d58;
-  --color-text-disabled: #5c5242;
+  --color-text-primary: #f5f5fa;
+  --color-text-secondary: #9090a8;
+  --color-text-muted: #585870;
+  --color-text-disabled: #424258;
   
   /* Status Colors */
-  --color-status-live: #dc4c4c;
-  --color-status-upcoming: #e4c766;
-  --color-status-completed: #2eaa6e;
+  --color-status-live: #ef4444;
+  --color-status-upcoming: #a78bfa;
+  --color-status-completed: #22c55e;
   
   /* Game-Specific Colors */
   --color-valorant: #ff4655;
-  --color-rocket-league: #4a9ece;
+  --color-rocket-league: #3b82f6;
   --color-smash: #e60012;
   
   /* Border Colors */
-  --color-border-default: rgba(184, 168, 144, 0.12);
-  --color-border-hover: rgba(184, 168, 144, 0.25);
+  --color-border-default: rgba(139, 92, 246, 0.12);
+  --color-border-hover: rgba(139, 92, 246, 0.25);
   --color-border-accent: var(--color-accent-gold);
   --color-border-subtle: rgba(255, 255, 255, 0.05);
   
@@ -198,17 +198,17 @@
   /* Glow Shadows */
   --shadow-glow-primary: 0 0 20px var(--color-glow-gold), 0 0 40px var(--color-glow-gold);
   --shadow-glow-blue: 0 0 15px var(--color-glow-blue), 0 0 30px var(--color-glow-blue);
-  --shadow-glow-subtle: 0 0 30px rgba(201, 162, 39, 0.12);
+  --shadow-glow-subtle: 0 0 30px rgba(139, 92, 246, 0.12);
   
-  /* Card shadows with warm tint */
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 1px rgba(201, 162, 39, 0.1);
-  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 1px rgba(201, 162, 39, 0.2);
+  /* Card shadows with purple tint */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 1px rgba(139, 92, 246, 0.1);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 1px rgba(139, 92, 246, 0.2);
   
   /* Glassmorphism */
-  --glass-bg: rgba(15, 18, 24, 0.85);
-  --glass-bg-light: rgba(22, 26, 34, 0.75);
+  --glass-bg: rgba(15, 15, 26, 0.85);
+  --glass-bg-light: rgba(22, 22, 34, 0.75);
   --glass-blur: blur(16px);
-  --glass-border: rgba(184, 168, 144, 0.1);
+  --glass-border: rgba(139, 92, 246, 0.1);
   
   /* ========================================
      TRANSITIONS & ANIMATIONS
