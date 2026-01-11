@@ -278,6 +278,7 @@ function initAppleScrollReveal() {
   initRhythmReveal();
   initTeamsReveal();
   initScheduleReveal();
+  initConcertReveal();
   initTicketsReveal();
   initFooterReveal();
 }
@@ -290,6 +291,7 @@ function revealAllElements() {
   document.querySelectorAll('.ticket-card').forEach(el => el.classList.add('is-revealed'));
   document.querySelectorAll('.schedule-item').forEach(el => el.classList.add('is-revealed'));
   document.querySelectorAll('.teams-tabs').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.concert-card').forEach(el => el.classList.add('is-revealed'));
 }
 
 /* ========================================
@@ -494,6 +496,57 @@ function initScheduleReveal() {
     });
     
     itemObserver.observe(item);
+  });
+}
+
+/* ========================================
+   CONCERT SECTION REVEAL
+   ======================================== */
+
+function initConcertReveal() {
+  const concertSection = document.querySelector('.concert-section');
+  if (!concertSection) return;
+
+  const sectionHeader = concertSection.querySelector('.section-header');
+  const concertCards = concertSection.querySelectorAll('.concert-card');
+
+  // Observer for section header
+  if (sectionHeader) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          headerObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    headerObserver.observe(sectionHeader);
+  }
+
+  // Observer for concert cards with stagger
+  concertCards.forEach((card, index) => {
+    // Featured card reveals first
+    const isFeatured = card.classList.contains('concert-card-featured');
+    const delay = isFeatured ? 0 : (index * 0.1);
+    card.style.transitionDelay = delay + 's';
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: isFeatured ? 0.1 : 0.15,
+      rootMargin: '0px 0px -60px 0px'
+    });
+    
+    cardObserver.observe(card);
   });
 }
 

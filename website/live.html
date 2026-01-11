@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NECS 2026 Live - Watch the National Esports Championship Series live matches, stats, and scores.">
+  <meta name="theme-color" content="#8b5cf6">
+  
+  <title>NECS Live | Watch Live Matches</title>
+  
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  
+  <style>
+    /* Live Page Specific Styles */
+    .live-page {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #050508 0%, #0a0a14 50%, #0d0d1a 100%);
+    }
+    
+    .live-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 20, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+      padding: var(--space-4) 0;
+    }
+    
+    .live-header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+    
+    .live-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+    
+    .live-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-extrabold);
+      color: #0a0a12;
+      font-size: var(--text-lg);
+    }
+    
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+    }
+    
+    .live-badge .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: livePulse 1.5s ease-in-out infinite;
+    }
+    
+    .back-link {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: color 0.3s ease;
+    }
+    
+    .back-link:hover {
+      color: var(--color-accent-gold);
+    }
+    
+    .live-main {
+      padding-top: 100px;
+      padding-bottom: var(--space-16);
+    }
+    
+    .live-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+    
+    /* Video Section */
+    .video-section {
+      margin-bottom: var(--space-8);
+    }
+    
+    .video-wrapper {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 20, 40, 0.8), rgba(10, 10, 25, 0.9));
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+    
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: 
+        radial-gradient(ellipse at center, rgba(139, 92, 246, 0.1) 0%, transparent 60%),
+        linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(10, 10, 25, 0.95));
+    }
+    
+    .video-play-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-3xl);
+      color: white;
+      margin-bottom: var(--space-4);
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .video-play-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 60px rgba(139, 92, 246, 0.6);
+    }
+    
+    .video-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+    
+    .video-subtitle {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      margin-top: var(--space-2);
+    }
+    
+    /* Match Selector */
+    .match-selector {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+    
+    .match-select-btn {
+      background: rgba(20, 20, 40, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-5);
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+    }
+    
+    .match-select-btn:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      color: var(--color-text-primary);
+    }
+    
+    .match-select-btn.active {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+    }
+    
+    /* Stats Layout */
+    .stats-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    
+    @media (max-width: 768px) {
+      .stats-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Team Panel */
+    .team-panel {
+      background: linear-gradient(165deg, rgba(20, 20, 40, 0.7), rgba(15, 15, 30, 0.8));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .team-panel:hover {
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
+    }
+    
+    .team-panel.team-left {
+      border-left: 3px solid #8b5cf6;
+    }
+    
+    .team-panel.team-right {
+      border-right: 3px solid #3b82f6;
+    }
+    
+    .team-panel-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+    }
+    
+    .team-badge {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(30, 30, 50, 0.9), rgba(20, 20, 40, 0.95));
+      border: 2px solid rgba(139, 92, 246, 0.4);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: #a78bfa;
+    }
+    
+    .team-right .team-badge {
+      color: #60a5fa;
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    
+    .team-panel-info h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      margin-bottom: var(--space-1);
+    }
+    
+    .team-panel-info p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    
+    .team-score {
+      margin-left: auto;
+      font-family: var(--font-display);
+      font-size: var(--text-4xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+    }
+    
+    /* Stats Tabs */
+    .stats-tabs {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+    
+    .stats-tab {
+      background: rgba(20, 20, 40, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.1);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-4);
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+    }
+    
+    .stats-tab:hover {
+      color: var(--color-text-secondary);
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+    
+    .stats-tab.active {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: rgba(139, 92, 246, 0.3);
+      color: #a78bfa;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+    
+    .stat-block {
+      background: rgba(20, 20, 40, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.08);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      margin-top: var(--space-1);
+    }
+    
+    /* Player List */
+    .player-list {
+      list-style: none;
+    }
+    
+    .player-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.06);
+    }
+    
+    .player-item:last-child {
+      border-bottom: none;
+    }
+    
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    
+    .player-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.15));
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    
+    .player-name {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-text-primary);
+    }
+    
+    .player-role {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    
+    .player-stats {
+      display: flex;
+      gap: var(--space-4);
+    }
+    
+    .player-stat {
+      text-align: center;
+    }
+    
+    .player-stat-value {
+      font-family: var(--font-display);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+    }
+    
+    .player-stat-label {
+      font-size: 10px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .live-header-container {
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+      
+      .video-play-icon {
+        width: 60px;
+        height: 60px;
+        font-size: var(--text-2xl);
+      }
+      
+      .video-title {
+        font-size: var(--text-lg);
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .player-stats {
+        gap: var(--space-2);
+      }
+    }
+    
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .live-badge .live-dot {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body class="live-page">
+  <!-- Live Header -->
+  <header class="live-header">
+    <div class="live-header-container">
+      <a href="index.html" class="live-logo">
+        <div class="live-logo-icon">N</div>
+        <span>NECS</span>
+      </a>
+      
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        NECS Live
+      </div>
+      
+      <a href="index.html" class="back-link">
+        ← Back to Home
+      </a>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="live-main">
+    <div class="live-container">
+      <!-- Video Section -->
+      <section class="video-section">
+        <div class="video-wrapper">
+          <div class="video-placeholder">
+            <div class="video-play-icon">▶</div>
+            <h1 class="video-title">NECS Live</h1>
+            <p class="video-subtitle">Valorant Championship Match - Live Now</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Match Selector -->
+      <div class="match-selector">
+        <button class="match-select-btn active" data-match="valorant">Valorant</button>
+        <button class="match-select-btn" data-match="rocket-league">Rocket League</button>
+        <button class="match-select-btn" data-match="smash">Super Smash Bros</button>
+      </div>
+      
+      <!-- Stats Layout - Two Teams -->
+      <div class="stats-layout">
+        <!-- Team Left -->
+        <div class="team-panel team-left">
+          <div class="team-panel-header">
+            <div class="team-badge">NV</div>
+            <div class="team-panel-info">
+              <h3>Nova Vanguard</h3>
+              <p>Valorant Division</p>
+            </div>
+            <div class="team-score">13</div>
+          </div>
+          
+          <!-- Stats Tabs -->
+          <div class="stats-tabs">
+            <button class="stats-tab active">Teams</button>
+            <button class="stats-tab">Players</button>
+            <button class="stats-tab">Match</button>
+          </div>
+          
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-block">
+              <div class="stat-value">87</div>
+              <div class="stat-label">Kills</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-value">62</div>
+              <div class="stat-label">Deaths</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-value">145</div>
+              <div class="stat-label">Assists</div>
+            </div>
+          </div>
+          
+          <!-- Player List -->
+          <ul class="player-list">
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">PK</div>
+                <div>
+                  <div class="player-name">Pranav Kousikan</div>
+                  <div class="player-role">Duelist</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">24</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">12</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">8</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">MR</div>
+                <div>
+                  <div class="player-name">Maria Rodriguez</div>
+                  <div class="player-role">Sentinel</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">18</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">14</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">22</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">JT</div>
+                <div>
+                  <div class="player-name">James Thompson</div>
+                  <div class="player-role">Initiator</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">15</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">11</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">35</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Team Right -->
+        <div class="team-panel team-right">
+          <div class="team-panel-header">
+            <div class="team-badge">SE</div>
+            <div class="team-panel-info">
+              <h3>Shadow Elite</h3>
+              <p>Valorant Division</p>
+            </div>
+            <div class="team-score">10</div>
+          </div>
+          
+          <!-- Stats Tabs -->
+          <div class="stats-tabs">
+            <button class="stats-tab active">Teams</button>
+            <button class="stats-tab">Players</button>
+            <button class="stats-tab">Match</button>
+          </div>
+          
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-block">
+              <div class="stat-value">62</div>
+              <div class="stat-label">Kills</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-value">87</div>
+              <div class="stat-label">Deaths</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-value">98</div>
+              <div class="stat-label">Assists</div>
+            </div>
+          </div>
+          
+          <!-- Player List -->
+          <ul class="player-list">
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">RK</div>
+                <div>
+                  <div class="player-name">Ryan Kim</div>
+                  <div class="player-role">Duelist</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">19</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">18</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">6</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">SP</div>
+                <div>
+                  <div class="player-name">Sofia Petrov</div>
+                  <div class="player-role">Sentinel</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">14</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">16</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">18</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+            <li class="player-item">
+              <div class="player-info">
+                <div class="player-avatar">MJ</div>
+                <div>
+                  <div class="player-name">Marcus Johnson</div>
+                  <div class="player-role">Initiator</div>
+                </div>
+              </div>
+              <div class="player-stats">
+                <div class="player-stat">
+                  <div class="player-stat-value">12</div>
+                  <div class="player-stat-label">K</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">19</div>
+                  <div class="player-stat-label">D</div>
+                </div>
+                <div class="player-stat">
+                  <div class="player-stat-value">28</div>
+                  <div class="player-stat-label">A</div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    // Match selector functionality
+    document.querySelectorAll('.match-select-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.match-select-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+    
+    // Stats tabs functionality
+    document.querySelectorAll('.stats-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const panel = tab.closest('.team-panel');
+        panel.querySelectorAll('.stats-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
