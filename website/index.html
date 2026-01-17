@@ -44,6 +44,7 @@
         <li><a href="#schedule" class="navbar-link">Schedule</a></li>
         <li><a href="#concert" class="navbar-link">Concert</a></li>
         <li><a href="#tickets" class="navbar-link">Tickets</a></li>
+        <li><a href="#menu-merch" class="navbar-link">Menu & Merch</a></li>
         <li><a href="live.html" class="btn btn-primary btn-sm">Watch Live</a></li>
       </ul>
       
@@ -912,6 +913,570 @@
       </div>
     </section>
 
+    <!-- ========================================
+         MENU & MERCHANDISE SECTION
+         ======================================== -->
+    <section class="section menu-merch-section" id="menu-merch">
+      
+      <!-- Rewards Overview Banner -->
+      <div class="rewards-banner scroll-reveal-item">
+        <div class="container">
+          <div class="rewards-banner-content">
+            <div class="rewards-banner-icon" aria-hidden="true">🎁</div>
+            <div class="rewards-banner-text">
+              <h3 class="rewards-banner-title">Earn <span class="text-gradient">Rewards</span> With Every Purchase</h3>
+              <p class="rewards-banner-desc">Collect points from menu items, merchandise, and reviews to unlock exclusive perks!</p>
+            </div>
+            <div class="rewards-stats">
+              <div class="reward-stat">
+                <div class="reward-stat-icon">🍔</div>
+                <div class="reward-stat-info">
+                  <span class="reward-stat-value">1pt</span>
+                  <span class="reward-stat-label">Per $1 Food</span>
+                </div>
+              </div>
+              <div class="reward-stat">
+                <div class="reward-stat-icon">👕</div>
+                <div class="reward-stat-info">
+                  <span class="reward-stat-value">2pts</span>
+                  <span class="reward-stat-label">Per $1 Merch</span>
+                </div>
+              </div>
+              <div class="reward-stat">
+                <div class="reward-stat-icon">⭐</div>
+                <div class="reward-stat-info">
+                  <span class="reward-stat-value">50pts</span>
+                  <span class="reward-stat-label">Per Review</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MENU SECTION -->
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Fuel Your Game</span>
+          <h2 class="section-title">Event <span class="text-gradient">Menu</span></h2>
+          <p class="section-description">
+            Power up with delicious drinks and food curated for champions. Every purchase earns you reward points!
+          </p>
+        </header>
+
+        <!-- Menu Category Tabs -->
+        <div class="menu-tabs" role="tablist" aria-label="Menu category selection">
+          <button class="menu-tab active" data-category="drinks" role="tab" aria-selected="true" aria-controls="menu-drinks">
+            <span class="menu-tab-icon">🥤</span>
+            Drinks
+          </button>
+          <button class="menu-tab" data-category="food" role="tab" aria-selected="false" aria-controls="menu-food">
+            <span class="menu-tab-icon">🍔</span>
+            Food
+          </button>
+        </div>
+
+        <!-- Drinks Menu -->
+        <div class="menu-grid active" id="menu-drinks" role="tabpanel" aria-labelledby="tab-drinks">
+          <!-- Specialty Drink -->
+          <article class="menu-card menu-card-specialty">
+            <div class="menu-card-badge specialty-badge">⭐ Specialty</div>
+            <div class="menu-card-icon" aria-hidden="true">☕</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Champion's Brew</h3>
+              <p class="menu-card-desc">Signature espresso with caramel, topped with championship gold dust</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-specialty">Specialty</span>
+                <span class="menu-card-reward">+5 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-badge popular-badge">🔥 Popular</div>
+            <div class="menu-card-icon" aria-hidden="true">🧋</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Gamer's Fuel</h3>
+              <p class="menu-card-desc">Energy-boosting iced tea with berry blast and ginseng</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-popular">Popular</span>
+                <span class="menu-card-reward">+4 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-icon" aria-hidden="true">🥤</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Pixel Punch</h3>
+              <p class="menu-card-desc">Refreshing fruit smoothie with mango, passion fruit & açaí</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-reward">+3 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-badge new-badge">✨ New</div>
+            <div class="menu-card-icon" aria-hidden="true">🍵</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Victory Matcha</h3>
+              <p class="menu-card-desc">Premium matcha latte with oat milk and honey drizzle</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-new">New</span>
+                <span class="menu-card-reward">+4 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card menu-card-specialty">
+            <div class="menu-card-badge specialty-badge">⭐ Specialty</div>
+            <div class="menu-card-icon" aria-hidden="true">🍹</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Nashville Sunset</h3>
+              <p class="menu-card-desc">Sparkling lemonade with Tennessee honey and lavender</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-specialty">Specialty</span>
+                <span class="menu-card-reward">+5 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-icon" aria-hidden="true">🥛</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Pro Player Protein</h3>
+              <p class="menu-card-desc">Chocolate protein shake with banana and peanut butter</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-reward">+4 pts</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Food Menu -->
+        <div class="menu-grid" id="menu-food" role="tabpanel" aria-labelledby="tab-food" style="display: none;">
+          <!-- Specialty Food -->
+          <article class="menu-card menu-card-specialty">
+            <div class="menu-card-badge specialty-badge">⭐ Specialty</div>
+            <div class="menu-card-icon" aria-hidden="true">🍔</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Champion Burger</h3>
+              <p class="menu-card-desc">Wagyu beef patty with truffle aioli and championship sauce</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-specialty">Specialty</span>
+                <span class="menu-card-reward">+8 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-badge popular-badge">🔥 Popular</div>
+            <div class="menu-card-icon" aria-hidden="true">🌮</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Nashville Hot Tacos</h3>
+              <p class="menu-card-desc">Crispy chicken tacos with Nashville hot spice blend</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-popular">Popular</span>
+                <span class="menu-card-reward">+6 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-icon" aria-hidden="true">🍕</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Gamer's Pizza Slice</h3>
+              <p class="menu-card-desc">Hand-tossed slice with pepperoni and four-cheese blend</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-reward">+4 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-badge new-badge">✨ New</div>
+            <div class="menu-card-icon" aria-hidden="true">🥗</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Power Bowl</h3>
+              <p class="menu-card-desc">Quinoa bowl with grilled chicken, avocado & citrus dressing</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-new">New</span>
+                <span class="menu-card-reward">+5 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card menu-card-specialty">
+            <div class="menu-card-badge specialty-badge">⭐ Specialty</div>
+            <div class="menu-card-icon" aria-hidden="true">🍗</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Victory Wings</h3>
+              <p class="menu-card-desc">Signature dry-rubbed wings with honey BBQ glaze</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-tag tag-specialty">Specialty</span>
+                <span class="menu-card-reward">+7 pts</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card">
+            <div class="menu-card-icon" aria-hidden="true">🍟</div>
+            <div class="menu-card-content">
+              <h3 class="menu-card-name">Loaded Game Fries</h3>
+              <p class="menu-card-desc">Crispy fries topped with cheese sauce, bacon & jalapeños</p>
+              <div class="menu-card-meta">
+                <span class="menu-card-reward">+4 pts</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         MERCHANDISE SECTION
+         ======================================== -->
+    <section class="section merch-section" id="merchandise">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Official Gear</span>
+          <h2 class="section-title">NECS <span class="text-gradient">Merchandise</span></h2>
+          <p class="section-description">
+            Rep your favorite teams and the championship with official NECS 2026 apparel. Earn double points on all merch!
+          </p>
+        </header>
+
+        <!-- Merch Category Filter -->
+        <div class="merch-filters" role="group" aria-label="Merchandise filters">
+          <button class="merch-filter active" data-filter="all">All Items</button>
+          <button class="merch-filter" data-filter="hoodies">Hoodies</button>
+          <button class="merch-filter" data-filter="tshirts">T-Shirts</button>
+          <button class="merch-filter" data-filter="crewnecks">Crewnecks</button>
+          <button class="merch-filter" data-filter="hats">Hats</button>
+          <button class="merch-filter" data-filter="accessories">Accessories</button>
+        </div>
+
+        <!-- Merchandise Grid -->
+        <div class="merch-grid">
+          <!-- Hoodies -->
+          <article class="merch-card" data-category="hoodies">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">👕</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+80 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Hoodies</span>
+              <h3 class="merch-card-name">NECS 2026 Champion Hoodie</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="hoodies">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">👕</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+70 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Hoodies</span>
+              <h3 class="merch-card-name">Team Logo Zip Hoodie</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- T-Shirts -->
+          <article class="merch-card" data-category="tshirts">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">👚</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+50 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">T-Shirts</span>
+              <h3 class="merch-card-name">Official NECS Event Tee</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="tshirts">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">👚</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+45 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">T-Shirts</span>
+              <h3 class="merch-card-name">Nashville Gaming Graphic Tee</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Crewnecks -->
+          <article class="merch-card" data-category="crewnecks">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🧥</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+65 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Crewnecks</span>
+              <h3 class="merch-card-name">Premium NECS Crewneck</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="crewnecks">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🧥</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+60 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Crewnecks</span>
+              <h3 class="merch-card-name">Vintage Logo Sweatshirt</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Hats -->
+          <article class="merch-card" data-category="hats">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🧢</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+35 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Hats</span>
+              <h3 class="merch-card-name">NECS Snapback Cap</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="hats">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🧢</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+30 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Hats</span>
+              <h3 class="merch-card-name">Classic Dad Hat</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Accessories (Scarves & Other) -->
+          <article class="merch-card" data-category="accessories">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🧣</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+40 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Accessories</span>
+              <h3 class="merch-card-name">Championship Scarf</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="accessories">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🎒</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+55 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Accessories</span>
+              <h3 class="merch-card-name">NECS Pro Backpack</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="accessories">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">🎮</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+25 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Accessories</span>
+              <h3 class="merch-card-name">Collector's Pin Set</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="merch-card" data-category="accessories">
+            <div class="merch-card-image">
+              <div class="merch-placeholder-icon">☕</div>
+              <div class="merch-reward-badge">
+                <span class="merch-reward-icon">⭐</span>
+                <span>+20 pts</span>
+              </div>
+            </div>
+            <div class="merch-card-content">
+              <span class="merch-category-label">Accessories</span>
+              <h3 class="merch-card-name">NECS Thermal Mug</h3>
+              <div class="merch-card-actions">
+                <button class="btn btn-primary btn-sm merch-btn">View Item</button>
+                <button class="btn btn-outline btn-sm merch-btn">Earn Rewards</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================
+         REWARDS & REVIEWS SECTION
+         ======================================== -->
+    <section class="section rewards-section" id="rewards">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-label">Earn More</span>
+          <h2 class="section-title">Rewards <span class="text-gradient">Program</span></h2>
+          <p class="section-description">
+            Unlock exclusive perks by earning points through purchases and reviews. The more you engage, the more you earn!
+          </p>
+        </header>
+
+        <!-- How to Earn Grid -->
+        <div class="rewards-earn-grid">
+          <article class="rewards-earn-card">
+            <div class="rewards-earn-icon">
+              <span aria-hidden="true">🍔</span>
+            </div>
+            <h3 class="rewards-earn-title">Purchase Menu Items</h3>
+            <p class="rewards-earn-desc">Earn 1 point for every $1 spent on food and drinks. Specialty items earn bonus points!</p>
+            <div class="rewards-earn-highlight">
+              <span class="highlight-label">Earn up to</span>
+              <span class="highlight-value">8 pts</span>
+              <span class="highlight-label">per item</span>
+            </div>
+          </article>
+
+          <article class="rewards-earn-card rewards-earn-featured">
+            <div class="rewards-earn-icon">
+              <span aria-hidden="true">👕</span>
+            </div>
+            <h3 class="rewards-earn-title">Buy Merchandise</h3>
+            <p class="rewards-earn-desc">Double points on all official NECS merchandise! Premium items earn even more.</p>
+            <div class="rewards-earn-highlight">
+              <span class="highlight-label">Earn up to</span>
+              <span class="highlight-value">80 pts</span>
+              <span class="highlight-label">per item</span>
+            </div>
+            <div class="double-points-badge">2x POINTS</div>
+          </article>
+
+          <article class="rewards-earn-card">
+            <div class="rewards-earn-icon">
+              <span aria-hidden="true">⭐</span>
+            </div>
+            <h3 class="rewards-earn-title">Leave Reviews</h3>
+            <p class="rewards-earn-desc">Share your experience! Write reviews for menu items or merchandise to earn free points.</p>
+            <div class="rewards-earn-highlight">
+              <span class="highlight-label">Earn</span>
+              <span class="highlight-value">50 pts</span>
+              <span class="highlight-label">per review</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Rewards Tiers Progress -->
+        <div class="rewards-tiers scroll-reveal-item">
+          <h3 class="rewards-tiers-title">Reward Tiers</h3>
+          <div class="rewards-progress">
+            <div class="rewards-progress-bar">
+              <div class="rewards-progress-fill" style="width: 0%;" aria-label="Current progress: 0 points"></div>
+            </div>
+            <div class="rewards-tier-markers">
+              <div class="tier-marker" data-points="0">
+                <span class="tier-icon">🥉</span>
+                <span class="tier-name">Starter</span>
+                <span class="tier-points">0 pts</span>
+              </div>
+              <div class="tier-marker" data-points="100">
+                <span class="tier-icon">🥈</span>
+                <span class="tier-name">Contender</span>
+                <span class="tier-points">100 pts</span>
+              </div>
+              <div class="tier-marker" data-points="250">
+                <span class="tier-icon">🥇</span>
+                <span class="tier-name">Champion</span>
+                <span class="tier-points">250 pts</span>
+              </div>
+              <div class="tier-marker" data-points="500">
+                <span class="tier-icon">🏆</span>
+                <span class="tier-name">Legend</span>
+                <span class="tier-points">500 pts</span>
+              </div>
+            </div>
+          </div>
+          <div class="rewards-cta">
+            <button class="btn btn-primary btn-lg">Start Earning Today</button>
+            <p class="rewards-cta-note">Sign up for a free rewards account at any venue booth</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================
@@ -966,6 +1531,7 @@
             <li><a href="#schedule">Schedule</a></li>
             <li><a href="#concert">Concert</a></li>
             <li><a href="#tickets">Tickets</a></li>
+            <li><a href="#menu-merch">Menu & Merch</a></li>
             <li><a href="live.html">Watch Live</a></li>
           </ul>
         </div>

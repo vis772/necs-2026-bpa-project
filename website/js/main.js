@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   initScheduleTabs();
   initTeamTabs();
+  initMenuTabs();
+  initMerchFilters();
   initAppleScrollReveal();
 });
 
@@ -260,6 +262,126 @@ function initTeamTabs() {
 }
 
 /* ========================================
+   MENU TABS
+   ======================================== */
+
+function initMenuTabs() {
+  const menuTabs = document.querySelectorAll('.menu-tab');
+  const menuGrids = document.querySelectorAll('.menu-grid');
+
+  if (!menuTabs.length) return;
+
+  menuTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Update tab states
+      menuTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      // Hide all grids
+      menuGrids.forEach(grid => {
+        grid.style.display = 'none';
+        grid.classList.remove('active');
+      });
+
+      // Show target grid
+      const category = tab.dataset.category;
+      const targetGrid = document.getElementById('menu-' + category);
+      if (targetGrid) {
+        targetGrid.style.display = 'grid';
+        targetGrid.classList.add('active');
+        
+        // Animate cards with stagger
+        const cards = targetGrid.querySelectorAll('.menu-card');
+        cards.forEach((card, index) => {
+          card.classList.remove('is-revealed');
+          card.style.transitionDelay = (index * 0.08) + 's';
+          
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              card.classList.add('is-revealed');
+            });
+          });
+        });
+      }
+    });
+    
+    // Keyboard navigation
+    tab.addEventListener('keydown', (e) => {
+      const tabs = Array.from(menuTabs);
+      const currentIndex = tabs.indexOf(tab);
+      
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % tabs.length;
+        tabs[nextIndex].focus();
+        tabs[nextIndex].click();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        tabs[prevIndex].focus();
+        tabs[prevIndex].click();
+      }
+    });
+  });
+}
+
+/* ========================================
+   MERCHANDISE FILTERS
+   ======================================== */
+
+function initMerchFilters() {
+  const merchFilters = document.querySelectorAll('.merch-filter');
+  const merchCards = document.querySelectorAll('.merch-card');
+
+  if (!merchFilters.length) return;
+
+  merchFilters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      // Update filter states
+      merchFilters.forEach(f => f.classList.remove('active'));
+      filter.classList.add('active');
+
+      const filterValue = filter.dataset.filter;
+      
+      // Filter cards
+      merchCards.forEach((card, index) => {
+        const cardCategory = card.dataset.category;
+        const shouldShow = filterValue === 'all' || cardCategory === filterValue;
+        
+        // Reset animation
+        card.classList.remove('is-revealed');
+        
+        if (shouldShow) {
+          card.style.display = 'block';
+          card.style.transitionDelay = (index * 0.06) + 's';
+          
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              card.classList.add('is-revealed');
+            });
+          });
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+    
+    // Keyboard support
+    filter.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        filter.click();
+      }
+    });
+  });
+}
+
+/* ========================================
    APPLE-STYLE SCROLL REVEAL SYSTEM
    ======================================== */
 
@@ -280,6 +402,8 @@ function initAppleScrollReveal() {
   initScheduleReveal();
   initConcertReveal();
   initTicketsReveal();
+  initMenuMerchReveal();
+  initRewardsReveal();
   initFooterReveal();
 }
 
@@ -292,6 +416,10 @@ function revealAllElements() {
   document.querySelectorAll('.schedule-item').forEach(el => el.classList.add('is-revealed'));
   document.querySelectorAll('.teams-tabs').forEach(el => el.classList.add('is-revealed'));
   document.querySelectorAll('.concert-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.menu-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.merch-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.rewards-earn-card').forEach(el => el.classList.add('is-revealed'));
+  document.querySelectorAll('.rewards-tiers').forEach(el => el.classList.add('is-revealed'));
 }
 
 /* ========================================
@@ -599,6 +727,187 @@ function initTicketsReveal() {
     
     cardObserver.observe(card);
   });
+}
+
+/* ========================================
+   MENU & MERCH SECTION REVEAL
+   ======================================== */
+
+function initMenuMerchReveal() {
+  const menuMerchSection = document.querySelector('.menu-merch-section');
+  const merchSection = document.querySelector('.merch-section');
+  
+  // Menu section reveal
+  if (menuMerchSection) {
+    const rewardsBanner = menuMerchSection.querySelector('.rewards-banner');
+    const sectionHeader = menuMerchSection.querySelector('.section-header');
+    const menuCards = menuMerchSection.querySelectorAll('.menu-grid.active .menu-card, #menu-drinks .menu-card');
+
+    // Observer for rewards banner
+    if (rewardsBanner) {
+      const bannerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            bannerObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      bannerObserver.observe(rewardsBanner);
+    }
+
+    // Observer for section header
+    if (sectionHeader) {
+      const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            headerObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      headerObserver.observe(sectionHeader);
+    }
+
+    // Observer for menu cards with stagger
+    menuCards.forEach((card, index) => {
+      const isSpecialty = card.classList.contains('menu-card-specialty');
+      const delay = isSpecialty ? (index * 0.06) : (index * 0.08);
+      card.style.transitionDelay = delay + 's';
+      
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+      
+      cardObserver.observe(card);
+    });
+  }
+
+  // Merch section reveal
+  if (merchSection) {
+    const merchHeader = merchSection.querySelector('.section-header');
+    const merchCards = merchSection.querySelectorAll('.merch-card');
+
+    // Observer for section header
+    if (merchHeader) {
+      const headerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            headerObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      headerObserver.observe(merchHeader);
+    }
+
+    // Observer for merch cards with stagger
+    merchCards.forEach((card, index) => {
+      card.style.transitionDelay = (index * 0.06) + 's';
+      
+      const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      cardObserver.observe(card);
+    });
+  }
+}
+
+/* ========================================
+   REWARDS SECTION REVEAL
+   ======================================== */
+
+function initRewardsReveal() {
+  const rewardsSection = document.querySelector('.rewards-section');
+  if (!rewardsSection) return;
+
+  const sectionHeader = rewardsSection.querySelector('.section-header');
+  const earnCards = rewardsSection.querySelectorAll('.rewards-earn-card');
+  const rewardsTiers = rewardsSection.querySelector('.rewards-tiers');
+
+  // Observer for section header
+  if (sectionHeader) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          headerObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    headerObserver.observe(sectionHeader);
+  }
+
+  // Observer for earn cards with stagger
+  earnCards.forEach((card, index) => {
+    const isFeatured = card.classList.contains('rewards-earn-featured');
+    const delay = isFeatured ? 0 : (index * 0.1);
+    card.style.transitionDelay = delay + 's';
+    
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: isFeatured ? 0.1 : 0.15,
+      rootMargin: '0px 0px -60px 0px'
+    });
+    
+    cardObserver.observe(card);
+  });
+
+  // Observer for rewards tiers
+  if (rewardsTiers) {
+    const tiersObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          tiersObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    tiersObserver.observe(rewardsTiers);
+  }
 }
 
 /* ========================================
