@@ -1470,8 +1470,8 @@
             </div>
           </div>
           <div class="rewards-cta">
-            <button class="btn btn-primary btn-lg">Start Earning Today</button>
-            <p class="rewards-cta-note">Sign up for a free rewards account at any venue booth</p>
+            <button class="btn btn-primary btn-lg" id="rewards-signup-btn">Start Earning Today</button>
+            <p class="rewards-cta-note">Sign up for a free rewards account online or at any venue booth</p>
           </div>
         </div>
       </div>
@@ -1570,6 +1570,75 @@
       </div>
     </div>
   </footer>
+
+  <!-- Rewards Sign-Up Modal -->
+  <div class="modal-overlay" id="rewards-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-container">
+      <button class="modal-close" aria-label="Close modal" id="modal-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      
+      <div class="modal-header">
+        <div class="modal-icon">🎁</div>
+        <h2 class="modal-title" id="modal-title">Join <span class="text-gradient">NECS Rewards</span></h2>
+        <p class="modal-subtitle">Start earning points today and unlock exclusive perks!</p>
+      </div>
+      
+      <form class="modal-form" id="rewards-form">
+        <div class="form-group">
+          <label for="rewards-name" class="form-label">Full Name</label>
+          <input type="text" id="rewards-name" name="name" class="form-input" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="rewards-email" class="form-label">Email Address</label>
+          <input type="email" id="rewards-email" name="email" class="form-input" placeholder="you@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="rewards-phone" class="form-label">Phone Number <span class="form-optional">(Optional)</span></label>
+          <input type="tel" id="rewards-phone" name="phone" class="form-input" placeholder="(555) 123-4567">
+        </div>
+        
+        <div class="form-group">
+          <label for="rewards-ticket" class="form-label">Ticket Number <span class="form-optional">(Optional)</span></label>
+          <input type="text" id="rewards-ticket" name="ticket" class="form-input" placeholder="Enter if you have a ticket">
+          <p class="form-hint">Link your ticket to get bonus points!</p>
+        </div>
+        
+        <div class="form-checkbox-group">
+          <label class="form-checkbox">
+            <input type="checkbox" name="newsletter" checked>
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-label">Send me updates about rewards and exclusive offers</span>
+          </label>
+          
+          <label class="form-checkbox">
+            <input type="checkbox" name="terms" required>
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-label">I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a></span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg modal-submit">
+          <span class="btn-text">Create My Account</span>
+          <span class="btn-icon">→</span>
+        </button>
+        
+        <p class="modal-footer-text">Already a member? <a href="#" class="modal-link">Sign In</a></p>
+      </form>
+      
+      <!-- Success State -->
+      <div class="modal-success" id="modal-success" hidden>
+        <div class="success-icon">✓</div>
+        <h3 class="success-title">Welcome to NECS Rewards!</h3>
+        <p class="success-message">Your account has been created. Check your email for your welcome bonus of <strong>50 points</strong>!</p>
+        <button class="btn btn-primary btn-lg" id="success-close">Start Exploring</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="js/main.js"></script>

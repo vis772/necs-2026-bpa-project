@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMenuTabs();
   initMerchFilters();
   initAppleScrollReveal();
+  initRewardsModal();
 });
 
 /* ========================================
@@ -981,6 +982,112 @@ function throttle(func, limit) {
       setTimeout(function() { inThrottle = false; }, limit);
     }
   };
+}
+
+/* ========================================
+   REWARDS SIGN-UP MODAL
+   ======================================== */
+
+function initRewardsModal() {
+  const signupBtn = document.getElementById('rewards-signup-btn');
+  const modal = document.getElementById('rewards-modal');
+  const closeBtn = document.getElementById('modal-close');
+  const form = document.getElementById('rewards-form');
+  const successState = document.getElementById('modal-success');
+  const successCloseBtn = document.getElementById('success-close');
+  
+  if (!signupBtn || !modal) return;
+  
+  // Open modal
+  signupBtn.addEventListener('click', () => {
+    openModal();
+  });
+  
+  // Close modal on close button
+  closeBtn?.addEventListener('click', () => {
+    closeModal();
+  });
+  
+  // Close modal on overlay click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
+  
+  // Form submission
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Simulate form submission
+    const submitBtn = form.querySelector('.modal-submit');
+    const btnText = submitBtn?.querySelector('.btn-text');
+    
+    if (btnText) {
+      btnText.textContent = 'Creating Account...';
+      submitBtn.disabled = true;
+    }
+    
+    // Simulate API call delay
+    setTimeout(() => {
+      // Hide form, show success state
+      form.hidden = true;
+      if (successState) {
+        successState.hidden = false;
+      }
+      
+      // Reset button
+      if (btnText) {
+        btnText.textContent = 'Create My Account';
+        submitBtn.disabled = false;
+      }
+    }, 1500);
+  });
+  
+  // Close from success state
+  successCloseBtn?.addEventListener('click', () => {
+    closeModal();
+    
+    // Reset modal after close animation
+    setTimeout(() => {
+      form.hidden = false;
+      form.reset();
+      if (successState) {
+        successState.hidden = true;
+      }
+    }, 400);
+  });
+  
+  function openModal() {
+    modal.hidden = false;
+    // Trigger reflow for animation
+    modal.offsetHeight;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first input
+    const firstInput = modal.querySelector('input:not([type="hidden"])');
+    setTimeout(() => {
+      firstInput?.focus();
+    }, 300);
+  }
+  
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    
+    // Hide after animation
+    setTimeout(() => {
+      modal.hidden = true;
+    }, 400);
+  }
 }
 
 /* ========================================
